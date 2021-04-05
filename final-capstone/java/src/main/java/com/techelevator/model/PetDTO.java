@@ -1,6 +1,10 @@
 package com.techelevator.model;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import java.time.LocalDate;
 
 public class PetDTO {
 
@@ -9,9 +13,12 @@ public class PetDTO {
     @NotEmpty
     private String species;
     private String breed;
-    @NotEmpty
+    @NotNull
+    @Positive
     private double weight;
-    @NotEmpty
+    @NotNull
+    @Positive
+    //@Max(Long.valueOf(LocalDate.now().getYear())) "value must be constant"
     private int birthYear;
     @NotEmpty
     private String energeticRelaxed;

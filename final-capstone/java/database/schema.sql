@@ -41,7 +41,7 @@ CREATE TABLE pets (
         
         CONSTRAINT check_energetic_relaxed CHECK(energetic_relaxed IN ('energetic', 'relaxed')),
         CONSTRAINT check_shy_friendly CHECK(shy_friendly IN ('shy', 'friendly')),
-        CONSTRAINT check_apathetic_curious CHECK(apathetic_curious IN ('empathetic','curious'))
+        CONSTRAINT check_apathetic_curious CHECK(apathetic_curious IN ('apathetic','curious'))
 );
 
 
