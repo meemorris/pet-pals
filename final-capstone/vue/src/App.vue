@@ -16,16 +16,16 @@
 
 
 .btn {
-  display: block;
+  display: block !important;
   margin: auto;
   margin-top: 10px;
-  background: #07475f;
-  border-color: #07475f;
+  background: #07475f !important;
+  border-color: #07475f !important;
 }
 
 .btn:hover {
-  background: #1e7c9e;
-  border-color: #1e7c9e;
+  background: #1e7c9e !important;
+  border-color: #1e7c9e !important;
 }
 
 h1 {
