@@ -10,13 +10,13 @@ import javax.sql.DataSource;
 
 public class UserSqlDaoIntegrationTest extends DAOIntegrationTest {
 
-    private UserSqlDAO userSqlDAO;
+    private JdbcUserDAO userSqlDAO;
 
     @Before
     public void setup() {
         DataSource dataSource = this.getDataSource();
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        userSqlDAO = new UserSqlDAO(jdbcTemplate);
+        userSqlDAO = new JdbcUserDAO(jdbcTemplate);
     }
 
     @Test
