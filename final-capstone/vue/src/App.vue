@@ -32,7 +32,7 @@ h1 {
   font-family: 'Raleway', sans-serif;
 }
 
-input[type=text], input[type=password] {
+input[type=text], input[type=password], input[type=number] {
   width: 350px;
   margin: auto;
   margin-bottom: 5px;

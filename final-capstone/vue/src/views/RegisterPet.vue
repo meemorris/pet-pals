@@ -1,7 +1,7 @@
 <template>
   <div id="register" class="text-center">
-    <form class="form-registerPet">
-        <h1>Register your pet.</h1>
+    <form class="form-registerPet" v-on:submit.prevent="register">
+      <h1>Register Your Pet</h1>
       <label for="name" class="sr-only">Pet Name</label>
       <input
         type="text"
@@ -13,14 +13,24 @@
         autofocus
       />
       <label for="species">Species</label>
-      <select name="species" id = "species">
-        <option value="Dog">Dog</option>
-        <option value="Cat">Cat</option>
-        <option value="Rabbit">Rabbit</option>
-        <option value="Hedgehog">Hedgehog</option>
-        <option value="Other">Other</option>
+      <select name="species" id="species" v-model="pet.species" v-on:change="toggleOtherSpecies">
+        <option value="" default>---</option>
+        <option value="dog">Dog</option>
+        <option value="cat">Cat</option>
+        <option value="rabbit">Rabbit</option>
+        <option value="hedgehog">Hedgehog</option>
+        <option value="other">Other (please describe)</option>
       </select>
-      
+
+      <input
+        type="text"
+        id="otherSpecies"
+        class="form-control d-none"
+        placeholder="Other Species Type"
+        v-model="pet.species"
+        required
+      />
+
       <label for="breed" class="sr-only">breed</label>
       <input
         type="text"
@@ -28,76 +38,103 @@
         class="form-control"
         placeholder="Breed"
         v-model="pet.breed"
-        required
       />
       <label for="weight" class="sr-only">weight</label>
       <input
-        type="text"
+        type="number"
         id="weight"
+        min="0"
         class="form-control"
-        placeholder="Weight"
+        placeholder="Weight in pounds"
         v-model="pet.weight"
         required
       />
       <label for="birthYear" class="sr-only">BirthYear</label>
       <input
-        type="month"
+        type="number"
         id="birthYear"
         class="form-control"
         placeholder="Birth Year"
-        min="1970-01"
+        min="1970"
+        max="2021"
         value=""
         v-model="pet.birthYear"
         required
       />
-      <label for="energetic_relaxed" class="sr-only">energetic_relaxed</label>
-        <input 
-        type="radio" 
-        id="energetic" 
-        name="energetic_relaxed"
-        v-model="pet.energetic_relaxed"
-        value="energetic">
-        <label for="energetic"> Energetic</label><br>
 
-        <input 
-        type="radio" 
-        id="relaxed" 
-        name="energetic_relaxed"
-        v-model="pet.energetic_relaxed" 
-        value="relaxed">
-        <label for="relaxed"> Relaxed</label><br>
+      <div class="personality">
+        <p>Energy:</p>
+        <label for="energetic">
+          <input
+            type="radio"
+            id="energetic"
+            name="energetic_relaxed"
+            v-model="pet.energeticRelaxed"
+            value="energetic"
+          />
+          Energetic</label
+        >
 
-      <label for="shy_friendly" class="sr-only">Shy_Friendly</label>
-      <input 
-        type="radio" 
-        id="shy" 
-        name="shy_friendly" 
-        v-model="pet.shy_friendly"
-        value="shy">
-        <label for="shy"> Shy</label><br>
-        <input 
-        type="radio" 
-        id="friendly" 
-        name="shy_friendly"
-        v-model="pet.shy_friendly" 
-        value="friendly">
-        <label for="friendly"> Friendly</label><br>
-      
-      <label for="apathetic_curious" class="sr-only">Shy_Friendly</label>
-      <input 
-        type="radio" 
-        id="apathetic" 
-        name="apathetic_curious"
-        v-model="pet.apathetic_curious" 
-        value="apathetic">
-        <label for="apathetic"> Apathetic</label><br>
-        <input 
-        type="radio" 
-        id="curious" 
-        name="apathetic_curious" 
-        v-model="pet.apathetic_curious" 
-        value="curious">
-        <label for="curious"> Curious</label><br>
+        <label for="relaxed">
+          <input
+            type="radio"
+            id="relaxed"
+            name="energetic_relaxed"
+            v-model="pet.energeticRelaxed"
+            value="relaxed"
+          />
+          Relaxed</label
+        >
+      </div>
+
+      <div class="personality">
+        <p>Timidity:</p>
+        <label for="shy">
+          <input
+            type="radio"
+            id="shy"
+            name="shy_friendly"
+            v-model="pet.shyFriendly"
+            value="shy"
+          />
+          Shy
+        </label>
+        <label for="friendly">
+          <input
+            type="radio"
+            id="friendly"
+            name="shy_friendly"
+            v-model="pet.shyFriendly"
+            value="friendly"
+          />
+          Friendly
+        </label>
+      </div>
+
+      <div class="personality">
+        <p>Curiosity:</p>
+        <label for="apathetic">
+          <input
+            type="radio"
+            id="apathetic"
+            name="apathetic_curious"
+            v-model="pet.apatheticCurious"
+            value="apathetic"
+          />
+          Apathetic</label
+        >
+
+        <label for="curious">
+          <input
+            type="radio"
+            id="curious"
+            name="apathetic_curious"
+            v-model="pet.apatheticCurious"
+            value="curious"
+          />
+          Curious</label
+        >
+      </div>
 
       <label for="bio" class="sr-only">Bio</label>
       <input
@@ -105,55 +142,82 @@
         id="Bio"
         class="form-control"
         placeholder="Bio"
-        v-model="pet.Bio"
-        required
+        v-model="pet.bio"
       />
-      <button class="btn btn-lg btn-primary" type="submit">
-        Register Pet
-      </button>
+      <button class="btn btn-lg btn-primary" type="submit">Register Pet</button>
     </form>
   </div>
 </template>
 
 <script>
-import petService from '../services/PetService';
+import petService from "../services/PetService";
 
 export default {
-  name: 'registerPet',
+  name: "registerPet",
   data() {
     return {
       pet: {
-        name: '',
-        species: '',
-        breed: '',
-        weight: '',
-        birthYear: '',
-        energetic_relaxed: '',
-        shy_firendly: '',
-        apathetic_curious: '',
-        bio: '',
+        name: "",
+        species: "",
+        breed: "",
+        weight: "",
+        birthYear: "",
+        energeticRelaxed: "",
+        shyFriendly: "",
+        apatheticCurious: "",
+        bio: "",
       },
     };
   },
+
   methods: {
     register() {
-        petService.registerPet(this.pet).then (response => {
-            if(response.status===201){
+      petService
+        .registerPet(this.pet)
+        .then((response) => {
+          if (response.status === 201) {
             this.$router.push("/");
-            }
+          }
         })
-        .catch(error => {
-            if(error.response){
-                alert('Pet could not be registered. Response was ' + error.response.statusText );
-            } else if (error.request){
-                alert('Pet could not be registered. Server could not be reached');
-            }else{
-                alert('Pet could not be registered. Request could not be created.');
-            }
-        })
-    }
+        .catch((error) => {
+          if (error.response) {
+            alert(
+              "Pet could not be registered. Response was " +
+                error.response.statusText
+            );
+          } else if (error.request) {
+            alert("Pet could not be registered. Server could not be reached");
+          } else {
+            alert("Pet could not be registered. Request could not be created.");
+          }
+        });
+    },
+    toggleOtherSpecies() {
+      let otherSpeciesElement = document.getElementById("otherSpecies");
+      if (this.pet.species === "other") {
+        this.pet.species = "";
+        otherSpeciesElement.classList.remove("d-none");
+      } else {
+        otherSpeciesElement.classList.add("d-none");
+      }
+    },
   },
 };
 </script>
 
-<style></style>
+<style scoped>
+.personality {
+  display: block;
+}
+.personality label {
+  display: inline-block;
+  margin: 0.5rem;
+}
+
+.personality p {
+  display: inline-block;
+  margin: 0.5rem;
+  font-family: "Raleway", sans-serif;
+  font-weight: 600;
+}
+</style>
