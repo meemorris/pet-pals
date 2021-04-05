@@ -57,6 +57,7 @@ export default {
       registrationErrorMsg: 'There were problems registering this user.',
     };
   },
+
   methods: {
     register() {
       if (this.user.password != this.user.confirmPassword) {
