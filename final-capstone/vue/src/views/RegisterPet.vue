@@ -13,7 +13,12 @@
         autofocus
       />
       <label for="species">Species</label>
-      <select name="species" id="species" v-model="pet.species" v-on:change="toggleOtherSpecies">
+      <select
+        name="species"
+        id="species"
+        v-model="pet.species"
+        v-on:change="toggleOtherSpecies"
+      >
         <option value="" default>---</option>
         <option value="dog">Dog</option>
         <option value="cat">Cat</option>
@@ -139,11 +144,21 @@
       <label for="bio" class="sr-only">Bio</label>
       <input
         type="text"
-        id="Bio"
+        id="bio"
         class="form-control"
         placeholder="Bio"
         v-model="pet.bio"
       />
+
+      <label for="pic" class="sr-only">Pic</label>
+      <input
+        type="url"
+        id="pic"
+        class="form-control"
+        placeholder="Image URL of Pet"
+        v-model="pet.pic"
+      />
+
       <button class="btn btn-lg btn-primary" type="submit">Register Pet</button>
     </form>
   </div>
@@ -166,6 +181,7 @@ export default {
         shyFriendly: "",
         apatheticCurious: "",
         bio: "",
+        pic: "",
       },
     };
   },
@@ -176,7 +192,7 @@ export default {
         .registerPet(this.pet)
         .then((response) => {
           if (response.status === 201) {
-            this.$router.push("/");
+            this.$router.push("/profile");
           }
         })
         .catch((error) => {
@@ -219,5 +235,9 @@ export default {
   margin: 0.5rem;
   font-family: "Raleway", sans-serif;
   font-weight: 600;
+}
+
+h1 {
+  margin-top: 45px;
 }
 </style>

@@ -21,10 +21,10 @@ public class JdbcPetDAO implements PetDAO {
 
         // create pet
         String sql = "INSERT INTO pets (name, user_id, species, breed, weight, birth_year, " +
-                "energetic_relaxed, shy_friendly, apathetic_curious, bio) VALUES(?,?,?,?,?,?,?,?,?,?)";
+                "energetic_relaxed, shy_friendly, apathetic_curious, bio, pic) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
         petCreated = jdbcTemplate.update(sql, petDTO.getName(), userId, petDTO.getSpecies(), petDTO.getBreed(),
                 petDTO.getWeight(), petDTO.getBirthYear(), petDTO.getEnergeticRelaxed(), petDTO.getShyFriendly(),
-                petDTO.getApatheticCurious(), petDTO.getBio())==1;
+                petDTO.getApatheticCurious(), petDTO.getBio(), petDTO.getPic())==1;
 
 
         return petCreated;

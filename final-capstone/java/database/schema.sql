@@ -1,5 +1,6 @@
 BEGIN TRANSACTION;
 
+DROP TABLE IF EXISTS pets;
 DROP TABLE IF EXISTS users;
 DROP SEQUENCE IF EXISTS seq_user_id;
 
@@ -22,7 +23,6 @@ INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULi
 INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
 
 
-DROP TABLE IF EXISTS pets;
 
 CREATE TABLE pets (
         pet_id SERIAL,
@@ -36,6 +36,7 @@ CREATE TABLE pets (
         shy_friendly varchar(64) NOT NULL,
         apathetic_curious varchar(64) NOT NULL,
         bio varchar(1000),
+        pic varchar(2083),
         CONSTRAINT PK_pet PRIMARY KEY (pet_id),
         CONSTRAINT FK_user FOREIGN KEY (user_id) REFERENCES users(user_id),
         
@@ -44,7 +45,10 @@ CREATE TABLE pets (
         CONSTRAINT check_apathetic_curious CHECK(apathetic_curious IN ('apathetic','curious'))
 );
 
-
+INSERT INTO pets (name, user_id, species, breed, weight, birth_year, energetic_relaxed, shy_friendly, apathetic_curious, bio) VALUES ('Gimli', 1, 'cat', 'American Longhair', 8, 2020, 'energetic', 'friendly', 'curious', 'Gimli likes to type along with dad while he works on school projects');
+INSERT INTO pets (name, user_id, species, breed, weight, birth_year, energetic_relaxed, shy_friendly, apathetic_curious, bio, pic) VALUES ('Jasper', 2, 'cat', 'Russian Siberian', 19, 2010, 'relaxed', 'friendly', 'apathetic', 'Jasper is the laziest, friendliest cat in all the land', 'https://scontent-ort2-2.cdninstagram.com/v/t51.2885-15/e35/s1080x1080/96138189_241521896906719_5444118948239169433_n.jpg?tp=1&_nc_ht=scontent-ort2-2.cdninstagram.com&_nc_cat=107&_nc_ohc=ZgEO3E3PeeQAX8TvPcl&edm=AP_V10EAAAAA&ccb=7-4&oh=d80e497dfc4ea08a3fcfec87ccbcf5e8&oe=6092A5CC&_nc_sid=4f375e');
+INSERT INTO pets (name, user_id, species, weight, birth_year, energetic_relaxed, shy_friendly, apathetic_curious, bio) VALUES ('Sable', 1, 'dog', 50, 2016, 'energetic', 'friendly', 'curious', 'Sable likes to run around until she smashes into something.');
+INSERT INTO pets (name, user_id, species, weight, birth_year, energetic_relaxed, shy_friendly, apathetic_curious, pic) VALUES ('Quilliam', 2, 'hedgehog', 1, 2020, 'relaxed', 'shy', 'curious', 'https://scontent-ort2-2.cdninstagram.com/v/t51.2885-15/e35/s1080x1080/163175945_463728028084756_1030008473754746239_n.jpg?tp=1&_nc_ht=scontent-ort2-2.cdninstagram.com&_nc_cat=104&_nc_ohc=y1-u1u-xJosAX_1qmJX&edm=AP_V10EAAAAA&ccb=7-4&oh=2860f21f232d002c06c52d79712aaf35&oe=60907661&_nc_sid=4f375e');
 
 
 COMMIT TRANSACTION;

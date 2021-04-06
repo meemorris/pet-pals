@@ -1,10 +1,8 @@
 package com.techelevator.model;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
-import java.time.LocalDate;
 
 public class PetDTO {
 
@@ -27,6 +25,7 @@ public class PetDTO {
     @NotEmpty
     private String apatheticCurious;
     private String bio;
+    private String pic;
 
     public String getName() {
         return name;
@@ -98,5 +97,13 @@ public class PetDTO {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public String getPic() {
+        return pic;
+    }
+
+    public void setPic(String pic) {
+        this.pic = pic;
     }
 }

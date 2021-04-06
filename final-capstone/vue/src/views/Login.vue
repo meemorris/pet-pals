@@ -60,7 +60,7 @@ export default {
           if (response.status == 200) {
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);
             this.$store.commit("SET_USER", response.data.user);
-            this.$router.push("/");
+            this.$router.push("/profile");
           }
         })
         .catch(error => {
@@ -76,6 +76,8 @@ export default {
 </script>
 
 <style scoped>
-
+h1 {
+  margin-top: 45px;
+}
 
 </style>
