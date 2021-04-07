@@ -4,12 +4,16 @@ import com.techelevator.model.Pet;
 import com.techelevator.model.PetDTO;
 
 import java.security.Principal;
+import java.util.List;
 
 public interface PetDAO {
 
-    boolean create(PetDTO petDTO, int userId);
+    long create(PetDTO petDTO, int userId);
 
     Pet getPet(int id);
 
     void updatePet(int id, PetDTO petDTO);
+
+    List<Pet> getAllPetList();
 }
+

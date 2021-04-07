@@ -192,7 +192,8 @@ export default {
         .registerPet(this.pet)
         .then((response) => {
           if (response.status === 201) {
-            this.$router.push("/profile");
+            const petId = response.data.petId;
+            this.$router.push(`/pets/${petId}`);
           }
         })
         .catch((error) => {
