@@ -20,7 +20,22 @@ export default new Vuex.Store({
   state: {
     token: currentToken || '',
     user: currentUser || {},
-    pets: []
+    pets: [],
+    pet: {
+      petId: '',
+      name: '',
+      userId: '',
+      species: '',
+      breed: '',
+      weight: '',
+      birthYear: '',
+      energeticRelaxed: '',
+      shyFriendly: '',
+      apatheticCurious: '',
+      bio: '',
+      pic: '',
+    }
+
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -41,6 +56,9 @@ export default new Vuex.Store({
     },
     SET_PETS(state, data){
       state.pets = data;
+    },
+    SET_CURRENT_PET(state, data) {
+      state.pet = data;
     }
   }
 })

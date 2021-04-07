@@ -7,6 +7,8 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class JdbcPetDAO implements PetDAO {
@@ -18,17 +20,19 @@ public class JdbcPetDAO implements PetDAO {
     }
 
     @Override
-    public boolean create(PetDTO petDTO, int userId) {
-        boolean petCreated = false;
+    public long create(PetDTO petDTO, int userId) {
+        long petId;
 
         // create pet
         String sql = "INSERT INTO pets (name, user_id, species, breed, weight, birth_year, " +
-                "energetic_relaxed, shy_friendly, apathetic_curious, bio, pic) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-        petCreated = jdbcTemplate.update(sql, petDTO.getName(), userId, petDTO.getSpecies(), petDTO.getBreed(),
+                "energetic_relaxed, shy_friendly, apathetic_curious, bio, pic) VALUES(?,?,?,?,?,?,?,?,?,?,?) " +
+                "RETURNING pet_id";
+        petId = jdbcTemplate.update(sql, petDTO.getName(), userId, petDTO.getSpecies(), petDTO.getBreed(),
                 petDTO.getWeight(), petDTO.getBirthYear(), petDTO.getEnergeticRelaxed(), petDTO.getShyFriendly(),
-                petDTO.getApatheticCurious(), petDTO.getBio(), petDTO.getPic())==1;
+                petDTO.getApatheticCurious(), petDTO.getBio(), petDTO.getPic());
 
-        return petCreated;
+        return petId;
+
     }
 
     @Override
@@ -54,6 +58,25 @@ public class JdbcPetDAO implements PetDAO {
                 petDTO.getWeight(), petDTO.getBirthYear(), petDTO.getEnergeticRelaxed(), petDTO.getShyFriendly(),
                 petDTO.getApatheticCurious(), petDTO.getBio(), petDTO.getPic(), id);
     }
+
+    @Override
+    public List<Pet> getAllPetList() {
+        List<Pet> petList = new ArrayList<>();
+
+        String sql = "SELECT pet_id, name, user_id, species, breed, weight, birth_year, " +
+                "energetic_relaxed, shy_friendly, apathetic_curious, bio, pic FROM pets";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+        if(results.next()) {
+            petList.add(mapRowToPet(results));
+        }
+        return petList;
+    }
+
+
+
+
+
+
 
     private Pet mapRowToPet(SqlRowSet results) {
         Pet pet = new Pet();
