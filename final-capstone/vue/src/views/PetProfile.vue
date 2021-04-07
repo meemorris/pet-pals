@@ -10,9 +10,9 @@ import Pet from '@/components/Pet';
 
 export default {
   name: 'petProfile',
-  props: {
-    'petId': Number
-  },
+  // props: {
+  //   'petId': Number
+  // },
   components: {
     Pet 
   },

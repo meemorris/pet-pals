@@ -1,17 +1,26 @@
 <template>
 <div>
   <h1>Home of Your Future Profile Page</h1>
-  <router-link v-bind:to= "{name : 'registerPet'}">Register Pet</router-link>
-  <router-link v-bind:pet="pet">Pet Profile</router-link>
+  <div id="petColumn">
+    <h1>Your Pets</h1> 
+      <pet-preview v-for="pet in myPetsFilter" v-bind:key="pet.petId" v-bind:pet="pet" v-on:click="viewPetDetails(pet.petId)" />
+      <router-link v-bind:to= "{name : 'registerPet'}">Register Pet</router-link>
+    </div>
+
+  <!-- <router-link v-bind:pet="pet">Pet Profile</router-link> -->
 </div>
 </template>
 
 <script>
 import petService from '@/services/PetService';
+import PetPreview from '@/components/PetPreview.vue';
 
 export default {
 created() {
   this.retrievePetList();
+},
+components: {
+  PetPreview
 },
 computed: {
   myPetsFilter() {
@@ -36,6 +45,9 @@ methods: {
             alert("Pet list could not be found. Request could not be created.");
           }
     });
+  },
+  viewPetDetails(id) {
+    this.$router.push(`/pets/${id}`)
   }
 }
 
