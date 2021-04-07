@@ -28,7 +28,6 @@ public class JdbcPetDAO implements PetDAO {
                 petDTO.getWeight(), petDTO.getBirthYear(), petDTO.getEnergeticRelaxed(), petDTO.getShyFriendly(),
                 petDTO.getApatheticCurious(), petDTO.getBio(), petDTO.getPic())==1;
 
-
         return petCreated;
     }
 
