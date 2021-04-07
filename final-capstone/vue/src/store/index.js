@@ -20,7 +20,22 @@ export default new Vuex.Store({
   state: {
     token: currentToken || '',
     user: currentUser || {},
-    pets: []
+    // pets: [
+    //   {
+    //   id:"42",
+    //   name: "test",
+    //   species: "cat",
+    //   breed: "cat breed",
+    //   weight: "pounds",
+    //   birthYear: "1984",
+    //   energeticRelaxed: "",
+    //   shyFriendly: "",
+    //   apatheticCurious: "",
+    //   bio: "this is the bio",
+    //   pic: "https://api.time.com/wp-content/uploads/2019/11/gettyimages-459761948.jpg?w=800&quality=85",
+    // }
+    // ]
+
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
