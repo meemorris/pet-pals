@@ -1,12 +1,13 @@
 <template>
 <div>
-  <pet></pet>
+  <pet v-bind:id="$route.params.id"></pet>
   <router-link v-bind:to= "{name : 'registerPet'}">Register Pet</router-link>
 </div>
 </template>
 <script>
 import petService from '@/services/PetService';
 import Pet from '@/components/Pet';
+
 export default {
   name: 'petProfile',
   props: {

@@ -10,7 +10,7 @@ export default {
     return axios.get('/pets')
   },
   
-  petProfile(id){
+  getPet(id){
     return axios.get(`/pets/${id}`)
   }
 }
