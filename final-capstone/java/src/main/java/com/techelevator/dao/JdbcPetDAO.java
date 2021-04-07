@@ -65,7 +65,7 @@ public class JdbcPetDAO implements PetDAO {
         String sql = "SELECT pet_id, name, user_id, species, breed, weight, birth_year, " +
                 "energetic_relaxed, shy_friendly, apathetic_curious, bio, pic FROM pets";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
-        if(results.next()) {
+        while(results.next()) {
             petList.add(mapRowToPet(results));
         }
         return petList;

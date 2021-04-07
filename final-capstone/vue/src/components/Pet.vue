@@ -52,12 +52,16 @@ export default {
       .then(response => {
         this.$store.commit("SET_CURRENT_PET", response.data);
       })
-     .catch(error => {
-          if (error.response && error.response.status === 404) {
+     .catch((error) => {
+          if (error.response) {
             alert(
-              "Pet not available. This pet may have been deleted."
+              "Pet could not be found. Response was " +
+                error.response.statusText
             );
-            this.$router.push("/profile");
+          } else if (error.request) {
+            alert("Pet could not be found. Server could not be reached");
+          } else {
+            alert("Pet could not be found. Request could not be created.");
           }
         });
     }
