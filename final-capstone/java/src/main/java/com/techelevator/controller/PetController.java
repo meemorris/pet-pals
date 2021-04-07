@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -24,9 +25,9 @@ public class PetController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/pets/register", method = RequestMethod.POST)
-    public void register(@Valid @RequestBody PetDTO petDTO, Principal principal) {
+    public long register(@Valid @RequestBody PetDTO petDTO, Principal principal) {
         int userId = userDAO.findIdByUsername(principal.getName());
-        petDAO.create(petDTO, userId);
+        return petDAO.create(petDTO, userId);
     }
 
     @RequestMapping(path = "/pets/{id}", method = RequestMethod.GET)
@@ -37,6 +38,11 @@ public class PetController {
     @RequestMapping(path = "/pets/{id}", method = RequestMethod.PUT)
     public void updatePet(@PathVariable int id, @Valid @RequestBody PetDTO petDTO) {
         petDAO.updatePet(id, petDTO);
+    }
+
+    @RequestMapping(path = "/pets", method = RequestMethod.GET)
+    public List<Pet> getAllPetList() {
+        return petDAO.getAllPetList();
     }
 
 }
