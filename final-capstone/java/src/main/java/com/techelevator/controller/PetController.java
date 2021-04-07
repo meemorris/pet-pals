@@ -2,6 +2,7 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.PetDAO;
 import com.techelevator.dao.UserDAO;
+import com.techelevator.model.Pet;
 import com.techelevator.model.PetDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -22,9 +23,20 @@ public class PetController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(value = "/pets/register", method = RequestMethod.POST)
+    @RequestMapping(path = "/pets/register", method = RequestMethod.POST)
     public void register(@Valid @RequestBody PetDTO petDTO, Principal principal) {
         int userId = userDAO.findIdByUsername(principal.getName());
         petDAO.create(petDTO, userId);
     }
+
+    @RequestMapping(path = "/pets/{id}", method = RequestMethod.GET)
+    public Pet getPet(@PathVariable int id) {
+       return petDAO.getPet(id);
+    }
+
+    @RequestMapping(path = "/pets/{id}", method = RequestMethod.PUT)
+    public void updatePet(@PathVariable int id, @Valid @RequestBody PetDTO petDTO) {
+        petDAO.updatePet(id, petDTO);
+    }
+
 }
