@@ -3,6 +3,7 @@ package com.techelevator.dao;
 import com.techelevator.model.Pet;
 import com.techelevator.model.PetDTO;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
 import java.security.Principal;
@@ -33,11 +34,14 @@ public class JdbcPetDAO implements PetDAO {
 
     @Override
     public Pet getPet(int id) {
-        Pet pet;
+        Pet pet = new Pet();
 
-        String sql = "SELECT (pet_id, name, user_id, species, breed, weight, birth_year, " +
+        String sql = "SELECT pet_id, name, user_id, species, breed, weight, birth_year, " +
                 "energetic_relaxed, shy_friendly, apathetic_curious, bio, pic FROM pets WHERE pet_id = ?";
-        pet = jdbcTemplate.queryForObject(sql, Pet.class, id);
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
+        if(results.next()) {
+            pet = mapRowToPet(results);
+        }
 
         return pet;
     }
@@ -50,6 +54,23 @@ public class JdbcPetDAO implements PetDAO {
         jdbcTemplate.update(sql, petDTO.getName(), petDTO.getSpecies(), petDTO.getBreed(),
                 petDTO.getWeight(), petDTO.getBirthYear(), petDTO.getEnergeticRelaxed(), petDTO.getShyFriendly(),
                 petDTO.getApatheticCurious(), petDTO.getBio(), petDTO.getPic(), id);
+    }
+
+    private Pet mapRowToPet(SqlRowSet results) {
+        Pet pet = new Pet();
+        pet.setPetId(results.getLong("pet_id"));
+        pet.setName(results.getString("name"));
+        pet.setUserId(results.getLong("user_id"));
+        pet.setSpecies(results.getString("species"));
+        pet.setBreed(results.getString("breed"));
+        pet.setWeight(results.getInt("weight"));
+        pet.setBirthYear(results.getInt("birth_year"));
+        pet.setEnergeticRelaxed(results.getString("energetic_relaxed"));
+        pet.setShyFriendly(results.getString("shy_friendly"));
+        pet.setApatheticCurious(results.getString("apathetic_curious"));
+        pet.setBio(results.getString("bio"));
+        pet.setPic(results.getString("pic"));
+        return pet;
     }
 
 }

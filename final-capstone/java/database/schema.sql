@@ -30,7 +30,7 @@ CREATE TABLE pets (
         user_id int NOT NULL,
         species varchar(64) NOT NULL,
         breed varchar(64),
-        weight decimal(5,2) NOT NULL,
+        weight integer NOT NULL,
         birth_year integer NOT NULL,
         energetic_relaxed varchar(64) NOT NULL,
         shy_friendly varchar(64) NOT NULL,

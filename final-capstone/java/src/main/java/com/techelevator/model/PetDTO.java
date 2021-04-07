@@ -13,7 +13,7 @@ public class PetDTO {
     private String breed;
     @NotNull
     @Positive
-    private double weight;
+    private int weight;
     @NotNull
     @Positive
     //@Max(Long.valueOf(LocalDate.now().getYear())) "value must be constant"
@@ -51,11 +51,11 @@ public class PetDTO {
         this.breed = breed;
     }
 
-    public double getWeight() {
+    public int getWeight() {
         return weight;
     }
 
-    public void setWeight(double weight) {
+    public void setWeight(int weight) {
         this.weight = weight;
     }
 
