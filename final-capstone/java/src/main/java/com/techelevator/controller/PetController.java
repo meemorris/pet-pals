@@ -25,9 +25,9 @@ public class PetController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/pets/register", method = RequestMethod.POST)
-    public void register(@Valid @RequestBody PetDTO petDTO, Principal principal) {
+    public long register(@Valid @RequestBody PetDTO petDTO, Principal principal) {
         int userId = userDAO.findIdByUsername(principal.getName());
-        petDAO.create(petDTO, userId);
+        return petDAO.create(petDTO, userId);
     }
 
     @RequestMapping(path = "/pets/{id}", method = RequestMethod.GET)

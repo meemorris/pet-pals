@@ -21,13 +21,12 @@ public class JdbcPetDAO implements PetDAO {
 
     @Override
     public long create(PetDTO petDTO, int userId) {
-        long petId;
 
         // create pet
         String sql = "INSERT INTO pets (name, user_id, species, breed, weight, birth_year, " +
                 "energetic_relaxed, shy_friendly, apathetic_curious, bio, pic) VALUES(?,?,?,?,?,?,?,?,?,?,?) " +
                 "RETURNING pet_id";
-        petId = jdbcTemplate.update(sql, petDTO.getName(), userId, petDTO.getSpecies(), petDTO.getBreed(),
+        Long petId = jdbcTemplate.queryForObject(sql, Long.class, petDTO.getName(), userId, petDTO.getSpecies(), petDTO.getBreed(),
                 petDTO.getWeight(), petDTO.getBirthYear(), petDTO.getEnergeticRelaxed(), petDTO.getShyFriendly(),
                 petDTO.getApatheticCurious(), petDTO.getBio(), petDTO.getPic());
 
