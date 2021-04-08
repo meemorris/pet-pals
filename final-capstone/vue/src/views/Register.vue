@@ -93,7 +93,14 @@ export default {
 
 <style scoped>
 h1 {
-  margin-top: 45px;
+  padding-top: 12%;
+}
+
+#register {
+  background-image: url("../assets/bluePawsCircle.jpg");  
+  background-size: cover;
+  height: 100vh;
+  background-position: 5%;
 }
 
 </style>

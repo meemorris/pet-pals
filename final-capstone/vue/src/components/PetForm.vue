@@ -188,7 +188,6 @@ export default {
     this.completeFormForPet();
   },
 
-
   methods: {
     sendForm() {
       if (this.button === "Register") {
@@ -257,7 +256,6 @@ export default {
     checkUser() {
       if (this.$store.state.user.id != this.pet.userId) {
         this.$router.push("/profile");
-    
       }
     },
   },
@@ -278,5 +276,14 @@ export default {
   margin: 0.5rem;
   font-family: "Raleway", sans-serif;
   font-weight: 600;
+}
+
+.form-registerPet {
+  height: 100vh;
+}
+
+.species {
+  height: 100%;
+  width: 307px;
 }
 </style>

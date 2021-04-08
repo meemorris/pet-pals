@@ -78,11 +78,14 @@ export default {
 #login {
   grid-area: login;
   width: 25vw;
-  margin-bottom: 50px;
+  /* margin-bottom: 10px; */
 }
 #registration {
   grid-area: registration;
-  margin-bottom: 10vh;
+  margin-bottom: 50%;
+  
+  /* margin-bottom: 30px; */
+  /* margin-bottom: 60vh; */
 }
 
 #registration >button{

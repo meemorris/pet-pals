@@ -55,16 +55,26 @@ header {
   justify-content: space-between;
   background-color: #07475f;
   /* color: #fcf7ff !important; */
-  color: white;
+  color: #FAFAFA;
 }
 nav a {
   /* color: #fcf7ff !important; */
-  color: white;
+  color: #FAFAFA;
   padding-left: 10px;
   padding-right: 10px;
 }
+
+nav a:hover {
+  text-decoration: none;
+  color: #f89e7a;
+}
+
+#nav1 {
+  margin-left: 20px;
+}
+
 header >nav, header>h1 {
-  flex-basis: 50%S
+  flex-basis: 50%;
 }
 header>h1 {
   text-align: center;
@@ -74,6 +84,7 @@ header>nav {
 }
 #nav2{
   justify-content: flex-end;
+  margin-right: 20px;
 }
 
 .btn {

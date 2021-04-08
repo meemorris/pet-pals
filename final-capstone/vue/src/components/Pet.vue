@@ -19,19 +19,24 @@
 
         <h3 id="stats-header">Stats</h3>
         <div class="stats">
-        <p><span class="profile-header">Species: </span>{{ pet.species }}</p>
-        <p v-if="pet.breed"><span class="profile-header">Breed: </span>{{ pet.breed }}</p>
-        <p>
-          <span class="profile-header">Year of Birth: </span>{{ pet.birthYear }}
-        </p>
-        <p><span class="profile-header">Weight: </span>{{ pet.weight }} pounds</p>
+          <ul>
+            <li><span class="profile-header">Species: </span>{{ pet.species }}</li>
+            <li v-if="pet.breed"><span class="profile-header">Breed: </span>{{ pet.breed }}</li>
+            <li>
+            <span class="profile-header">Year of Birth: </span>{{ pet.birthYear }}
+            </li>
+            <li><span class="profile-header">Weight: </span>{{ pet.weight }} pound{{ pet.weight === 1 ? "" : "s" }}</li>
+        </ul>
       </div>
 
         <h3 id="personality-header">Personality</h3>
         <div class="personality">
-        <p>{{ pet.energeticRelaxed }}</p>
-        <p>{{ pet.shyFriendly }}</p>
-        <p>{{ pet.apatheticCurious }}</p>
+          <ul>
+        <li>{{ pet.energeticRelaxed }}</li>
+        <li>{{ pet.shyFriendly }}</li>
+        <!-- <i v-if="pet.apatheticCurious='apathetic'" class="fa fa-meh-o" aria-hidden="true"></i> -->
+        <li>{{ pet.apatheticCurious }}</li>
+          </ul>
       </div>
     </div>
         <router-link
@@ -60,7 +65,7 @@ export default {
     },
     checkUser() {
       return this.$store.state.user.id === this.pet.userId;
-  }
+    },
   },
   methods: {
     retrievePet() {
@@ -140,47 +145,75 @@ h1 {
   display: grid;
   grid-template-columns: 1fr, 1fr;
   gap: 10px;
-  grid-template-areas: 
-  "b-header bio-info"
-  "s-header stat-info"
-  "p-header personality-info";
+  grid-template-areas:
+    "b-header bio-info"
+    "s-header stat-info"
+    "p-header personality-info";
   align-items: center;
 }
 
 #bio-header {
   grid-area: b-header;
   padding-bottom: 5%;
-  border-bottom: 3px solid #C4CAD0;
+  border-bottom: 3px solid #c4cad0;
   align-self: initial;
 }
 
 #bio {
   grid-area: bio-info;
   margin-bottom: 10%;
+  /* display: inline-block; Needed to add space between the bullet and the text */
+  /* width: 1em; Also needed for space (tweak if needed) */
+  margin-left: 6%; 
 }
 
 #stats-header {
   grid-area: s-header;
   padding-bottom: 5%;
-  border-bottom: 3px solid #C4CAD0;
+  border-bottom: 3px solid #c4cad0;
   align-self: initial;
 }
 
 .stats {
   grid-area: stat-info;
   margin-bottom: 10%;
+  align-self: baseline;
 }
 
 #personality-header {
   grid-area: p-header;
   padding-bottom: 5%;
-  border-bottom: 3px solid #C4CAD0;
+  border-bottom: 3px solid #c4cad0;
   margin-bottom: 10%;
   align-self: initial;
 }
 
 .personality {
   grid-area: personality-info;
+  align-self: flex-end;
 }
 
+#updatePet {
+  margin-bottom: 20%;
+}
+
+ul {
+  list-style: none; /* Remove default bullets */
+  /* padding-bottom: 5%; */
+  display:flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+
+
+
+ul li::before {
+  content: "\2022"; /* Add content: \2022 is the CSS Code/unicode for a bullet */
+  color: #a7acb1; /* Change the color */
+  font-weight: bold; /* If you want it to be bold */
+  display: inline-block; /* Needed to add space between the bullet and the text */
+  width: 1em; /* Also needed for space (tweak if needed) */
+  margin-left: -1em; /* Also needed for space (tweak if needed) */
+}
 </style>
