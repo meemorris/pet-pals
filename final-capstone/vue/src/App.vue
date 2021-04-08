@@ -7,7 +7,7 @@
     />
     <header>
       <nav id="nav1">
-        <router-link v-bind:to="{name: 'profile'}" v-show="$store.state.token != ''">Profile</router-link>
+        <router-link v-bind:to="{name: 'profile'}" v-show="$store.state.token != ''">Home</router-link>
         <router-link v-bind:to="{ name: 'home' }" v-show="$store.state.token == ''">Home</router-link
         >
         <span v-show="$store.state.token != ''">&nbsp;|&nbsp;</span>
