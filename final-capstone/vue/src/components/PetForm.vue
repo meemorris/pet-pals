@@ -1,5 +1,5 @@
 <template>
-  <form class="form-registerPet" v-on:submit.prevent="register">
+  <form class="form-registerPet" v-on:submit.prevent="sendForm">
     <label for="name" class="sr-only">Pet Name</label>
     <input
       type="text"
@@ -189,27 +189,52 @@ export default {
   },
 
   methods: {
-    register() {
-      petService
-        .registerPet(this.pet)
-        .then((response) => {
-          if (response.status === 201) {
-            const petId = response.data;
-            this.$router.push(`/pets/${petId}`);
-          }
-        })
-        .catch((error) => {
-          if (error.response) {
-            alert(
-              "Pet could not be registered. Response was " +
-                error.response.statusText
-            );
-          } else if (error.request) {
-            alert("Pet could not be registered. Server could not be reached");
-          } else {
-            alert("Pet could not be registered. Request could not be created.");
-          }
-        });
+    sendForm() {
+      if (this.button === "Register") {
+        petService
+          .registerPet(this.pet)
+          .then((response) => {
+            if (response.status === 201) {
+              const petId = response.data;
+              this.$router.push(`/pets/${petId}`);
+            }
+          })
+          .catch((error) => {
+            if (error.response) {
+              alert(
+                "Pet could not be registered. Response was " +
+                  error.response.statusText
+              );
+            } else if (error.request) {
+              alert("Pet could not be registered. Server could not be reached");
+            } else {
+              alert(
+                "Pet could not be registered. Request could not be created."
+              );
+            }
+          });
+      } else if (this.button === "Update") {
+        const petId = this.$route.params.id;
+        petService
+          .updatePet(petId, this.pet)
+          .then((response) => {
+            if (response.status === 200) {
+              this.$router.push(`/pets/${petId}`);
+            }
+          })
+          .catch((error) => {
+            if (error.response) {
+              alert(
+                "Pet could not be updated. Response was " +
+                  error.response.statusText
+              );
+            } else if (error.request) {
+              alert("Pet could not be updated. Server could not be reached");
+            } else {
+              alert("Pet could not be updated. Request could not be created.");
+            }
+          });
+      }
     },
     toggleOtherSpecies() {
       let otherSpeciesElement = document.getElementById("otherSpecies");
@@ -223,7 +248,7 @@ export default {
     completeFormForPet() {
       if (this.button === "Update") {
         petService.getPet(this.$route.params.id).then((response) => {
-            this.pet = response.data;
+          this.pet = response.data;
         });
       }
     },

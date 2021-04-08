@@ -12,5 +12,9 @@ export default {
   
   getPet(id){
     return axios.get(`/pets/${id}`)
-  }
+  },
+
+  updatePet(id, pet){
+    return axios.put(`/pets/${id}`, pet)
+  },
 }
