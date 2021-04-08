@@ -58,6 +58,22 @@ export default new Vuex.Store({
     },
     SET_CURRENT_PET(state, data) {
       state.pet = data;
+    },
+    CLEAR_CURRENT_PET(state) {
+      state.pet = {
+        petId: '',
+        name: '',
+        userId: '',
+        species: '',
+        breed: '',
+        weight: '',
+        birthYear: '',
+        energeticRelaxed: '',
+        shyFriendly: '',
+        apatheticCurious: '',
+        bio: '',
+        pic: '',
+      }
     }
   }
 })

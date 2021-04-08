@@ -8,6 +8,7 @@ import RegisterPet from '../views/RegisterPet.vue'
 import store from '../store/index'
 import Profile from '@/views/Profile.vue'
 import PetProfile from '@/views/PetProfile.vue'
+import UpdatePet from '../views/UpdatePet.vue'
 
 Vue.use(Router)
 
@@ -76,6 +77,14 @@ const router = new Router({
       path: "/profile",
       name: "profile",
       component: Profile,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/pets/:id/update",
+      name: "updatePet",
+      component: UpdatePet,
       meta: {
         requiresAuth: true
       }

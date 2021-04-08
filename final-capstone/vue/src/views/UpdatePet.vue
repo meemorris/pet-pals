@@ -1,6 +1,6 @@
 <template>
-  <div id="register" class="text-center">
-    <h1>Register Your Pet</h1>
+  <div id="update" class="text-center">
+    <h1>Update Your Pet</h1>
     <pet-form v-bind:button="text"></pet-form>
   </div>
 </template>
@@ -9,23 +9,15 @@
 import petForm from "@/components/PetForm";
 
 export default {
-  name: "registerPet",
+  name: "updatePet",
   components: {
     petForm,
   },
   data() {
     return {
-      text: "Register",
+      text: "Update",
     };
   },
-  created(){
-    this.clearPet();
-  },
-  methods: {
-    clearPet(){
-      this.$store.commit("CLEAR_CURRENT_PET")
-    }
-  }
 };
 </script>
 
