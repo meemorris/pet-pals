@@ -5,7 +5,7 @@ export default {
         return axios.post('/profile', user)
       },
 
-    updatePet(id, user){
+    updateProfile(id, user){
         return axios.put(`/profile/${id}`, user)
     },
 
