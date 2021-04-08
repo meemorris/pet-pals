@@ -22,7 +22,6 @@
       </div>
 
       <div id="accountColumn">
-        <h2>Account Info</h2>
         <account-info></account-info>
       </div>
 

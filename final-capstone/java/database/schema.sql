@@ -40,7 +40,7 @@ CREATE TABLE accounts (
         CONSTRAINT FK_user FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
-INSERT INTO accounts (user_id, first_name, last_name, email, phone, address, city, state, zip, bio, pic) VALUES(2,'Adminnie','McUserson','admin@gmail.com',null,'123 Main St.','Cincinnati','OH','45123','I love pets and Tech Elevator','https://coursereport-production.imgix.net/uploads/school/logo/259/original/mark.png?w=200&h=200')
+INSERT INTO accounts (user_id, first_name, last_name, email, phone, address, city, state, zip, bio, pic) VALUES(2,'Adminnie','McUserson','admin@gmail.com',null,'123 Main St.','Cincinnati','OH','45123','I love pets and Tech Elevator','https://coursereport-production.imgix.net/uploads/school/logo/259/original/mark.png?w=200&h=200');
         
 
 
