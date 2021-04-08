@@ -17,6 +17,7 @@
           >Logout</router-link>
 
       </nav>
+    
 
         <h1>Pet Pals</h1>
 
@@ -31,6 +32,8 @@
   </div>
 </template>
 
+
+
 <style>
 
 /* * {
@@ -38,6 +41,9 @@
   border-color: red;
 } */
 
+#app {
+  background-color: #FCF7FF;
+}
 header {
   display: flex !important;
   flex-direction: row;
