@@ -34,7 +34,8 @@ export default new Vuex.Store({
       apatheticCurious: '',
       bio: '',
       pic: '',
-    }
+    },
+    accountInfo: {},
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -74,6 +75,9 @@ export default new Vuex.Store({
         bio: '',
         pic: '',
       }
+    },
+    SET_ACCOUNT_INFO(state, data) {
+      state.accountInfo = data;
     }
   }
 })

@@ -37,10 +37,12 @@
 <script>
 import petService from "@/services/PetService";
 import PetPreview from "@/components/PetPreview.vue";
+import userService from "@/services/UserService";
 
 export default {
   created() {
     this.retrievePetList();
+    this.retrieveAccountInfo();
   },
   components: {
     PetPreview,
@@ -75,6 +77,28 @@ export default {
     viewPetDetails(id) {
       this.$router.push(`/pets/${id}`);
     },
+    retrieveAccountInfo() {
+      userService.getProfile(this.$store.state.user.id)
+      .then((response) => {
+        if(response.data === {}){ //may need to change depending on what is returned
+          this.$router.push({name: 'CreateProfile'})
+        } else {
+          this.$store.commit("SET_ACCOUNT_INFO", response.data);
+        }
+      })
+      .catch((error) => {
+          if (error.response) {
+            alert(
+              "Account information could not be found. Response was " +
+                error.response.statusText
+            );
+          } else if (error.request) {
+            alert("Account information could not be found. Server could not be reached");
+          } else {
+            alert("Account information could not be found. Request could not be created.");
+          }
+        });
+    }
   },
 };
 </script>
