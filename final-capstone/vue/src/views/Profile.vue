@@ -1,39 +1,65 @@
 <template>
-<div>
-  <h1>Home of Your Future Profile Page</h1>
-  <div id="petColumn">
-    <h1>Your Pets</h1> 
-      <pet-preview v-for="pet in myPetsFilter" v-bind:key="pet.petId" v-bind:pet="pet" v-on:click="viewPetDetails(pet.petId)" />
-      <router-link v-bind:to= "{name : 'registerPet'}">Register Pet</router-link>
-    </div>
+  <div id="profile">
+    <h1>Welcome!</h1>
+    <div id="columns">
+      <div id="petColumn">
+        <h2>Your Pets</h2>
+        <div
+        class="preview"
+          v-for="pet in myPetsFilter"
+          v-bind:key="pet.petId"
+          v-on:click="viewPetDetails(pet.petId)"
+        >
+          <pet-preview v-bind:pet="pet" />
+        </div>
+        <router-link
+          :to="{ name: 'registerPet' }"
+          id="registerPet"
+          tag="button"
+          class="btn btn-primary"
+          >Register New Pet</router-link
+        >
+      </div>
 
-  <!-- <router-link v-bind:pet="pet">Pet Profile</router-link> -->
-</div>
+      <div id="accountColumn">
+        <h2>Account Info</h2>
+      </div>
+
+      <div id="playdateColumn">
+        <h2>Current Playdates</h2>
+      </div>
+
+      <!-- <router-link v-bind:pet="pet">Pet Profile</router-link> -->
+    </div>
+  </div>
 </template>
 
 <script>
-import petService from '@/services/PetService';
-import PetPreview from '@/components/PetPreview.vue';
+import petService from "@/services/PetService";
+import PetPreview from "@/components/PetPreview.vue";
 
 export default {
-created() {
-  this.retrievePetList();
-},
-components: {
-  PetPreview
-},
-computed: {
-  myPetsFilter() {
-    return this.$store.state.pets.filter(pet => pet.userId === this.$store.state.user.id)
-  }
-},
-methods: {
-  retrievePetList() {
-    petService.list()
-    .then(response => {
-      this.$store.commit("SET_PETS", response.data);
-    })
-    .catch((error) => {
+  created() {
+    this.retrievePetList();
+  },
+  components: {
+    PetPreview,
+  },
+  computed: {
+    myPetsFilter() {
+      return this.$store.state.pets.filter(
+        (pet) => pet.userId === this.$store.state.user.id
+      );
+    },
+  },
+  methods: {
+    retrievePetList() {
+      petService
+        .list()
+        .then((response) => {
+          this.$store.commit("SET_PETS", response.data);
+        })
+        .catch((error) => {
           if (error.response) {
             alert(
               "Pet list could not be found. Response was " +
@@ -44,16 +70,47 @@ methods: {
           } else {
             alert("Pet list could not be found. Request could not be created.");
           }
-    });
+        });
+    },
+    viewPetDetails(id) {
+      this.$router.push(`/pets/${id}`);
+    },
   },
-  viewPetDetails(id) {
-    this.$router.push(`/pets/${id}`)
-  }
-}
-
-}
+};
 </script>
 
-<style>
+<style scoped>
+#columns {
+  display: flex;
+  justify-content: space-around;
+}
 
+#petColumn,
+#accountColumn,
+#playdateColumn {
+  flex-basis: 25%;
+}
+
+#petColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#registerPet {
+  margin-bottom: 50px
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+h1 {
+  margin-top: 45px;
+  margin-bottom: 45px;
+}
+
+.preview:hover {
+  background-color: #c4cad0;
+}
 </style>

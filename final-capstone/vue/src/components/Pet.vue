@@ -82,7 +82,7 @@ export default {
 }
 
 .pet-pic {
-  max-width: 30vw;
+  width: 30vw;
 }
 
 </style>
