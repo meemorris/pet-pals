@@ -36,8 +36,9 @@
     <input
       type="tel"
       id="phone"
+      pattern="\d{3}[\-]\d{3}[\-]\d{4}"
       class="form-control"
-      placeholder="Phone Number"
+      placeholder="Phone Number: 123-456-7891"
       v-model="user.phone"
     />
 
