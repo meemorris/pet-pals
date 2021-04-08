@@ -4,7 +4,8 @@
 
     <h2 id="pet-name">{{ pet.name }}</h2>
     
-    <img id="pet-pic" v-bind:src="pet.pic" />
+    <img id="pet-pic" v-if="pet.pic" v-bind:src="pet.pic" />
+    <!-- <img class="pet-pic" v-else v-bind:src="src/assets/noPetPic.png" /> -->
   
     <div id="playdates">
       <h3>Scheduled Playdates</h3>
@@ -12,14 +13,14 @@
 
     <div class="profile-card">
      
-        <h3 id="bio-header">Bio</h3>
-        <p id="bio">{{ pet.bio }}</p>
+        <h3 id="bio-header" v-if="pet.bio">Bio</h3>
+        <p id="bio" v-if="pet.bio">{{ pet.bio }}</p>
       
 
         <h3 id="stats-header">Stats</h3>
         <div class="stats">
         <p><span class="profile-header">Species: </span>{{ pet.species }}</p>
-        <p><span class="profile-header">Breed: </span>{{ pet.breed }}</p>
+        <p v-if="pet.breed"><span class="profile-header">Breed: </span>{{ pet.breed }}</p>
         <p>
           <span class="profile-header">Year of Birth: </span>{{ pet.birthYear }}
         </p>
