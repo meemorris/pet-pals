@@ -35,6 +35,10 @@
 
 
 <style>
+body{
+  color: #2a2b2a !important;
+  background-color: #fcf7ff !important;
+}
 
 /* * {
   border-style: dotted;
@@ -50,7 +54,7 @@ header {
   align-items: center; 
   justify-content: space-between;
   background-color: #07475f;
-  color: #fcf7ff;
+  color: #fcf7ff !important;
 }
 nav a {
   color: #fcf7ff !important;
@@ -83,7 +87,7 @@ header>nav {
   border-color: #1e7c9e !important;
 }
 
-h1 {
+h1, h2, h3 {
   font-family: "Raleway", sans-serif;
 }
 

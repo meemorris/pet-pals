@@ -85,7 +85,6 @@ export default {
     "image image pd"
     "pet-info pet-info pd"
     ". . pd";
-  /* height: 100vh; */
   margin: 0 30px;
 }
 
