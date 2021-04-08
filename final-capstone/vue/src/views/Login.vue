@@ -80,4 +80,12 @@ h1 {
   margin-top: 45px;
 }
 
+#login {
+  background-image: url("../assets/bluePawsCircle.jpg");
+  background-size: cover;
+  height: 100vh;
+
+  
+}
+
 </style>

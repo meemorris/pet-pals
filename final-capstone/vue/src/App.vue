@@ -37,7 +37,7 @@
 <style>
 body{
   color: #2a2b2a !important;
-  background-color: #fcf7ff !important;
+  /* background-color: #fcf7ff !important; */
 }
 
 /* * {
@@ -46,7 +46,7 @@ body{
 } */
 
 #app {
-  background-color: #FCF7FF;
+  background-color: #FAFAFA; 
 }
 header {
   display: flex !important;
@@ -54,15 +54,17 @@ header {
   align-items: center; 
   justify-content: space-between;
   background-color: #07475f;
-  color: #fcf7ff !important;
+  /* color: #fcf7ff !important; */
+  color: white;
 }
 nav a {
-  color: #fcf7ff !important;
+  /* color: #fcf7ff !important; */
+  color: white;
   padding-left: 10px;
   padding-right: 10px;
 }
 header >nav, header>h1 {
-  flex-basis: 50%
+  flex-basis: 50%S
 }
 header>h1 {
   text-align: center;
