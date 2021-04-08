@@ -4,8 +4,8 @@
 
     <h2 id="pet-name">{{ pet.name }}</h2>
     
-    <img id="pet-pic" v-if="pet.pic" v-bind:src="pet.pic" />
-    <!-- <img class="pet-pic" v-else v-bind:src="src/assets/noPetPic.png" /> -->
+    <img class="pet-pic" v-if="pet.pic" v-bind:src="pet.pic" />
+    <img class="pet-pic" v-else src="@/assets/noPetPic.png" />
   
     <div id="playdates">
       <h3>Scheduled Playdates</h3>
@@ -100,7 +100,7 @@ h1 {
   text-align: center;
 }
 
-#pet-pic {
+.pet-pic {
   border-radius: 2%;
   grid-area: image;
   max-width: 30vw;
