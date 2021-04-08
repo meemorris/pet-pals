@@ -188,6 +188,7 @@ export default {
     this.completeFormForPet();
   },
 
+
   methods: {
     sendForm() {
       if (this.button === "Register") {
@@ -249,7 +250,14 @@ export default {
       if (this.button === "Update") {
         petService.getPet(this.$route.params.id).then((response) => {
           this.pet = response.data;
+          this.checkUser();
         });
+      }
+    },
+    checkUser() {
+      if (this.$store.state.user.id != this.pet.userId) {
+        this.$router.push("/profile");
+    
       }
     },
   },
