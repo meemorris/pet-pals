@@ -2,7 +2,6 @@ package com.techelevator.dao;
 
 import com.techelevator.model.Account;
 import com.techelevator.model.AccountDTO;
-import com.techelevator.model.Pet;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -12,16 +11,15 @@ public class JdbcAccountDAO implements AccountDAO{
 
     private JdbcTemplate jdbcTemplate;
 
-    public void JdbcAccountDAO(JdbcTemplate jdbcTemplate){
+    public JdbcAccountDAO(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
     public void create(AccountDTO accountDTO, int userId) {
         //create account
-        String sql = "INSERT INTO accounts (user_id, first_name, last_name, email, phone, address, city, state" +
-                "zip, bio, pic) VALUES(?,?,?,?,?,?,?,?,?,?,?) " +
-                "RETURNING pet_id";
+        String sql = "INSERT INTO accounts (user_id, first_name, last_name, email, phone, address, city, state, " +
+                "zip, bio, pic) VALUES(?,?,?,?,?,?,?,?,?,?,?) ";
         jdbcTemplate.update(sql,  userId, accountDTO.getFirstName(), accountDTO.getLastName(), accountDTO.getEmail(),
                 accountDTO.getPhone(), accountDTO.getAddress(), accountDTO.getCity(), accountDTO.getState(),
                 accountDTO.getZip(), accountDTO.getBio(), accountDTO.getPic());
@@ -32,7 +30,7 @@ public class JdbcAccountDAO implements AccountDAO{
 
     @Override
     public void updateAccount(int id, AccountDTO accountDTO) {
-        String sql = "UPDATE accounts SET first_name = ?, las_name = ?, email = ?, phone = ?, address = ?, " +
+        String sql = "UPDATE accounts SET first_name = ?, last_name = ?, email = ?, phone = ?, address = ?, " +
                 "city = ?, state = ?, zip = ?, bio = ?, pic = ? WHERE user_id = ?";
         jdbcTemplate.update(sql, accountDTO.getFirstName(), accountDTO.getLastName(), accountDTO.getEmail(),
                 accountDTO.getPhone(), accountDTO.getAddress(), accountDTO.getCity(), accountDTO.getState(),
@@ -44,8 +42,8 @@ public class JdbcAccountDAO implements AccountDAO{
     public Account getAccount(int id) {
         Account account = new Account();
 
-        String sql = "SELECT first_name, last_name, email, phone, address, city, state" +
-                "zip, bio, pic FROM pets WHERE user_id = ?";
+        String sql = "SELECT first_name, last_name, email, phone, address, city, state, " +
+                "zip, bio, pic FROM accounts WHERE user_id = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
         if(results.next()) {
             account = mapRowToAccount(results);

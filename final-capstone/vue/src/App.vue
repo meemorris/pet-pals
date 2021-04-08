@@ -107,7 +107,9 @@ h1, h2, h3 {
 input[type="text"],
 input[type="password"],
 input[type="number"],
-input[type="url"] {
+input[type="url"],
+input[type="tel"],
+input[type="email"] {
   width: 350px;
   margin: auto;
   margin-bottom: 5px;

@@ -157,7 +157,7 @@ export default {
           });
       } else if (this.button === "Update") {
         userService
-          .updateProfile(this.$store.state.use.id, this.user)
+          .updateProfile(this.$store.state.user.id, this.user)
           .then((response) => {
             if (response.status === 200) {
               this.$router.push('/profile');
