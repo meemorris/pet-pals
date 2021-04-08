@@ -34,6 +34,14 @@
         <p>{{ pet.apatheticCurious }}</p>
       </div>
     </div>
+        <router-link
+      :to="{ name: 'updatePet' }"
+      id="updatePet"
+      tag="button"
+      class="btn btn-primary"
+      v-if="checkUser"
+      >Update Pet Info</router-link
+    >
   </div>
 </template>
 
@@ -50,6 +58,9 @@ export default {
     pet() {
       return this.$store.state.pet;
     },
+    checkUser() {
+      return this.$store.state.user.id === this.pet.userId;
+  }
   },
   methods: {
     retrievePet() {
