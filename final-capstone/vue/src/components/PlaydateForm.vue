@@ -69,7 +69,7 @@
     <label for="petName">Pet Name</label>
     <select name="petName" id="petName" v-model="playdate.name" required>
         <option value="" default>---</option>
-        <option v-for="pet in myPetsFilter" v-bind:key="pet.petId"
+        <option v-for="pet in $store.state.pets" v-bind:key="pet.petId"
         >
         {{ pet.name }}
         </option>
