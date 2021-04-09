@@ -136,5 +136,6 @@ h1 {
 
 .preview:hover {
   background-color: #c4cad0;
+  border-radius: 2%;
 }
 </style>
