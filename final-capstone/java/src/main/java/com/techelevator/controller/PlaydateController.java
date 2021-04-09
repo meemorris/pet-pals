@@ -2,6 +2,7 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.PlaydateDAO;
 import com.techelevator.model.CreatePlaydateDTO;
+import com.techelevator.model.Playdate;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.security.Principal;
 
-@Controller
+@RestController
+@CrossOrigin
 public class PlaydateController {
 
     private PlaydateDAO playdateDAO;
@@ -25,7 +27,8 @@ public class PlaydateController {
     }
 
     @RequestMapping(path = "/playdates/{id}", method = RequestMethod.GET)
-    public CreatePlaydateDTO getPlaydate(@PathVariable int id) {
+    public Playdate getPlaydate(@PathVariable int id) {
         return playdateDAO.getPlaydate(id);
+
     }
 }

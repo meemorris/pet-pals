@@ -59,12 +59,12 @@ public class JdbcPetDAO implements PetDAO {
     }
 
     @Override
-    public List<Pet> getAllPetList() {
+    public List<Pet> getPetsByUserId(int userId) {
         List<Pet> petList = new ArrayList<>();
 
         String sql = "SELECT pet_id, name, user_id, species, breed, weight, birth_year, " +
-                "energetic_relaxed, shy_friendly, apathetic_curious, bio, pic FROM pets";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+                "energetic_relaxed, shy_friendly, apathetic_curious, bio, pic FROM pets WHERE user_id = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
         while(results.next()) {
             petList.add(mapRowToPet(results));
         }
