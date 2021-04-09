@@ -84,4 +84,7 @@ CREATE TABLE playdates (
         
 );
 
+INSERT INTO playdates (pet_id, address, city, state, zip, date) VALUES (2, '123', 'Cincinnati', 'Ohio', '42521', '2021-04-10 12:00:00');
+
+
 COMMIT TRANSACTION;

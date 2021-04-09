@@ -1,4 +1,9 @@
 package com.techelevator.dao;
 
-public class PlaydateDAO {
+import com.techelevator.model.CreatePlaydateDTO;
+
+public interface PlaydateDAO {
+    long create(CreatePlaydateDTO playdateDTO);
+
+    CreatePlaydateDTO getPlaydate(int id);
 }
