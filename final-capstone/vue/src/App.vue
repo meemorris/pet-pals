@@ -11,7 +11,7 @@
     </head>
     <header>
       <nav id="nav1">
-        <router-link v-bind:to="{name: 'profile'}" v-show="$store.state.token != ''">Profile</router-link>
+        <router-link v-bind:to="{name: 'profile'}" v-show="$store.state.token != ''">Home</router-link>
         <router-link v-bind:to="{ name: 'home' }" v-show="$store.state.token == ''">Home</router-link
         >
         <span v-show="$store.state.token != ''">&nbsp;|&nbsp;</span>
@@ -104,14 +104,16 @@ header>nav {
   border-color: #1e7c9e !important;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
   font-family: "Raleway", sans-serif;
 }
 
 input[type="text"],
 input[type="password"],
 input[type="number"],
-input[type="url"] {
+input[type="url"],
+input[type="tel"],
+input[type="email"] {
   width: 350px;
   margin: auto;
   margin-bottom: 5px;

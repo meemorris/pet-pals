@@ -1,5 +1,6 @@
 BEGIN TRANSACTION;
 
+DROP TABLE IF EXISTS accounts;
 DROP TABLE IF EXISTS pets;
 DROP TABLE IF EXISTS users;
 DROP SEQUENCE IF EXISTS seq_user_id;
@@ -22,6 +23,25 @@ CREATE TABLE users (
 INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
 INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
 
+CREATE TABLE accounts (
+        account_id SERIAL,
+        user_id int NOT NULL UNIQUE,
+        first_name varchar(32) NOT NULL,
+        last_name varchar(32) NOT NULL,
+        email varchar(64) NOT NULL,
+        phone varchar(20),
+        address varchar(64) NOT NULL,
+        city varchar(64) NOT NULL,
+        state varchar(32) NOT NULL,
+        zip varchar(10) NOT NULL,
+        bio varchar(1000),
+        pic varchar(2083),
+        CONSTRAINT PK_account PRIMARY KEY (account_id),
+        CONSTRAINT FK_user FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+INSERT INTO accounts (user_id, first_name, last_name, email, phone, address, city, state, zip, bio, pic) VALUES(2,'Adminnie','McUserson','admin@gmail.com',null,'123 Main St.','Cincinnati','OH','45123','I love pets and Tech Elevator','https://coursereport-production.imgix.net/uploads/school/logo/259/original/mark.png?w=200&h=200');
+        
 
 
 CREATE TABLE pets (

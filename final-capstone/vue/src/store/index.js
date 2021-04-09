@@ -35,7 +35,18 @@ export default new Vuex.Store({
       bio: '',
       pic: '',
     },
-    accountInfo: {},
+    accountInfo: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      address: '',
+      city: '',
+      state: '',
+      zip: '',
+      bio: '',
+      pic: '',
+    },
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {

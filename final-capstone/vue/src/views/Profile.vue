@@ -22,7 +22,7 @@
       </div>
 
       <div id="accountColumn">
-        <h2>Account Info</h2>
+        <account-info></account-info>
       </div>
 
       <div id="playdateColumn">
@@ -36,8 +36,9 @@
 
 <script>
 import petService from "@/services/PetService";
-import PetPreview from "@/components/PetPreview.vue";
+import petPreview from "@/components/PetPreview.vue";
 import userService from "@/services/UserService";
+import accountInfo from "@/components/AccountInfo.vue";
 
 export default {
   created() {
@@ -45,7 +46,8 @@ export default {
     this.retrieveAccountInfo();
   },
   components: {
-    PetPreview,
+    petPreview,
+    accountInfo
   },
   computed: {
     myPetsFilter() {
@@ -80,8 +82,8 @@ export default {
     retrieveAccountInfo() {
       userService.getProfile(this.$store.state.user.id)
       .then((response) => {
-        if(response.data === {}){ //may need to change depending on what is returned
-          this.$router.push({name: 'CreateProfile'})
+        if(response.data.firstName === null){ 
+          this.$router.push('/profile/create')
         } else {
           this.$store.commit("SET_ACCOUNT_INFO", response.data);
         }

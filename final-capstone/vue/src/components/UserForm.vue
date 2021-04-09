@@ -1,15 +1,5 @@
 <template>
   <form class="form-user" v-on:submit.prevent="sendForm">
-    <label for="name" class="sr-only">Username</label>
-    <input
-      type="text"
-      id="name"
-      class="form-control"
-      placeholder="Username"
-      v-model="user.username"
-      required
-      autofocus
-    />
 
     <label for="first-name" class="sr-only">First Name</label>
     <input
@@ -19,6 +9,7 @@
       placeholder="First Name"
       v-model="user.firstName"
       required
+      autofocus
     />
 
     <label for="last-name" class="sr-only">Last Name</label>
@@ -45,8 +36,9 @@
     <input
       type="tel"
       id="phone"
+      pattern="\d{3}[\-]\d{3}[\-]\d{4}"
       class="form-control"
-      placeholder="Phone Number"
+      placeholder="Phone Number: 123-456-7891"
       v-model="user.phone"
     />
 
@@ -87,7 +79,7 @@
       pattern="[0-9]*"
       class="form-control"
       placeholder="Zip Code"
-      v-model="pet.zip"
+      v-model="user.zip"
       required
     />
 
@@ -123,17 +115,16 @@ export default {
   data() {
     return {
       user: {
-        username: "",
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        address: "",
-        city: "",
-        state: "",
-        zip: "",
-        bio: "",
-        pic: "",
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        address: '',
+        city: '',
+        state: '',
+        zip: '',
+        bio: '',
+        pic: '',
       },
     };
   },
@@ -167,7 +158,7 @@ export default {
           });
       } else if (this.button === "Update") {
         userService
-          .updatePet(this.$store.state.use.id, this.user)
+          .updateProfile(this.$store.state.user.id, this.user)
           .then((response) => {
             if (response.status === 200) {
               this.$router.push('/profile');
