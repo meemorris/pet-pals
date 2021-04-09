@@ -41,8 +41,9 @@ public class PetController {
     }
 
     @RequestMapping(path = "/pets", method = RequestMethod.GET)
-    public List<Pet> getAllPetList() {
-        return petDAO.getAllPetList();
+    public List<Pet> getPetsByUserId(Principal principal) {
+        int userId = userDAO.findIdByUsername(principal.getName());
+        return petDAO.getPetsByUserId(userId);
     }
 
 }

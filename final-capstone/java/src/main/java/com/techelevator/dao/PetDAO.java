@@ -14,6 +14,6 @@ public interface PetDAO {
 
     void updatePet(int id, PetDTO petDTO);
 
-    List<Pet> getAllPetList();
+    List<Pet> getPetsByUserId(int userId);
 }
 
