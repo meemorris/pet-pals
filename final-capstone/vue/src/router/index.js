@@ -12,6 +12,7 @@ import UpdatePet from '@/views/UpdatePet.vue'
 import UpdateProfile from '@/views/UpdateProfile.vue'
 import CreateProfile from '@/views/CreateProfile.vue'
 import CreatePlaydate from '@/views/CreatePlaydate.vue'
+import Playdates from '@/views/Playdates.vue'
 
 Vue.use(Router)
 
@@ -114,6 +115,14 @@ const router = new Router({
       component: CreatePlaydate,
       meta: {
         requiresAuth: true
+      }
+    },
+    {
+      path: "/playdates",
+      name: "playdates",
+      component: Playdates,
+      meta: {
+        requiresAuth: false
       }
     }
   ]
