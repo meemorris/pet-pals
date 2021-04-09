@@ -58,6 +58,15 @@
       v-if="checkUser"
       >Update Pet Info</router-link
     >
+
+    <router-link
+          :to="{ name: 'createPlaydate' }"
+          id="createPlaydate"
+          tag="button"
+          class="btn btn-primary"
+          >Schedule Playdate</router-link
+        >
+
   </div>
 </template>
 
@@ -170,6 +179,10 @@ h3 {
 #updatePet {
   margin-bottom: 20%;
 }
+
+/* #createPlaydate {
+  margin-bottom: 10%;
+} */
 
 #stats p::before, #personality-info p::before {
   content: "\2022"; 

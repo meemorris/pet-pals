@@ -27,9 +27,16 @@
 
       <div id="playdateColumn">
         <h2>Current Playdates</h2>
+
+        <router-link
+          :to="{ name: 'createPlaydate' }"
+          id="createPlaydate"
+          tag="button"
+          class="btn btn-primary"
+          >Schedule Playdate</router-link
+        >
       </div>
 
-      <!-- <router-link v-bind:pet="pet">Pet Profile</router-link> -->
     </div>
   </div>
 </template>
@@ -124,7 +131,7 @@ export default {
 }
 
 #registerPet {
-  margin-bottom: 50px
+  margin-bottom: 50px;
 }
 
 h1, h2 {

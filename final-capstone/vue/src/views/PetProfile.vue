@@ -1,7 +1,6 @@
 <template>
   <div>
     <pet v-bind:id="$route.params.id"></pet>
-
   </div>
 </template>
 <script>
