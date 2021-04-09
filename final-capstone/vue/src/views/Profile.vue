@@ -136,11 +136,13 @@ export default {
 
 h1, h2 {
   text-align: center;
+  
 }
 
 h1 {
   margin-top: 45px;
   margin-bottom: 45px;
+  color: #cd704c;
 }
 
 .preview:hover {

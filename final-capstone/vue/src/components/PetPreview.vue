@@ -1,7 +1,8 @@
 <template>
   <div id="preview">
     <h3>{{ pet.name }}</h3>
-    <img v-bind:src="pet.pic" />
+    <img class="pet-pic" v-if="pet.pic" v-bind:src="pet.pic" />
+    <img class="pet-pic" v-else src="@/assets/noPetPic.png" />
   </div>
 </template>
 

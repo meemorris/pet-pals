@@ -141,6 +141,12 @@ h1 {
   padding-left: 9%;
 }
 
+h2 {
+  font-family: 'Rock Salt', cursive;
+  color: #07475f; 
+  font-size: 1.8rem;
+}
+
 h3 {
   font-family: 'Rock Salt', cursive;
   color: #949494; 
