@@ -56,7 +56,7 @@
       required
     />
 
-    <label for="petName" class="sr-only">Pet Name</label>
+    <!-- <label for="petName" class="sr-only">Pet Name</label>
     <input
       type="text"
       id="petName"
@@ -64,7 +64,17 @@
       placeholder="Pet Name"
       v-model="playdate.petName"
       required
-    />
+    /> -->
+
+    <label for="petName">Pet Name</label>
+    <select name="petName" id="petName" v-model="playdate.name" required>
+        <option value="" default>---</option>
+        <option v-for="pet in myPetsFilter" v-bind:key="pet.petId"
+        >
+        {{ pet.name }}
+        </option>
+    
+    </select>
 
     <button class="btn btn-lg btn-primary" type="submit">
       Schedule Playdate
@@ -73,6 +83,7 @@
 </template>
 
 <script>
+
 export default {
   name: "playdateForm",
   data() {
@@ -87,23 +98,13 @@ export default {
       },
     };
   },
-//   computed: {
-//       currentDate() {
-//         //   return new Date().toLocaleDateString();
-//         const date = new Date();
-//         return date.getFullYear().toString() + '-' + (date.getMonth() + 1).toString().padStart(2, 0) +
-//     '-' + date.getDate().toString().padStart(2, 0);
-//       }
-//   }
-
 };
 </script>
 
 <style>
-
 .form-user {
   height: 100vh;
-  margin-top: 5vh; 
+  margin-top: 5vh;
 }
 
 #date-time {
@@ -113,7 +114,7 @@ export default {
 }
 
 #dateTimePicker {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 </style>

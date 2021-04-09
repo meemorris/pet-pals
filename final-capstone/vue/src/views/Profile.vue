@@ -6,7 +6,7 @@
         <h2>Your Pets</h2>
         <div
         class="preview"
-          v-for="pet in myPetsFilter"
+          v-for="pet in $store.state.pets"
           v-bind:key="pet.petId"
           v-on:click="viewPetDetails(pet.petId)"
         >
@@ -56,17 +56,17 @@ export default {
     petPreview,
     accountInfo
   },
-  computed: {
-    myPetsFilter() {
-      return this.$store.state.pets.filter(
-        (pet) => pet.userId === this.$store.state.user.id
-      );
-    },
-  },
+  // computed: {
+  //   myPetsFilter() {
+  //     return this.$store.state.pets.filter(
+  //       (pet) => pet.userId === this.$store.state.user.id
+  //     );
+  //   },
+  // },
   methods: {
     retrievePetList() {
       petService
-        .list()
+        .getPetsByUserId()
         .then((response) => {
           this.$store.commit("SET_PETS", response.data);
         })
