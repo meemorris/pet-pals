@@ -1,5 +1,6 @@
 BEGIN TRANSACTION;
 
+DROP TABLE IF EXISTS playdates;
 DROP TABLE IF EXISTS accounts;
 DROP TABLE IF EXISTS pets;
 DROP TABLE IF EXISTS users;
@@ -70,5 +71,17 @@ INSERT INTO pets (name, user_id, species, breed, weight, birth_year, energetic_r
 INSERT INTO pets (name, user_id, species, weight, birth_year, energetic_relaxed, shy_friendly, apathetic_curious, bio) VALUES ('Sable', 1, 'dog', 50, 2016, 'energetic', 'friendly', 'curious', 'Sable likes to run around until she smashes into something.');
 INSERT INTO pets (name, user_id, species, weight, birth_year, energetic_relaxed, shy_friendly, apathetic_curious, pic) VALUES ('Quilliam', 2, 'hedgehog', 1, 2020, 'relaxed', 'shy', 'curious', 'https://scontent-ort2-2.cdninstagram.com/v/t51.2885-15/e35/s1080x1080/163175945_463728028084756_1030008473754746239_n.jpg?tp=1&_nc_ht=scontent-ort2-2.cdninstagram.com&_nc_cat=104&_nc_ohc=y1-u1u-xJosAX_1qmJX&edm=AP_V10EAAAAA&ccb=7-4&oh=2860f21f232d002c06c52d79712aaf35&oe=60907661&_nc_sid=4f375e');
 
+CREATE TABLE playdates (
+        playdate_id SERIAL,
+        pet_id int NOT NULL,
+        address varchar(64) NOT NULL,
+        city varchar(64) NOT NULL,
+        state varchar(32) NOT NULL,
+        zip varchar(10) NOT NULL,
+        date timestamp NOT NULL,
+        CONSTRAINT PK_playdate PRIMARY KEY (playdate_id),
+        CONSTRAINT FK_pet FOREIGN KEY (pet_id) REFERENCES pets(pet_id)
+        
+);
 
 COMMIT TRANSACTION;
