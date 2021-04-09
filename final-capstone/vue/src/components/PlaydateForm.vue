@@ -1,5 +1,5 @@
 <template>
-  <form class="form-user" v-on:submit.prevent="sendForm">
+  <form class="form-user" v-on:submit.prevent="sendPlaydate">
     <div id="dateTimePicker">
       <!-- <label for="date-time" class="sr-only">Date and Time</label> -->
       <!-- line 10(value="currentDate") not currently functioning, looking into how to display the current date and time as default value -->
@@ -9,7 +9,7 @@
         name="dateTime"
         value="currentDate"
         class="form-control"
-        v-model="playdate.dateTime"
+        v-model="playdate.date"
         required
         autofocus
       />
@@ -67,13 +67,17 @@
     /> -->
 
     <label for="petName">Pet Name</label>
-    <select name="petName" id="petName" v-model="playdate.name" required>
-        <option value="" default>---</option>
-        <option v-for="pet in $store.state.pets" v-bind:key="pet.petId"
-        >
+    <select
+      name="petName"
+      id="petName"
+      v-on:click="findPetByName"
+      v-model="petName"
+      required
+    >
+      <option value="" default>---</option>
+      <option v-for="pet in $store.state.pets" v-bind:key="pet.petId">
         {{ pet.name }}
-        </option>
-    
+      </option>
     </select>
 
     <button class="btn btn-lg btn-primary" type="submit">
@@ -83,20 +87,52 @@
 </template>
 
 <script>
+import playdateService from "@/services/PlaydateService.js";
 
 export default {
   name: "playdateForm",
   data() {
     return {
       playdate: {
-        dateTime: "",
+        date: "",
         address: "",
         city: "",
         state: "",
         zip: "",
-        petName: "",
+        pet: {},
       },
+      petName: "",
     };
+  },
+  methods: {
+    sendPlaydate() {
+      playdateService
+        .createPlaydate(this.playdate)
+        .then((response) => {
+          if (response.status === 201) {
+            this.$router.push("/profile");
+          }
+        })
+        .catch((error) => {
+          if (error.response) {
+            alert(
+              "Playdate could not be scheduled. Response was " +
+                error.response.statusText
+            );
+          } else if (error.request) {
+            alert(
+              "Playdate could not be scheduled. Server could not be reached"
+            );
+          } else {
+            alert(
+              "Playdate could not be scheduled. Request could not be created."
+            );
+          }
+        });
+    },
+    findPetByName() {
+        this.playdate.pet = this.$store.state.pets.find((pet) => pet.name === this.petName);
+      }
   },
 };
 </script>
