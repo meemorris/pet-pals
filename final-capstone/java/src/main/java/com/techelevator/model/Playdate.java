@@ -1,16 +1,12 @@
 package com.techelevator.model;
 
-import org.hibernate.validator.internal.util.privilegedactions.LoadClass;
-
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public class Playdate {
 
     private long playdateId;
 
-    private long petId;
+    private Pet pet;
 
     private String address;
 
@@ -23,9 +19,9 @@ public class Playdate {
     private LocalDateTime date;
 
     public Playdate(){}
-    public Playdate(long playdateId, long petId, String address, String city, String state, String zip, LocalDateTime date) {
+    public Playdate(long playdateId, Pet pet, String address, String city, String state, String zip, LocalDateTime date) {
         this.playdateId = playdateId;
-        this.petId = petId;
+        this.pet = pet;
         this.address = address;
         this.city = city;
         this.state = state;
@@ -38,12 +34,12 @@ public class Playdate {
     }
 
 
-    public long getPetId() {
-        return petId;
+    public Pet getPet() {
+        return pet;
     }
 
-    public void setPetId(long petId) {
-        this.petId = petId;
+    public void setPet(Pet pet) {
+        this.pet = pet;
     }
 
     public String getAddress() {

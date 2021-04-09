@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public class CreatePlaydateDTO {
 
     @NotNull
-    private long petId;
+    private Pet pet;
     @NotEmpty
     private String address;
     @NotEmpty
@@ -31,12 +31,12 @@ public class CreatePlaydateDTO {
 //        this.date = date;
 //    }
 
-    public long getPetId() {
-        return petId;
+    public Pet getPet() {
+        return pet;
     }
 
-    public void setPetId(long petId) {
-        this.petId = petId;
+    public void setPet(Pet pet) {
+        this.pet = pet;
     }
 
     public String getAddress() {
