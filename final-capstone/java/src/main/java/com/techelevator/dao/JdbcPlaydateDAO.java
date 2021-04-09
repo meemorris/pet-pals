@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.CreatePlaydateDTO;
+import com.techelevator.model.Playdate;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -27,24 +28,25 @@ public class JdbcPlaydateDAO implements PlaydateDAO {
     }
 
     @Override
-    public CreatePlaydateDTO getPlaydate(int id) {
-        CreatePlaydateDTO dto = new CreatePlaydateDTO();
-        String sql = "SELECT pet_id, address, city, state, zip, date FROM playdates WHERE playdate_id = ?";
+    public Playdate getPlaydate(int id) {
+        Playdate playdate = new Playdate();
+        String sql = "SELECT playdate_id, pet_id, address, city, state, zip, date FROM playdates WHERE playdate_id = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
         if(results.next()) {
-            dto = mapRowToPlaydate(results);
+            playdate = mapRowToPlaydate(results);
         }
-        return dto;
+        return playdate;
     }
 
-    private CreatePlaydateDTO mapRowToPlaydate(SqlRowSet results) {
-        CreatePlaydateDTO dto = new CreatePlaydateDTO();
-        dto.setPetId(results.getLong("pet_id"));
-        dto.setAddress(results.getString("address"));
-        dto.setCity(results.getString("city"));
-        dto.setState(results.getString("state"));
-        dto.setZip(results.getString("zip"));
-        dto.setDate(results.getTimestamp("date"));
-        return dto;
+    private Playdate mapRowToPlaydate(SqlRowSet results) {
+        Playdate playdate = new Playdate();
+        playdate.setPlaydateId(results.getLong("playdate_id"));
+        playdate.setPetId(results.getLong("pet_id"));
+        playdate.setAddress(results.getString("address"));
+        playdate.setCity(results.getString("city"));
+        playdate.setState(results.getString("state"));
+        playdate.setZip(results.getString("zip"));
+        playdate.setDate(results.getTimestamp("date").toLocalDateTime());
+        return playdate;
     }
 }

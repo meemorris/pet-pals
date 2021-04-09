@@ -6,7 +6,7 @@ import javax.validation.constraints.Positive;
 import java.sql.Time;
 import java.time.LocalDateTime;
 
-public class CreatePlaydateDTO<TimeStamp> {
+public class CreatePlaydateDTO {
 
     @NotNull
     private long petId;
@@ -19,17 +19,17 @@ public class CreatePlaydateDTO<TimeStamp> {
     @NotEmpty
     private String zip;
     @NotNull
-    private TimeStamp date;
+    private LocalDateTime date;
 
-    public CreatePlaydateDTO() {}
-    public CreatePlaydateDTO(@NotNull long petId, @NotEmpty String address, @NotEmpty String city, @NotEmpty String state, @NotEmpty String zip, @NotNull TimeStamp date) {
-        this.petId = petId;
-        this.address = address;
-        this.city = city;
-        this.state = state;
-        this.zip = zip;
-        this.date = date;
-    }
+//    public CreatePlaydateDTO() {}
+//    public CreatePlaydateDTO(@NotNull long petId, @NotEmpty String address, @NotEmpty String city, @NotEmpty String state, @NotEmpty String zip, @NotNull TimeStamp date) {
+//        this.petId = petId;
+//        this.address = address;
+//        this.city = city;
+//        this.state = state;
+//        this.zip = zip;
+//        this.date = date;
+//    }
 
     public long getPetId() {
         return petId;
@@ -71,11 +71,11 @@ public class CreatePlaydateDTO<TimeStamp> {
         this.zip = zip;
     }
 
-    public TimeStamp getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(TimeStamp date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 }
