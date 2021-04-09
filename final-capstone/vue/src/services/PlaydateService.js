@@ -6,5 +6,9 @@ export default {
     return axios.post('/playdates', playdate)
   },
 
+  getListOfPlaydates(){
+    return axios.get('/playdates')
+  }
+
   
 }
