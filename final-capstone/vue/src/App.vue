@@ -27,7 +27,7 @@
 
       <nav id="nav2">
 
-        <a href ="#">Playdates</a>
+        <router-link v-bind:to="{name: 'playdates'}">Playdates</router-link>
         <span v-show="$store.state.token != ''">&nbsp;|&nbsp;</span>
         <a href="#" v-show="$store.state.token != ''">Message Forum</a>
       </nav>
