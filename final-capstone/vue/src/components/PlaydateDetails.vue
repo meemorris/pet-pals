@@ -1,35 +1,196 @@
 <template>
-  <div id="details">
-    <h3>Playdate with {{ playdate.pet.name }}</h3>
-    <img class="pet-pic" v-if="playdate.pet.pic" v-bind:src="playdate.pet.pic" />
-    <img class="pet-pic" v-else src="@/assets/noPetPic.png" />
-    <p>Location: {{playdate.address}}, {{playdate.city}}, {{playdate.state}} {{playdate.zip}}</p>
-    <p>Date/Time: {{playdate.date}}</p>
+  <div id="details" v-on:click="toggleDisplay">
+    <div id="small">
+      <img
+        class="pet-pic"
+        v-if="playdate.pet.pic"
+        v-bind:src="playdate.pet.pic"
+      />
+      <img class="pet-pic" v-else src="@/assets/noPetPic.png" />
+
+      <h4>Playdate with {{ playdate.pet.name }}</h4>
+
+      <p>
+        Location: {{ playdate.address }}, {{ playdate.city }},
+        {{ playdate.state }} {{ playdate.zip }}
+      </p>
+      <p>Date/Time: {{ moment(this.playdate.date).format('dddd, MMMM Do YYYY, h:mm a') }}</p>
+    </div>
+
+    <div id="large" class="d-none">
+      <div id="pet-pic">
+        <img
+          class="pet-pic"
+          v-if="playdate.pet.pic"
+          v-bind:src="playdate.pet.pic"
+        />
+        <img class="pet-pic" v-else src="@/assets/noPetPic.png" />
+      </div>
+      <div id="title">
+        <h4>Playdate with {{ playdate.pet.name }}</h4>
+      </div>
+      <div id="pet-details">
+        <p v-if="playdate.pet.bio">{{ playdate.pet.bio }}</p>
+        <p>
+          {{ playdate.pet.energeticRelaxed }} | {{ playdate.pet.shyFriendly }} | {{ playdate.pet.apatheticCurious }}
+        </p>
+        <p>Species: {{ playdate.pet.species }}</p>
+        <p v-if="playdate.pet.breed">Breed: {{ playdate.pet.breed }}</p>
+        <p>
+          Weight: {{ playdate.pet.weight }} pound{{
+            playdate.pet.weight === 1 ? "" : "s"
+          }}
+        </p>
+        <p v-if="age === 0">Less Than 1 Year Old</p>
+        <p v-else>Age: {{ age }} year{{ age === 1 ? "" : "s" }}</p>
+      </div>
+      <div id="playdate-details">
+        <p>
+          Location: {{ playdate.address }}, {{ playdate.city }},
+          {{ playdate.state }} {{ playdate.zip }}
+        </p>
+        <p>Date/Time: {{ moment(this.playdate.date).format('dddd, MMMM Do YYYY, h:mm a') }}</p>
+      </div>
+      <div id="owner-details">
+        <img class="owner-pic" v-if="owner.pic" v-bind:src="owner.pic" />
+        <img class="owner-pic" v-else src="@/assets/noPetPic.png" />
+        <div id="owner-content">
+          <h5>Owner</h5>
+          <h6>{{ owner.firstName }} {{ owner.lastName }}</h6>
+          <p v-if="owner.bio">{{ owner.bio }}</p>
+        </div>
+      </div>
+      <div id="join-playdate">
+         <router-link
+          :to="{ name: 'createPlaydate' }"
+          id="createPlaydate"
+          tag="button"
+          class="btn btn-primary"
+          >Join Playdate</router-link
+        >
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import userService from "@/services/UserService";
 export default {
   name: "playdateDetails",
   props: ["playdate"],
+  created() {
+    this.getOwner();
+  },
+  data() {
+    return {
+      owner: {},
+    };
+  },
+  computed: {
+    age() {
+      return new Date().getFullYear() - this.playdate.pet.birthYear;
+    },
+  },
+  methods: {
+    getOwner() {
+      return userService
+        .getProfile(this.playdate.pet.userId)
+        .then((response) => {
+          this.owner = response.data;
+        });
+    },
+    toggleDisplay() {
+      const smallDisplay = document.getElementById('small');
+      const largeDisplay = document.getElementById('large');
+      if(largeDisplay.classList.contains('d-none')){
+        largeDisplay.classList.remove('d-none');
+        smallDisplay.classList.add('d-none');
+      } else {
+        smallDisplay.classList.remove('d-none');
+        largeDisplay.classList.add('d-none');
+      }
+    }
+  },
 };
 </script>
 
 <style scoped>
-img {
-    width: 200px;
-     max-width: 350px;
-    min-width: 150px; 
-    border-radius: 2%;
-    margin-bottom: 10px;
-    margin-left:10px;
-    margin-right:10px;
+#large {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas:  
+  "pic title title"
+  "pic pet playdate"
+  "pic pet owner" 
+  "pic pet join";
+}
+#pet-pic{
+  grid-area: pic;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#title{
+  grid-area: title;
+  margin-top: 10px;
+}
+#pet-details{
+  grid-area: pet;
+}
+#playdate-details{
+  grid-area: playdate;
+}
+#owner-details {
+  grid-area: owner;
+}
+#join-playdate {
+  grid-area: join;
+  margin-bottom: 10px
 }
 
-h3 {
-    margin-top: 10px;
+#small .pet-pic {
+  width: 100px;
+  border-radius: 2%;
+  margin: 10px;
 }
 
+#large .pet-pic {
+  width: 250px;
+  border-radius: 2%;
+}
 
+#small {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 20px;
+  height: 120px;
+}
 
+.owner-pic {
+  height: 100px;
+  width: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+#details:hover {
+  background-color: #c4cad0;
+  border-radius: 2%;
+}
+
+h4 {
+  text-align: center;
+}
+
+#owner-details {
+  display: flex;
+}
+
+#owner-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 </style>
