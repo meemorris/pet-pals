@@ -1,13 +1,10 @@
 <template>
   <form class="form-user" v-on:submit.prevent="sendPlaydate">
     <div id="dateTimePicker">
-      <!-- <label for="date-time" class="sr-only">Date and Time</label> -->
-      <!-- line 10(value="currentDate") not currently functioning, looking into how to display the current date and time as default value -->
       <input
         type="datetime-local"
         id="date-time"
         name="dateTime"
-        value="currentDate"
         class="form-control"
         v-model="playdate.date"
         required
@@ -56,29 +53,22 @@
       required
     />
 
-    <!-- <label for="petName" class="sr-only">Pet Name</label>
-    <input
-      type="text"
-      id="petName"
-      class="form-control"
-      placeholder="Pet Name"
-      v-model="playdate.petName"
-      required
-    /> -->
-
-    <label for="petName">Pet Name</label>
-    <select
-      name="petName"
-      id="petName"
-      v-on:click="findPetByName"
-      v-model="petName"
-      required
-    >
-      <option value="" default>---</option>
-      <option v-for="pet in $store.state.pets" v-bind:key="pet.petId">
-        {{ pet.name }}
-      </option>
-    </select>
+    <div id="selectPet">
+      <div>
+      <select
+        name="petName"
+        id="petName"
+        v-on:click="findPetByName"
+        v-model="petName"
+        required
+      >
+        <option value="" default>Pet Name</option>
+        <option v-for="pet in $store.state.pets" v-bind:key="pet.petId">
+          {{ pet.name }}
+        </option>
+      </select>
+      </div>
+    </div>
 
     <button class="btn btn-lg btn-primary" type="submit">
       Schedule Playdate
@@ -131,8 +121,10 @@ export default {
         });
     },
     findPetByName() {
-        this.playdate.pet = this.$store.state.pets.find((pet) => pet.name === this.petName);
-      }
+      this.playdate.pet = this.$store.state.pets.find(
+        (pet) => pet.name === this.petName
+      );
+    },
   },
 };
 </script>
@@ -153,4 +145,20 @@ export default {
   display: flex;
   justify-content: center;
 }
+
+#selectPet {
+  display: flex;
+  justify-content: center;
+}
+
+#petName {
+  width: 350px;
+  height: 40px;
+  border: 1px solid hsla(210, 6%, 67%, 0.5);
+  border-radius: 3%;
+}
+
+
+
+
 </style>
