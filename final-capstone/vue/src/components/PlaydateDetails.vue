@@ -1,6 +1,6 @@
 <template>
   <div id="details" v-on:click="toggleDisplay">
-    <div id="small">
+    <div id="small" v-show="showSmall">
       <img
         class="pet-pic"
         v-if="playdate.pet.pic"
@@ -17,7 +17,7 @@
       <p>Date/Time: {{ moment(this.playdate.date).format('dddd, MMMM Do YYYY, h:mm a') }}</p>
     </div>
 
-    <div id="large" class="d-none">
+    <div id="large" v-show="showLarge">
       <div id="pet-pic">
         <img
           class="pet-pic"
@@ -84,6 +84,8 @@ export default {
   data() {
     return {
       owner: {},
+      showSmall: true,
+      showLarge: false,
     };
   },
   computed: {
@@ -100,14 +102,12 @@ export default {
         });
     },
     toggleDisplay() {
-      const smallDisplay = document.getElementById('small');
-      const largeDisplay = document.getElementById('large');
-      if(largeDisplay.classList.contains('d-none')){
-        largeDisplay.classList.remove('d-none');
-        smallDisplay.classList.add('d-none');
+      if (this.showSmall){
+        this.showSmall = false;
+        this.showLarge = true;
       } else {
-        smallDisplay.classList.remove('d-none');
-        largeDisplay.classList.add('d-none');
+        this.showSmall = true;
+        this.showLarge = false;
       }
     }
   },
