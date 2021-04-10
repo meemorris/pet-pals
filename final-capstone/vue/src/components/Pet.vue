@@ -27,10 +27,8 @@
           <p v-if="pet.breed">
             <span class="profile-header">Breed: </span>{{ pet.breed }}
           </p>
-          <p>
-            <span class="profile-header">Year of Birth: </span
-            >{{ pet.birthYear }}
-          </p>
+          <p v-if="age === 0">Less Than 1 Year Old</p>
+          <p v-else>Age: {{ age }} year{{ age === 1 ? "" : "s" }}</p>
           <p>
             <span class="profile-header">Weight: </span>{{ pet.weight }} pound{{
               pet.weight === 1 ? "" : "s"
@@ -86,6 +84,9 @@ export default {
     checkUser() {
       return this.$store.state.user.id === this.pet.userId;
     },
+    age() {
+      return new Date().getFullYear() - this.pet.birthYear;
+    }
   },
   methods: {
     retrievePet() {
@@ -185,10 +186,6 @@ h3 {
 #updatePet {
   margin-bottom: 20%;
 }
-
-/* #createPlaydate {
-  margin-bottom: 10%;
-} */
 
 #stats p::before, #personality-info p::before {
   content: "\2022"; 
