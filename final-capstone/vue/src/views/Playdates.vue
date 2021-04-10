@@ -1,12 +1,7 @@
 <template>
-  <div>
+  <div id="list">
       <h1>Playdates</h1>
     <div v-for="playdate in playdateList" v-bind:key="playdate.playdateId">
-    <!-- <h3>Playdate with {{ playdate.pet.name }}</h3>
-    <img class="pet-pic" v-if="playdate.pet.pic" v-bind:src="playdate.pet.pic" />
-    <img class="pet-pic" v-else src="@/assets/noPetPic.png" />
-    <p>Location: {{playdate.address}}, {{playdate.city}}, {{playdate.state}} {{playdate.zip}}</p>
-    <p>Date/Time:{{playdate.date}}</p> -->
       <playdate-details v-bind:playdate="playdate"/>
     </div>
   </div>
@@ -57,3 +52,14 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+#list {
+    display: flex;
+    flex-direction: column;
+}
+h1 {
+    text-align: center;
+    margin-top: 45px;
+}
+</style>

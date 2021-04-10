@@ -104,7 +104,7 @@ header>nav {
   border-color: #1e7c9e !important;
 }
 
-h1, h2, h3, h4 {
+h1, h2, h3, h4, h5, h6 {
   font-family: "Raleway", sans-serif;
 }
 

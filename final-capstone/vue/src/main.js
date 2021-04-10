@@ -7,7 +7,9 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import moment from 'moment'
 
+Vue.prototype.moment = moment
 Vue.config.productionTip = false
 
 axios.defaults.baseURL = process.env.VUE_APP_REMOTE_API;
