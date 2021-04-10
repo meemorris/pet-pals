@@ -115,6 +115,7 @@ export default {
 </script>
 
 <style scoped>
+
 #large {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
