@@ -14,7 +14,10 @@
         Location: {{ playdate.address }}, {{ playdate.city }},
         {{ playdate.state }} {{ playdate.zip }}
       </p>
-      <p>Date/Time: {{ moment(this.playdate.date).format('dddd, MMMM Do YYYY, h:mm a') }}</p>
+      <p>
+        Date/Time:
+        {{ moment(this.playdate.date).format("dddd, MMMM Do YYYY, h:mm a") }}
+      </p>
     </div>
 
     <div id="large" v-show="showLarge">
@@ -32,7 +35,8 @@
       <div id="pet-details">
         <p v-if="playdate.pet.bio">{{ playdate.pet.bio }}</p>
         <p>
-          {{ playdate.pet.energeticRelaxed }} | {{ playdate.pet.shyFriendly }} | {{ playdate.pet.apatheticCurious }}
+          {{ playdate.pet.energeticRelaxed }} | {{ playdate.pet.shyFriendly }} |
+          {{ playdate.pet.apatheticCurious }}
         </p>
         <p>Species: {{ playdate.pet.species }}</p>
         <p v-if="playdate.pet.breed">Breed: {{ playdate.pet.breed }}</p>
@@ -49,7 +53,10 @@
           Location: {{ playdate.address }}, {{ playdate.city }},
           {{ playdate.state }} {{ playdate.zip }}
         </p>
-        <p>Date/Time: {{ moment(this.playdate.date).format('dddd, MMMM Do YYYY, h:mm a') }}</p>
+        <p>
+          Date/Time:
+          {{ moment(this.playdate.date).format("dddd, MMMM Do YYYY, h:mm a") }}
+        </p>
       </div>
       <div id="owner-details">
         <img class="owner-pic" v-if="owner.pic" v-bind:src="owner.pic" />
@@ -61,7 +68,7 @@
         </div>
       </div>
       <div id="join-playdate">
-         <router-link
+        <router-link
           :to="{ name: 'createPlaydate' }"
           id="createPlaydate"
           tag="button"
@@ -102,43 +109,42 @@ export default {
         });
     },
     toggleDisplay() {
-      if (this.showSmall){
+      if (this.showSmall) {
         this.showSmall = false;
         this.showLarge = true;
       } else {
         this.showSmall = true;
         this.showLarge = false;
       }
-    }
+    },
   },
 };
 </script>
 
 <style scoped>
-
 #large {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-areas:  
-  "pic title title"
-  "pic pet playdate"
-  "pic pet owner" 
-  "pic pet join";
+  grid-template-areas:
+    "pic title title"
+    "pic pet playdate"
+    "pic pet owner"
+    "pic pet join";
 }
-#pet-pic{
+#pet-pic {
   grid-area: pic;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-#title{
+#title {
   grid-area: title;
   margin-top: 10px;
 }
-#pet-details{
+#pet-details {
   grid-area: pet;
 }
-#playdate-details{
+#playdate-details {
   grid-area: playdate;
 }
 #owner-details {
@@ -146,7 +152,7 @@ export default {
 }
 #join-playdate {
   grid-area: join;
-  margin-bottom: 10px
+  margin-bottom: 10px;
 }
 
 #small .pet-pic {
@@ -179,6 +185,7 @@ export default {
 #details:hover {
   background-color: #c4cad0;
   border-radius: 2%;
+  cursor: pointer;
 }
 
 h4 {

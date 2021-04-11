@@ -1,19 +1,20 @@
 <template>
-<div>
-    <h1 id="schedule">Schedule Playdate</h1>
-    <playdate-form></playdate-form>
+  <div>
+    <div class="outline">
+      <h1 class="form-header">Schedule Playdate</h1>
+      <playdate-form></playdate-form>
     </div>
+  </div>
 </template>
 
 <script>
-import PlaydateForm from '../components/PlaydateForm.vue'
+import PlaydateForm from "../components/PlaydateForm.vue";
 export default {
-    name: "createPlaydate",
-    components: {
-        PlaydateForm
-    }
-}
-
+  name: "createPlaydate",
+  components: {
+    PlaydateForm,
+  },
+};
 </script>
 
 <style>

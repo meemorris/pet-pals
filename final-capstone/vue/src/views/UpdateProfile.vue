@@ -1,7 +1,9 @@
 <template>
   <div id="update" class="text-center">
-    <h1>Update Account Information</h1>
-    <user-form v-bind:button="text"></user-form>
+    <div class="outline">
+      <h1 class="form-header">Update Account Information</h1>
+      <user-form v-bind:button="text"></user-form>
+    </div>
   </div>
 </template>
 
@@ -22,7 +24,5 @@ export default {
 </script>
 
 <style scoped>
-h1 {
-  margin-top: 45px;
-}
+
 </style>

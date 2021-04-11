@@ -1,7 +1,9 @@
 <template>
   <div id="register" class="text-center">
-    <h1>Create Profile</h1>
-    <user-form v-bind:button="text"></user-form>
+    <div class="outline">
+      <h1 class="form-header">Create Profile</h1>
+      <user-form v-bind:button="text"></user-form>
+    </div>
   </div>
 </template>
 
@@ -18,12 +20,9 @@ export default {
       text: "Create",
     };
   },
-
 };
 </script>
 
 <style scoped>
-h1 {
-  margin-top: 45px;
-}
+
 </style>

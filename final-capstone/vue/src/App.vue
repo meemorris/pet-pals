@@ -49,6 +49,10 @@ body{
   border-color: red;
 } */
 
+/* * {
+  border: 0.01px dotted hsla(0, 0%, 100%, 0.0);
+} */
+
 #app {
   background-color: #FAFAFA; 
 }
@@ -68,10 +72,11 @@ nav a {
   padding-right: 10px;
 }
 
-nav a:hover {
+nav a:hover, .router-link-exact-active {
   text-decoration: none;
   color: #f89e7a;
 }
+
 
 #nav1 {
   margin-left: 20px;
@@ -118,4 +123,33 @@ input[type="email"] {
   margin: auto;
   margin-bottom: 5px;
 }
+
+.outline {
+  border: 1px solid #c4cad0;
+  border-radius: 0.25rem;
+  margin: 50px auto 300px auto;
+  padding: 30px 25px;
+  background-color: #fff;
+  box-shadow: 1px 3px 7px 0 rgba(134, 130, 130, 0.4),
+    0 1px 2px 0 rgba(56, 56, 56, 0.3);
+  width: 40vw;
+  max-width: 600px;
+}
+
+.outline:hover {
+  background-color: #FAFAFA;
+}
+
+.form-header {
+  margin-top: 15px;
+  margin-bottom: 20px;
+  font-size: 1.6rem;
+  text-align: center;
+}
+
+.form-submit {
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+
 </style>

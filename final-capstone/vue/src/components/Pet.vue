@@ -48,23 +48,29 @@
       </div>
     </div>
 
-    <router-link
-      :to="{ name: 'updatePet' }"
-      id="updatePet"
-      tag="button"
-      class="btn btn-primary"
-      v-if="checkUser"
-      >Update Pet Info</router-link
-    >
+    <div class="links">
+      <router-link
+        :to="{ name: 'updatePet' }"
+        id="updatePet"
+        class="btn btn-primary"
+        v-if="checkUser"
+        >Update Pet Info</router-link
+      >
 
-    <router-link
-          :to="{ name: 'createPlaydate' }"
-          id="createPlaydate"
-          tag="button"
-          class="btn btn-primary"
-          >Schedule Playdate</router-link
-        >
+      <router-link
+        :to="{ name: 'createPlaydate' }"
+        id="createPlaydate"
+        class="btn btn-primary"
+        >Schedule Playdate</router-link
+      >
 
+      <router-link
+        :to="{ name: 'profile' }"
+        id="profile"
+        class="btn btn-primary"
+        >Back to User Profile</router-link
+      >
+    </div>
   </div>
 </template>
 
@@ -86,7 +92,7 @@ export default {
     },
     age() {
       return new Date().getFullYear() - this.pet.birthYear;
-    }
+    },
   },
   methods: {
     retrievePet() {
@@ -113,17 +119,15 @@ export default {
 </script>
 
 <style scoped>
-
 .pet-profile {
   display: grid;
   grid-template-columns: 1fr, 1fr, 1fr;
-  gap: 30px;
+  gap: 40px;
   grid-template-areas:
     "page-header page-header page-header"
     "name name name"
-    "image image pd"
-    "pet-info pet-info pd"
-    ". . pd";
+    "links image pd"
+    "pet-info pet-info pd";
   margin: 0 30px;
 }
 
@@ -131,26 +135,26 @@ h1 {
   grid-area: page-header;
   margin-left: 1vw;
   margin-top: 5vh;
-  font-family: 'Rock Salt', cursive;
+  font-family: "Rock Salt", cursive;
   font-size: 1.8rem;
   color: #cd704c;
-  background-image: url("../assets/paw-outline-light.png"); 
+  /* background-image: url("../assets/paw-outline-light.png"); 
   background-size: 8%;
   background-repeat: no-repeat;
-  background-position: 2% 30%;
-  padding-top: 5%;
-  padding-left: 9%;
+  background-position: 2% 30%; */
+  padding-top: 2rem;
+  padding-left: 4rem;
 }
 
 h2 {
-  font-family: 'Rock Salt', cursive;
-  color: #07475f; 
+  font-family: "Rock Salt", cursive;
+  color: #07475f;
   font-size: 1.8rem;
 }
 
 h3 {
-  font-family: 'Rock Salt', cursive;
-  color: #949494; 
+  font-family: "Rock Salt", cursive;
+  color: #949494;
   font-size: 1.4rem;
 }
 
@@ -162,38 +166,46 @@ h3 {
 .pet-pic {
   border-radius: 2%;
   grid-area: image;
-  max-width: 30vw;
+  max-width: 25vw;
   margin-left: 30%;
 }
 
 #playdates {
   display: flex;
   grid-area: pd;
-  border: 4px solid #cd704c;
-  border-radius: 15px;
+  border: 2px solid #cd704c;
+  border-radius: 0.25rem;
   margin: 20px 10px;
   padding: 30px 25px;
+  background-color: #fff;
+  box-shadow: 1px 3px 7px 0 rgba(134, 130, 130, 0.4),
+    0 1px 2px 0 rgba(56, 56, 56, 0.3);
 }
 
 .profile-card {
   grid-area: pet-info;
-  border: 4px solid #cd704c;
-  border-radius: 15px;
+  border: 2px solid #cd704c;
+  border-radius: 0.25rem;
   margin: 20px 10px;
   padding: 30px 25px;
+  background-color: #fff;
+  box-shadow: 1px 3px 7px 0 rgba(134, 130, 130, 0.4),
+    0 1px 2px 0 rgba(56, 56, 56, 0.3);
 }
 
-#updatePet {
-  margin-bottom: 20%;
+.profile-card:hover,
+#playdates:hover {
+  background-color: #fafafa;
 }
 
-#stats p::before, #personality-info p::before {
-  content: "\2022"; 
-  color: #a7acb1; 
-  font-weight: bold; 
-  display: inline-block; 
-  width: 1em; 
-  margin-left: -1em; 
+#stats p::before,
+#personality-info p::before {
+  content: "\2022";
+  color: #a7acb1;
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
 }
 
 .bio-group {
@@ -243,4 +255,10 @@ h3 {
 #personality-info {
   flex-basis: 60%;
 }
+
+.links {
+  grid-area: links;
+  max-width: 300px;
+}
+
 </style>

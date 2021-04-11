@@ -5,7 +5,7 @@
       <div id="petColumn">
         <h2>Your Pets</h2>
         <div
-        class="preview"
+          class="preview"
           v-for="pet in $store.state.pets"
           v-bind:key="pet.petId"
           v-on:click="viewPetDetails(pet.petId)"
@@ -27,16 +27,16 @@
 
       <div id="playdateColumn">
         <h2>Current Playdates</h2>
-
-        <router-link
-          :to="{ name: 'createPlaydate' }"
-          id="createPlaydate"
-          tag="button"
-          class="btn btn-primary"
-          >Schedule Playdate</router-link
-        >
+        <div id="playdate-info">
+          </div>
+          <router-link
+            :to="{ name: 'createPlaydate' }"
+            id="createPlaydate"
+            tag="button"
+            class="btn btn-primary"
+            >Schedule Playdate</router-link
+          >
       </div>
-
     </div>
   </div>
 </template>
@@ -54,15 +54,9 @@ export default {
   },
   components: {
     petPreview,
-    accountInfo
+    accountInfo,
   },
-  // computed: {
-  //   myPetsFilter() {
-  //     return this.$store.state.pets.filter(
-  //       (pet) => pet.userId === this.$store.state.user.id
-  //     );
-  //   },
-  // },
+
   methods: {
     retrievePetList() {
       petService
@@ -87,27 +81,32 @@ export default {
       this.$router.push(`/pets/${id}`);
     },
     retrieveAccountInfo() {
-      userService.getProfile(this.$store.state.user.id)
-      .then((response) => {
-        if(response.data.firstName === null){ 
-          this.$router.push('/profile/create')
-        } else {
-          this.$store.commit("SET_ACCOUNT_INFO", response.data);
-        }
-      })
-      .catch((error) => {
+      userService
+        .getProfile(this.$store.state.user.id)
+        .then((response) => {
+          if (response.data.firstName === null) {
+            this.$router.push("/profile/create");
+          } else {
+            this.$store.commit("SET_ACCOUNT_INFO", response.data);
+          }
+        })
+        .catch((error) => {
           if (error.response) {
             alert(
               "Account information could not be found. Response was " +
                 error.response.statusText
             );
           } else if (error.request) {
-            alert("Account information could not be found. Server could not be reached");
+            alert(
+              "Account information could not be found. Server could not be reached"
+            );
           } else {
-            alert("Account information could not be found. Request could not be created.");
+            alert(
+              "Account information could not be found. Request could not be created."
+            );
           }
         });
-    }
+    },
   },
 };
 </script>
@@ -134,9 +133,10 @@ export default {
   margin-bottom: 50px;
 }
 
-h1, h2 {
+h1,
+h2 {
   text-align: center;
-  
+  margin-bottom: 3vh;
 }
 
 h1 {
@@ -145,8 +145,18 @@ h1 {
   color: #cd704c;
 }
 
-.preview:hover {
+/* .preview:hover {
   background-color: #c4cad0;
   border-radius: 2%;
+} */
+
+#playdate-info {
+  border: 2px solid #cd704c;
+  border-radius: 0.25rem;
+  margin: 20px 10px;
+  padding: 30px 25px;
+  background-color: #fff;
+  box-shadow: 1px 3px 7px 0 rgba(134, 130, 130, 0.4),
+    0 1px 2px 0 rgba(56, 56, 56, 0.3);
 }
 </style>

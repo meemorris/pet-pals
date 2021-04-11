@@ -1,7 +1,9 @@
 <template>
   <div id="register" class="text-center">
-    <h1>Register Your Pet</h1>
-    <pet-form v-bind:button="text"></pet-form>
+    <div class="outline">
+      <h1 class="form-header">Register Your Pet</h1>
+      <pet-form v-bind:button="text"></pet-form>
+    </div>
   </div>
 </template>
 
@@ -18,19 +20,19 @@ export default {
       text: "Register",
     };
   },
-  created(){
+  created() {
     this.clearPet();
   },
   methods: {
-    clearPet(){
-      this.$store.commit("CLEAR_CURRENT_PET")
-    }
-  }
+    clearPet() {
+      this.$store.commit("CLEAR_CURRENT_PET");
+    },
+  },
 };
 </script>
 
 <style scoped>
-h1 {
-  margin-top: 45px;
+#register {
+  background-color: #fafafa;
 }
 </style>

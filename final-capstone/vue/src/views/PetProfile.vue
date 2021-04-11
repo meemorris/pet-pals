@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-//import petService from '@/services/PetService';
+
 import Pet from "@/components/Pet";
 
 export default {

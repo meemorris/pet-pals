@@ -1,7 +1,9 @@
 <template>
   <div id="update" class="text-center">
-    <h1>Update Your Pet</h1>
-    <pet-form v-bind:button="text"></pet-form>
+    <div class="outline">
+      <h1 class="form-header">Update Your Pet</h1>
+      <pet-form v-bind:button="text"></pet-form>
+    </div>
   </div>
 </template>
 
@@ -22,7 +24,5 @@ export default {
 </script>
 
 <style scoped>
-h1 {
-  margin-top: 45px;
-}
+
 </style>

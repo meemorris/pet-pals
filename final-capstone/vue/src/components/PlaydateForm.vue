@@ -1,15 +1,16 @@
 <template>
   <form class="form-user" v-on:submit.prevent="sendPlaydate">
     <div id="dateTimePicker">
+      <label for="date-time" class="sr-only">Date and Time</label>
       <input
-        type="datetime-local"
-        id="date-time"
-        name="dateTime"
-        class="form-control"
-        v-model="playdate.date"
-        required
-        autofocus
-      />
+          type="datetime-local"
+          id="date-time"
+          name="dateTime"
+          class="form-control"
+          v-model="playdate.date"
+          required
+          autofocus
+        />
     </div>
 
     <label for="address" class="sr-only">Address</label>
@@ -55,22 +56,22 @@
 
     <div id="selectPet">
       <div>
-      <select
-        name="petName"
-        id="petName"
-        v-on:click="findPetByName"
-        v-model="petName"
-        required
-      >
-        <option value="" default>Pet Name</option>
-        <option v-for="pet in $store.state.pets" v-bind:key="pet.petId">
-          {{ pet.name }}
-        </option>
-      </select>
+        <select
+          name="petName"
+          id="petName"
+          v-on:click="findPetByName"
+          v-model="petName"
+          required
+        >
+          <option value="" default disabled>Pet Name</option>
+          <option v-for="pet in $store.state.pets" v-bind:key="pet.petId">
+            {{ pet.name }}
+          </option>
+        </select>
       </div>
     </div>
 
-    <button class="btn btn-lg btn-primary" type="submit">
+    <button class="btn btn-lg btn-primary form-submit" type="submit">
       Schedule Playdate
     </button>
   </form>
@@ -93,6 +94,16 @@ export default {
       },
       petName: "",
     };
+  },
+  computed: {
+    today() {
+      let today = new Date();
+      let dd = String(today.getDate()).padStart(2, "0");
+      let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0
+      let yyyy = today.getFullYear();
+
+      return mm + "/" + dd + "/" + yyyy;
+    },
   },
   methods: {
     sendPlaydate() {
@@ -131,7 +142,6 @@ export default {
 
 <style>
 .form-user {
-  height: 100vh;
   margin-top: 5vh;
 }
 
@@ -157,8 +167,4 @@ export default {
   border: 1px solid hsla(210, 6%, 67%, 0.5);
   border-radius: 3%;
 }
-
-
-
-
 </style>
