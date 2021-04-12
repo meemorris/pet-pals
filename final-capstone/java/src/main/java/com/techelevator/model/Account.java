@@ -1,7 +1,5 @@
 package com.techelevator.model;
 
-import javax.validation.constraints.NotEmpty;
-
 public class Account {
 
     private String firstName;
@@ -14,10 +12,12 @@ public class Account {
     private String zip;
     private String bio;
     private String pic;
+    private String lat;
+    private String lng;
 
     public Account(){}
 
-    public Account(String firstName,String lastName, String email, String phone, String address, String city, String state, String zip, String bio, String pic) {
+    public Account(String firstName, String lastName, String email, String phone, String address, String city, String state, String zip, String bio, String pic, String lat, String lng) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -28,6 +28,8 @@ public class Account {
         this.zip = zip;
         this.bio = bio;
         this.pic = pic;
+        this.lat = lat;
+        this.lng = lng;
     }
 
     public String getFirstName() {
@@ -108,5 +110,21 @@ public class Account {
 
     public void setPic(String pic) {
         this.pic = pic;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
     }
 }

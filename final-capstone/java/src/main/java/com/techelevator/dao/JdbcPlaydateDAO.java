@@ -1,7 +1,9 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.CreatePlaydateDTO;
+import com.techelevator.model.Location;
 import com.techelevator.model.Playdate;
+import com.techelevator.services.MapService;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -25,11 +27,16 @@ public class JdbcPlaydateDAO implements PlaydateDAO {
 
 
     @Override
-    public long create(CreatePlaydateDTO playdateDTO) {
-        String sql = "INSERT INTO playdates (pet_id, address, city, state, zip, date) " +
-                "VALUES(?, ?, ?, ?, ?, ?) RETURNING playdate_id";
+    public long create(CreatePlaydateDTO playdateDTO, MapService mapService) {
+
+        //get lat and lng
+        Location location = mapService.getLocation(playdateDTO.getAddress(), playdateDTO.getCity(), playdateDTO.getState());
+
+        //create playdate
+        String sql = "INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) " +
+                "VALUES(?, ?, ?, ?, ?, ?, ?, ?) RETURNING playdate_id";
         Long playdateId = jdbcTemplate.queryForObject(sql, Long.class, playdateDTO.getPet().getPetId(), playdateDTO.getAddress(),
-                playdateDTO.getCity(), playdateDTO.getState(), playdateDTO.getZip(), playdateDTO.getDate());
+                playdateDTO.getCity(), playdateDTO.getState(), playdateDTO.getZip(), playdateDTO.getDate(), location.getLat(), location.getLng());
 
         //add to linker table
         String sqlPetPlaydate = "INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES(?,?,?)";
@@ -41,7 +48,7 @@ public class JdbcPlaydateDAO implements PlaydateDAO {
     @Override
     public Playdate getPlaydate(int id) {
         Playdate playdate = new Playdate();
-        String sql = "SELECT playdate_id, pet_id, address, city, state, zip, date FROM playdates WHERE playdate_id = ?";
+        String sql = "SELECT playdate_id, pet_id, address, city, state, zip, date, lat, lng FROM playdates WHERE playdate_id = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
         if(results.next()) {
             playdate = mapRowToPlaydate(results);
@@ -53,7 +60,7 @@ public class JdbcPlaydateDAO implements PlaydateDAO {
     public List<Playdate> getAllPlaydates() {
         List<Playdate> playdates = new ArrayList<>();
 
-        String sql = "SELECT playdate_id, pet_id, address, city, state, zip, date FROM playdates";
+        String sql = "SELECT playdate_id, pet_id, address, city, state, zip, date, lat, lng FROM playdates";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         while(results.next()) {
             playdates.add(mapRowToPlaydate(results));
@@ -78,6 +85,8 @@ public class JdbcPlaydateDAO implements PlaydateDAO {
         playdate.setState(results.getString("state"));
         playdate.setZip(results.getString("zip"));
         playdate.setDate(results.getTimestamp("date").toLocalDateTime());
+        playdate.setLat(results.getString("lat"));
+        playdate.setLng(results.getString("lng"));
         return playdate;
     }
 }

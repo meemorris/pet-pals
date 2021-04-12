@@ -17,7 +17,7 @@ Each SQL script has a specific purpose as described below:
 
 | File Name | Description |
 | --------- | ----------- |
-| `data.sql` | This script populates the database with any static setup data or test/demo data. The project team should modify this script. |
+| `geocodeResult.sql` | This script populates the database with any static setup geocodeResult or test/demo geocodeResult. The project team should modify this script. |
 | `dropdb.sql` | This script destroys the database so that it can be recreated. It drops the database and associated users. The project team shouldn't have to modify this script. |
 | `schema.sql` | This script creates all of the database objects, such as tables and sequences. The project team should modify this script. |
 | `user.sql` | This script creates the database application users and grants them the appropriate privileges. The project team shouldn't have to modify this script. <br /> See the next section for more information on these users. |
@@ -85,7 +85,7 @@ There is a single controller in the `com.techelevator.controller` package called
 
 This controller contains the `/login` and `/register` routes and works with the Vue starter as is. If you need to modify the user registration form, start here.
 
-The authentication controller uses the `UserSqlDAO` to read and write data from the users table.
+The authentication controller uses the `UserSqlDAO` to read and write geocodeResult from the users table.
 
 
 ## Testing

@@ -1,6 +1,9 @@
 <template>
   <div id="list">
     <h1>Playdates</h1>
+    <button class="btn btn-primary" v-on:click="toggleDisplayType">
+      View as {{ displayType === "List" ? "Map" : "List" }}
+    </button>
 
     <div id="filters">
       <div id="species-group">
@@ -11,7 +14,7 @@
           v-on:change="toggleOtherSpecies"
         >
           <option value="" default selected disabled>Species</option>
-          <option value="" >View All</option>
+          <option value="">View All</option>
           <option value="dog">Dog</option>
           <option value="cat">Cat</option>
           <option value="rabbit">Rabbit</option>
@@ -32,7 +35,7 @@
       <div id="energy-group">
         <select name="energy" id="energy" v-model="filter.pet.energeticRelaxed">
           <option value="" default selected disabled>Energy</option>
-           <option value="" >View All</option>
+          <option value="">View All</option>
           <option value="energetic">Energetic</option>
           <option value="relaxed">Relaxed</option>
         </select>
@@ -41,16 +44,20 @@
       <div id="timidity-group">
         <select name="timidity" id="timidity" v-model="filter.pet.shyFriendly">
           <option value="" default selected disabled>Timidity</option>
-           <option value="" >View All</option>
+          <option value="">View All</option>
           <option value="shy">Shy</option>
           <option value="friendly">Friendly</option>
         </select>
       </div>
 
       <div id="curiosity-group">
-        <select name="curiosity" id="curiosity" v-model="filter.pet.apatheticCurious">
+        <select
+          name="curiosity"
+          id="curiosity"
+          v-model="filter.pet.apatheticCurious"
+        >
           <option value="" default selected disabled>Curiosity</option>
-           <option value="" >View All</option>
+          <option value="">View All</option>
           <option value="apathetic">Apathetic</option>
           <option value="curious">Curious</option>
         </select>
@@ -59,7 +66,7 @@
       <div id="distance-group">
         <select name="distance" id="distance">
           <option value="" default selected disabled>Max Distance</option>
-           <option value="" >Any Distance</option>
+          <option value="">Any Distance</option>
           <option value="fiveMiles">5 miles</option>
           <option value="tenMiles">10 miles</option>
           <option value="fifteenMiles">15 miles</option>
@@ -68,24 +75,28 @@
           <option value="fiftyMiles">50 miles</option>
         </select>
       </div>
-
     </div>
 
     <p v-show="filteredList.length == 0" id="no-results">No results found</p>
 
-    <div v-for="playdate in filteredList" v-bind:key="playdate.playdateId">
-      <playdate-details v-bind:playdate="playdate" />
+    <div id="list-view" v-if="displayTypeIsList">
+      <div v-for="playdate in filteredList" v-bind:key="playdate.playdateId">
+        <playdate-details v-bind:playdate="playdate" />
+      </div>
     </div>
+    <TravelMap v-else class="travel-map" v-bind:playdateList="playdateList" v-bind:markers="markers"/>
   </div>
 </template>
 <script>
 import playdateService from "@/services/PlaydateService";
 import PlaydateDetails from "@/components/PlaydateDetails.vue";
+import TravelMap from "@/components/TravelMap";
 
 export default {
   name: "playdates",
   data() {
     return {
+      displayType: "List",
       playdateList: [],
       filter: {
         playdate_id: "",
@@ -108,7 +119,10 @@ export default {
         state: "",
         zip: "",
         date: "",
+        lat: "",
+        lng: "",
       },
+      markers: [],
     };
   },
   created() {
@@ -117,15 +131,24 @@ export default {
 
   components: {
     PlaydateDetails,
+    TravelMap,
   },
   computed: {
+    displayTypeIsList() {
+      return this.displayType === "List";
+    },
     filteredList() {
       let filteredPlaydates = this.playdateList;
-      const isListedOption = this.filter.pet.species === 'dog' || this.filter.pet.species === 'cat' ||
-      this.filter.pet.species === 'rabbit' || this.filter.pet.species === 'hedgehog';
+      const isListedOption =
+        this.filter.pet.species === "dog" ||
+        this.filter.pet.species === "cat" ||
+        this.filter.pet.species === "rabbit" ||
+        this.filter.pet.species === "hedgehog";
       if (this.filter.pet.species != "" && !isListedOption) {
         filteredPlaydates = filteredPlaydates.filter(
-          (playdate) => playdate.pet.species.toLowerCase() == this.filter.pet.species.toLowerCase()
+          (playdate) =>
+            playdate.pet.species.toLowerCase() ==
+            this.filter.pet.species.toLowerCase()
         );
       } else if (this.filter.pet.species != "") {
         filteredPlaydates = filteredPlaydates.filter(
@@ -135,7 +158,8 @@ export default {
 
       if (this.filter.pet.energeticRelaxed != "") {
         filteredPlaydates = filteredPlaydates.filter(
-          (playdate) => playdate.pet.energeticRelaxed == this.filter.pet.energeticRelaxed
+          (playdate) =>
+            playdate.pet.energeticRelaxed == this.filter.pet.energeticRelaxed
         );
       }
 
@@ -147,15 +171,22 @@ export default {
 
       if (this.filter.pet.apatheticCurious != "") {
         filteredPlaydates = filteredPlaydates.filter(
-          (playdate) => playdate.pet.apatheticCurious == this.filter.pet.apatheticCurious
+          (playdate) =>
+            playdate.pet.apatheticCurious == this.filter.pet.apatheticCurious
         );
       }
-
 
       return filteredPlaydates;
     },
   },
   methods: {
+    toggleDisplayType() {
+      if (this.displayType === "List") {
+        this.displayType = "Map";
+      } else {
+        this.displayType = "List";
+      }
+    },
     toggleOtherSpecies() {
       let otherSpeciesElement = document.getElementById("otherSpecies");
       if (this.filter.pet.species === "other") {
@@ -170,6 +201,7 @@ export default {
         .getListOfPlaydates()
         .then((response) => {
           this.playdateList = response.data;
+          this.populateMarkers();
         })
         .catch((error) => {
           if (error.response) {
@@ -188,11 +220,23 @@ export default {
           }
         });
     },
+    populateMarkers(){
+      this.playdateList.forEach(element => {
+        let marker = {
+          id : element.playdateId,
+          position: { lat: Number(element.lat), lng: Number(element.lng) }
+        };
+        this.markers.push(marker);
+      })
+    }
   },
 };
 </script>
 
 <style scoped>
+.travel-map {
+  height: 400px;
+}
 #list {
   display: flex;
   flex-direction: column;
@@ -222,7 +266,10 @@ h1 {
   padding-left: 5px;
 }
 
-#energy, #timidity, #curiosity, #distance {
+#energy,
+#timidity,
+#curiosity,
+#distance {
   border: 1px solid hsla(210, 6%, 67%, 0.6);
   border-radius: 3%;
   height: 35px;
@@ -230,7 +277,6 @@ h1 {
   max-width: 250px;
   padding-left: 5px;
 }
-
 
 #otherSpecies {
   margin-top: 2vh;
@@ -242,5 +288,4 @@ h1 {
   text-align: center;
   margin-top: 5vh;
 }
-
 </style>
