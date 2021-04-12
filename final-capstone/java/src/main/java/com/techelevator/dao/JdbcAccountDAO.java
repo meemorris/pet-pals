@@ -2,6 +2,8 @@ package com.techelevator.dao;
 
 import com.techelevator.model.Account;
 import com.techelevator.model.AccountDTO;
+import com.techelevator.model.Location;
+import com.techelevator.services.MapService;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -16,13 +18,16 @@ public class JdbcAccountDAO implements AccountDAO{
     }
 
     @Override
-    public void create(AccountDTO accountDTO, int userId) {
+    public void create(AccountDTO accountDTO, int userId, MapService mapService) {
+        //get lat and lng
+        Location location = mapService.getLocation(accountDTO.getAddress(), accountDTO.getCity(), accountDTO.getState());
+
         //create account
         String sql = "INSERT INTO accounts (user_id, first_name, last_name, email, phone, address, city, state, " +
-                "zip, bio, pic) VALUES(?,?,?,?,?,?,?,?,?,?,?) ";
+                "zip, bio, pic, lat, lng) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?) ";
         jdbcTemplate.update(sql,  userId, accountDTO.getFirstName(), accountDTO.getLastName(), accountDTO.getEmail(),
                 accountDTO.getPhone(), accountDTO.getAddress(), accountDTO.getCity(), accountDTO.getState(),
-                accountDTO.getZip(), accountDTO.getBio(), accountDTO.getPic());
+                accountDTO.getZip(), accountDTO.getBio(), accountDTO.getPic(), location.getLat(), location.getLng());
 
 
 

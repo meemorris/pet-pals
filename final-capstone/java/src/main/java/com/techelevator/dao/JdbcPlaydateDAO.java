@@ -1,7 +1,9 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.CreatePlaydateDTO;
+import com.techelevator.model.Location;
 import com.techelevator.model.Playdate;
+import com.techelevator.services.MapService;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -23,11 +25,16 @@ public class JdbcPlaydateDAO implements PlaydateDAO {
 
 
     @Override
-    public long create(CreatePlaydateDTO playdateDTO) {
-        String sql = "INSERT INTO playdates (pet_id, address, city, state, zip, date) " +
-                "VALUES(?, ?, ?, ?, ?, ?) RETURNING playdate_id";
+    public long create(CreatePlaydateDTO playdateDTO, MapService mapService) {
+
+        //get lat and lng
+        Location location = mapService.getLocation(playdateDTO.getAddress(), playdateDTO.getCity(), playdateDTO.getState());
+
+        //create playdate
+        String sql = "INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) " +
+                "VALUES(?, ?, ?, ?, ?, ?, ?, ?) RETURNING playdate_id";
         Long playdateId = jdbcTemplate.queryForObject(sql, Long.class, playdateDTO.getPet().getPetId(), playdateDTO.getAddress(),
-                playdateDTO.getCity(), playdateDTO.getState(), playdateDTO.getZip(), playdateDTO.getDate());
+                playdateDTO.getCity(), playdateDTO.getState(), playdateDTO.getZip(), playdateDTO.getDate(), location.getLat(), location.getLng());
 
         return playdateId;
     }

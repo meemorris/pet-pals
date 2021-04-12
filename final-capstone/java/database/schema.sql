@@ -37,12 +37,14 @@ CREATE TABLE accounts (
         zip varchar(10) NOT NULL,
         bio varchar(1000),
         pic varchar(2083),
+        lat varchar(32),
+        lng varchar(32),
         CONSTRAINT PK_account PRIMARY KEY (account_id),
         CONSTRAINT FK_user FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
-INSERT INTO accounts (user_id, first_name, last_name, email, phone, address, city, state, zip, bio, pic) VALUES(2,'Adminnie','McUserson','admin@gmail.com',null,'1776 Mentor Ave','Cincinnati','OH','45212','I love pets and Tech Elevator','https://coursereport-production.imgix.net/uploads/school/logo/259/original/mark.png?w=200&h=200');
-INSERT INTO accounts (user_id, first_name, last_name, email, phone, address, city, state, zip, bio, pic) VALUES(1,'User','McUserson','user@gmail.com',null,'1776 Mentor Ave','Cincinnati','OH','45212','I love pets and Tech Elevator','https://images.squarespace-cdn.com/content/v1/590cc57ebe659408c68d77fd/1542727248986-IXU7LRPF57P1P7T3X6KW/ke17ZwdGBToddI8pDm48kLue6M7bjRoDm4ngETiAUll7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QPOohDIaIeljMHgDF5CVlOqpeNLcJ80NK65_fV7S1UbX0kVSBOaiAPmQOaCV_okilAZ2V09ysmDG9gGf1pgEmhkNt8GyT_TyPg6j8ik9Tkw/DSC_4456.JPG');
+INSERT INTO accounts (user_id, first_name, last_name, email, phone, address, city, state, zip, bio, pic, lat, lng) VALUES(2,'Adminnie','McUserson','admin@gmail.com',null,'1776 Mentor Ave','Cincinnati','OH','45212','I love pets and Tech Elevator','https://coursereport-production.imgix.net/uploads/school/logo/259/original/mark.png?w=200&h=200', '39.15239450000001', '-84.4667027');
+INSERT INTO accounts (user_id, first_name, last_name, email, phone, address, city, state, zip, bio, lat, lng) VALUES(1,'User','McUserson','user@gmail.com',null,'1776 Mentor Ave','Cincinnati','OH','45212','I love pets and Tech Elevator','39.15239450000001', '-84.4667027');
                
 
 
@@ -80,14 +82,16 @@ CREATE TABLE playdates (
         state varchar(32) NOT NULL,
         zip varchar(10) NOT NULL,
         date timestamp NOT NULL,
+        lat varchar(32),
+        lng varchar(32),
         CONSTRAINT PK_playdate PRIMARY KEY (playdate_id),
         CONSTRAINT FK_pet FOREIGN KEY (pet_id) REFERENCES pets(pet_id)
         
 );
 
-INSERT INTO playdates (pet_id, address, city, state, zip, date) VALUES (2, '7850 VOA Park Dr', 'Cincinnati', 'Ohio', '45069', '2021-04-10 12:00:00');
-INSERT INTO playdates (pet_id, address, city, state, zip, date) VALUES (3, '4686 Old Irwin Simpson Rd', 'Mason', 'Ohio', ' 45040', '2021-04-11 03:00:00');
-INSERT INTO playdates (pet_id, address, city, state, zip, date) VALUES (4, '4335 Glendale Milford Rd', 'Blue Ash', 'Ohio', ' 45242', '2021-04-15 10:00:00');
+INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) VALUES (2, '7850 VOA Park Dr', 'Cincinnati', 'Ohio', '45069', '2021-04-10 12:00:00', '39.3686391', '-84.346541');
+INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) VALUES (3, '4686 Old Irwin Simpson Rd', 'Mason', 'Ohio', ' 45040', '2021-04-11 03:00:00', '39.3090199', '-84.3074929');
+INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) VALUES (4, '4335 Glendale Milford Rd', 'Blue Ash', 'Ohio', ' 45242', '2021-04-15 10:00:00', '39.2519331', '-84.38789640000002');
 
 
 

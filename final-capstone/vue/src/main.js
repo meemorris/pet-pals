@@ -8,7 +8,7 @@ import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import moment from 'moment'
-//import * as VueGoogleMaps from 'vue2-google-maps'
+
 
 Vue.prototype.moment = moment
 Vue.config.productionTip = false
@@ -19,12 +19,6 @@ Vue.use(BootstrapVue);
 
 Vue.use(IconsPlugin);
 
-// Vue.use(VueGoogleMaps, {
-//   load: {
-//     key: 'AIzaSyCMDIDFLUZUj0iH6vHHsSb-hFw4ZQmhgus',
-//     libraries: 'places',
-//   }
-// });
 
 new Vue({
   router,
