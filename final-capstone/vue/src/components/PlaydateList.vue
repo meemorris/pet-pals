@@ -2,7 +2,7 @@
   <div id="list">
     <h1>Playdates</h1>
     <button class="btn btn-primary" v-on:click="toggleDisplayType">
-      View as {{ displayType === "List" ? "Map" : "List" }}
+      {{ displayType === "List" ? "View Map" : "Back to List" }}
     </button>
 
     <div id="filters">
@@ -175,7 +175,7 @@ export default {
             playdate.pet.apatheticCurious == this.filter.pet.apatheticCurious
         );
       }
-
+      this.repopulateMarkers(filteredPlaydates)
       return filteredPlaydates;
     },
   },
@@ -221,6 +221,7 @@ export default {
         });
     },
     populateMarkers(){
+
       this.playdateList.forEach(element => {
         let marker = {
           id : element.playdateId,
@@ -228,7 +229,17 @@ export default {
         };
         this.markers.push(marker);
       })
-    }
+    },
+    repopulateMarkers(list){
+      this.markers = []
+      list.forEach(element => {
+        let marker = {
+          id : element.playdateId,
+          position: { lat: Number(element.lat), lng: Number(element.lng) }
+        };
+        this.markers.push(marker);
+      })
+    },
   },
 };
 </script>
