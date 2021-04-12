@@ -14,6 +14,8 @@ public class JdbcPlaydateDAO implements PlaydateDAO {
 
     private JdbcTemplate jdbcTemplate;
     private PetDAO petDAO;
+    private static final boolean IS_HOST = true;
+    private static final boolean IS_NOT_HOST = false;
 
     public JdbcPlaydateDAO(JdbcTemplate jdbcTemplate, PetDAO petDAO) {
         this.jdbcTemplate = jdbcTemplate;
@@ -28,6 +30,10 @@ public class JdbcPlaydateDAO implements PlaydateDAO {
                 "VALUES(?, ?, ?, ?, ?, ?) RETURNING playdate_id";
         Long playdateId = jdbcTemplate.queryForObject(sql, Long.class, playdateDTO.getPet().getPetId(), playdateDTO.getAddress(),
                 playdateDTO.getCity(), playdateDTO.getState(), playdateDTO.getZip(), playdateDTO.getDate());
+
+        //add to linker table
+        String sqlPetPlaydate = "INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES(?,?,?)";
+        jdbcTemplate.update(sqlPetPlaydate, playdateId, playdateDTO.getPet().getPetId(), IS_HOST);
 
         return playdateId;
     }
@@ -53,6 +59,12 @@ public class JdbcPlaydateDAO implements PlaydateDAO {
             playdates.add(mapRowToPlaydate(results));
         }
         return playdates;
+    }
+
+    @Override
+    public long joinPlaydate(int petId, int playdateId) {
+        String sql = "INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES(?,?,?)";
+        return jdbcTemplate.update(sql, playdateId, petId, IS_NOT_HOST);
     }
 
 

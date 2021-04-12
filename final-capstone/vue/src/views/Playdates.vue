@@ -1,18 +1,17 @@
 <template>
   <div>
-    <playdate-list/>
+    <playdate-list />
   </div>
 </template>
 <script>
-
-import PlaydateList from '../components/PlaydateList.vue';
+import PlaydateList from "../components/PlaydateList.vue";
 
 export default {
   name: "playdates",
   components: {
-    PlaydateList
-  }
-}
+    PlaydateList,
+  },
+};
 </script>
 
 <style scoped>

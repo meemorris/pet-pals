@@ -1,6 +1,7 @@
 <template>
   <div id="accountInfo">
-    <img v-bind:src="account.pic" />
+    <img v-if="account.pic" v-bind:src="account.pic" alt="profile picture"/>
+    <img v-else src="@/assets/default-user-pic.jpg" alt="profile picture">
     <h3>{{ account.firstName }} {{ account.lastName }}</h3>
     <h4>{{account.bio}}</h4>
     <p>{{ account.email }}</p>
@@ -37,6 +38,7 @@ img {
   margin-bottom: 10px;
   margin-left: 10px;
   margin-right: 10px;
+  border: 1px solid hsla(240, 1%, 40%, 0.2);
 }
 h4 {
     font-style: italic;

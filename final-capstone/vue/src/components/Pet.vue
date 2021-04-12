@@ -5,7 +5,7 @@
     <h2 id="pet-name">{{ pet.name }}</h2>
 
     <img class="pet-pic" v-if="pet.pic" v-bind:src="pet.pic" />
-    <img class="pet-pic" v-else src="@/assets/noPetPic.png" />
+    <img class="pet-pic default-pic" v-else src="@/assets/paws-default-white.png" />
 
     <div id="playdates">
       <h3>Scheduled Playdates</h3>
@@ -168,6 +168,10 @@ h3 {
   grid-area: image;
   max-width: 25vw;
   margin-left: 30%;
+}
+
+.default-pic {
+  border: 3px solid hsla(240, 1%, 40%, 0.2);
 }
 
 #playdates {
