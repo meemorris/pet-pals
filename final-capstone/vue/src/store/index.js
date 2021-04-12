@@ -46,6 +46,8 @@ export default new Vuex.Store({
       zip: '',
       bio: '',
       pic: '',
+      lat: '',
+      lng: '',
     },
   },
   mutations: {

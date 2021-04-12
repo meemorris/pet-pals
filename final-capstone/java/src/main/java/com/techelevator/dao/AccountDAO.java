@@ -7,7 +7,7 @@ import com.techelevator.services.MapService;
 public interface AccountDAO {
     void create(AccountDTO accountDTO, int userId, MapService mapService);
 
-    void updateAccount(int id, AccountDTO accountDTO);
+    void updateAccount(int id, AccountDTO accountDTO, MapService mapService);
 
     Account getAccount(int id);
 }

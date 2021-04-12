@@ -38,7 +38,7 @@ public class AccountController {
     }
 
     @RequestMapping(path = "/profile/{id}", method = RequestMethod.PUT)
-    public void updateAccount(@PathVariable int id, @Valid @RequestBody AccountDTO accountDTO){
-        accountDAO.updateAccount(id, accountDTO);
+    public void updateAccount(@PathVariable int id, @Valid @RequestBody AccountDTO accountDTO, MapService mapService){
+        accountDAO.updateAccount(id, accountDTO, mapService);
     }
 }

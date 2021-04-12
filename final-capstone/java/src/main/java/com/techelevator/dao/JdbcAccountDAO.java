@@ -34,12 +34,15 @@ public class JdbcAccountDAO implements AccountDAO{
     }
 
     @Override
-    public void updateAccount(int id, AccountDTO accountDTO) {
+    public void updateAccount(int id, AccountDTO accountDTO, MapService mapService) {
+        //get lat and long
+        Location location = mapService.getLocation(accountDTO.getAddress(), accountDTO.getCity(), accountDTO.getState());
+
         String sql = "UPDATE accounts SET first_name = ?, last_name = ?, email = ?, phone = ?, address = ?, " +
-                "city = ?, state = ?, zip = ?, bio = ?, pic = ? WHERE user_id = ?";
+                "city = ?, state = ?, zip = ?, bio = ?, pic = ?, lat=?, lng=? WHERE user_id = ?";
         jdbcTemplate.update(sql, accountDTO.getFirstName(), accountDTO.getLastName(), accountDTO.getEmail(),
                 accountDTO.getPhone(), accountDTO.getAddress(), accountDTO.getCity(), accountDTO.getState(),
-                accountDTO.getZip(), accountDTO.getBio(), accountDTO.getPic(), id);
+                accountDTO.getZip(), accountDTO.getBio(), accountDTO.getPic(), location.getLat(), location.getLng(), id);
 
     }
 
@@ -48,7 +51,7 @@ public class JdbcAccountDAO implements AccountDAO{
         Account account = new Account();
 
         String sql = "SELECT first_name, last_name, email, phone, address, city, state, " +
-                "zip, bio, pic FROM accounts WHERE user_id = ?";
+                "zip, bio, pic, lat, lng FROM accounts WHERE user_id = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
         if(results.next()) {
             account = mapRowToAccount(results);
@@ -69,6 +72,8 @@ public class JdbcAccountDAO implements AccountDAO{
         account.setZip(results.getString("zip"));
         account.setBio(results.getString("bio"));
         account.setPic(results.getString("pic"));
+        account.setLat(results.getString("lat"));
+        account.setLng(results.getString("lng"));
         return account;
     }
 }

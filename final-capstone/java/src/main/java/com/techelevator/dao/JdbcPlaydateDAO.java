@@ -42,7 +42,7 @@ public class JdbcPlaydateDAO implements PlaydateDAO {
     @Override
     public Playdate getPlaydate(int id) {
         Playdate playdate = new Playdate();
-        String sql = "SELECT playdate_id, pet_id, address, city, state, zip, date FROM playdates WHERE playdate_id = ?";
+        String sql = "SELECT playdate_id, pet_id, address, city, state, zip, date, lat, lng FROM playdates WHERE playdate_id = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
         if(results.next()) {
             playdate = mapRowToPlaydate(results);
@@ -54,7 +54,7 @@ public class JdbcPlaydateDAO implements PlaydateDAO {
     public List<Playdate> getAllPlaydates() {
         List<Playdate> playdates = new ArrayList<>();
 
-        String sql = "SELECT playdate_id, pet_id, address, city, state, zip, date FROM playdates";
+        String sql = "SELECT playdate_id, pet_id, address, city, state, zip, date, lat, lng FROM playdates";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         while(results.next()) {
             playdates.add(mapRowToPlaydate(results));
@@ -73,6 +73,8 @@ public class JdbcPlaydateDAO implements PlaydateDAO {
         playdate.setState(results.getString("state"));
         playdate.setZip(results.getString("zip"));
         playdate.setDate(results.getTimestamp("date").toLocalDateTime());
+        playdate.setLat(results.getString("lat"));
+        playdate.setLng(results.getString("lng"));
         return playdate;
     }
 }

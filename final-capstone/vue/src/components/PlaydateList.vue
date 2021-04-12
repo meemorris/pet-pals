@@ -84,14 +84,13 @@
         <playdate-details v-bind:playdate="playdate" />
       </div>
     </div>
-    <TravelMap v-else class="travel-map" v-bind:playdateList="playdateList" v-bind:mapMarkers="markers"/>
+    <TravelMap v-else class="travel-map" v-bind:playdateList="playdateList" v-bind:markers="markers"/>
   </div>
 </template>
 <script>
 import playdateService from "@/services/PlaydateService";
 import PlaydateDetails from "@/components/PlaydateDetails.vue";
 import TravelMap from "@/components/TravelMap";
-import MapService from "@/services/MapService"
 
 export default {
   name: "playdates",
@@ -120,6 +119,8 @@ export default {
         state: "",
         zip: "",
         date: "",
+        lat: "",
+        lng: "",
       },
       markers: [],
     };
@@ -220,18 +221,11 @@ export default {
         });
     },
     populateMarkers(){
-      this.playdateList.forEach(playdate => {
-        const addressString = playdate.address + " " + playdate.city + " " + playdate.state;
-        const replaced = addressString.split(' ').join('+');
+      this.playdateList.forEach(element => {
         let marker = {
-          id : addressString,
-          position: { lat: "", lng: "" }
+          id : element.playdateId,
+          position: { lat: Number(element.lat), lng: Number(element.lng) }
         };
-        MapService.getLatAndLong(replaced, "AIzaSyCMDIDFLUZUj0iH6vHHsSb-hFw4ZQmhgus")
-        .then((response) => {
-          marker.position.lat = response.geometry.location.lat;
-          marker.position.lng = response.geometry.location.lng;
-        })
         this.markers.push(marker);
       })
     }

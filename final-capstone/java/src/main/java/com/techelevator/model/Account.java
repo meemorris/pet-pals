@@ -12,11 +12,12 @@ public class Account {
     private String zip;
     private String bio;
     private String pic;
-    private Location location;
+    private String lat;
+    private String lng;
 
     public Account(){}
 
-    public Account(String firstName, String lastName, String email, String phone, String address, String city, String state, String zip, String bio, String pic, Location location) {
+    public Account(String firstName, String lastName, String email, String phone, String address, String city, String state, String zip, String bio, String pic, String lat, String lng) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -27,7 +28,8 @@ public class Account {
         this.zip = zip;
         this.bio = bio;
         this.pic = pic;
-        this.location = location;
+        this.lat = lat;
+        this.lng = lng;
     }
 
     public String getFirstName() {
@@ -110,11 +112,19 @@ public class Account {
         this.pic = pic;
     }
 
-    public Location getCoordinates() {
-        return location;
+    public String getLat() {
+        return lat;
     }
 
-    public void setCoordinates(Location location) {
-        this.location = location;
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
     }
 }
