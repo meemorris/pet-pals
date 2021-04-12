@@ -8,7 +8,9 @@ export default {
 
   getListOfPlaydates(){
     return axios.get('/playdates')
-  }
+  },
 
-  
+  joinPlaydate(petId, playdateId) {
+    return axios.post(`${petId}/join/playdate/${playdateId}`)
+  }
 }

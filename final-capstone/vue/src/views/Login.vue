@@ -3,12 +3,12 @@
     <form class="form-signin" @submit.prevent="login">
       <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
       <div
-        class="alert alert-danger"
+        class="alert alert-danger login-message"
         role="alert"
         v-if="invalidCredentials"
       >Invalid username and password!</div>
       <div
-        class="alert alert-success"
+        class="alert alert-success login-message"
         role="alert"
         v-if="this.$route.query.registration"
       >Thank you for registering, please sign in.</div>
@@ -85,6 +85,13 @@ h1 {
   background-size: cover;
   height: 100vh;
   background-position: 5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-message {
+  max-width: 350px;
 }
 
 /* .form-signin {

@@ -39,4 +39,10 @@ public class PlaydateController {
     public List<Playdate> getAllPlaydates() {
         return playdateDAO.getAllPlaydates();
     }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @RequestMapping(path = "{petId}/join/playdate/{playdateId}", method = RequestMethod.POST)
+    public long addPetToPlaydate(@PathVariable int petId, @PathVariable int playdateId) {
+        return playdateDAO.joinPlaydate(petId, playdateId);
+    }
 }

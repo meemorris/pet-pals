@@ -2,7 +2,7 @@
   <div id="register" class="text-center">
     <form class="form-register" @submit.prevent="register">
       <h1 class="h3 mb-3 font-weight-normal">Create Account</h1>
-      <div class="alert alert-danger" role="alert" v-if="registrationErrors">
+      <div id="register-message" class="alert alert-danger" role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
       </div>
       <label for="username" class="sr-only">Username</label>
@@ -101,6 +101,13 @@ h1 {
   background-size: cover;
   height: 100vh;
   background-position: 5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#register-message {
+  max-width: 350px;
 }
 
 </style>

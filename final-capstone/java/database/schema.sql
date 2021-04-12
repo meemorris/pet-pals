@@ -1,5 +1,6 @@
 BEGIN TRANSACTION;
 
+DROP TABLE IF EXISTS playdates_pets;
 DROP TABLE IF EXISTS playdates;
 DROP TABLE IF EXISTS accounts;
 DROP TABLE IF EXISTS pets;
@@ -93,6 +94,13 @@ INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) VALUES
 INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) VALUES (3, '4686 Old Irwin Simpson Rd', 'Mason', 'Ohio', ' 45040', '2021-04-11 03:00:00', '39.3090199', '-84.3074929');
 INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) VALUES (4, '4335 Glendale Milford Rd', 'Blue Ash', 'Ohio', ' 45242', '2021-04-15 10:00:00', '39.2519331', '-84.38789640000002');
 
-
+CREATE TABLE playdates_pets (
+        playdate_id int NOT NULL,
+        pet_id int NOT NULL,
+        is_host boolean NOT NULL,
+        
+        CONSTRAINT FK_playdate FOREIGN KEY(playdate_id) REFERENCES playdates(playdate_id),
+        CONSTRAINT FK_pet FOREIGN KEY(pet_id) REFERENCES pets(pet_id)
+);
 
 COMMIT TRANSACTION;

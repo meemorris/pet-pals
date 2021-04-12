@@ -153,4 +153,9 @@ input[type="email"] {
   margin-bottom: 15px;
 }
 
+.default-pic {
+  border: 1px solid hsla(240, 1%, 40%, 0.2);
+  border-radius: 2%;
+}
+
 </style>

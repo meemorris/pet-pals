@@ -6,7 +6,11 @@
         v-if="playdate.pet.pic"
         v-bind:src="playdate.pet.pic"
       />
-      <img class="pet-pic" v-else src="@/assets/noPetPic.png" />
+      <img
+        class="pet-pic default-pic"
+        v-else
+        src="@/assets/paws-default-white.png"
+      />
 
       <h4>Playdate with {{ playdate.pet.name }}</h4>
 
@@ -27,7 +31,11 @@
           v-if="playdate.pet.pic"
           v-bind:src="playdate.pet.pic"
         />
-        <img class="pet-pic" v-else src="@/assets/noPetPic.png" />
+        <img
+          class="pet-pic default-pic"
+          v-else
+          src="@/assets/paws-default-white.png"
+        />
       </div>
       <div id="title">
         <h4>Playdate with {{ playdate.pet.name }}</h4>
@@ -68,13 +76,34 @@
         </div>
       </div>
       <div id="join-playdate">
-        <router-link
+        <!-- <router-link
           :to="{ name: 'createPlaydate' }"
           id="createPlaydate"
           tag="button"
           class="btn btn-primary"
           >Join Playdate</router-link
-        >
+        > -->
+        <button class="btn btn-primary">
+          Join Playdate
+        </button>
+
+        <div id="selectPet">
+          <div>
+            <select
+              name="petName"
+              id="petName"
+              v-on:click="findPetByName"
+              v-on:change="togglePetQuestion"
+              v-model="petName"
+              required
+            >
+              <option value="" default disabled>Pet Name</option>
+              <option v-for="pet in $store.state.pets" v-bind:key="pet.petId">
+                {{ pet.name }}
+              </option>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -82,6 +111,7 @@
 
 <script>
 import userService from "@/services/UserService";
+import playdateService from "@/services/PlaydateService";
 export default {
   name: "playdateDetails",
   props: ["playdate"],
@@ -93,6 +123,8 @@ export default {
       owner: {},
       showSmall: true,
       showLarge: false,
+      pet: {},
+      petName: ""
     };
   },
   computed: {
@@ -101,6 +133,9 @@ export default {
     },
   },
   methods: {
+    maintainLargeDisplay() {
+      this.showSmall = false;
+    },
     getOwner() {
       return userService
         .getProfile(this.playdate.pet.userId)
@@ -117,6 +152,46 @@ export default {
         this.showLarge = false;
       }
     },
+    addPetToPlaydate() {
+      playdateService
+      .joinPlaydate(this.playdate.playdateId, this.pet.petId)
+      .then((response) => {
+        if (response.status === 201) {
+          this.$router.push('/playdates');
+        }
+      })
+      .catch((error) => {
+            if (error.response) {
+              alert(
+                "Playdate could not be joined. Response was " +
+                  error.response.statusText
+              );
+            } else if (error.request) {
+              alert(
+                "Playdate could not be joined. Server could not be reached"
+              );
+            } else {
+              alert(
+                "Playdate could not be joined. Request could not be created."
+              );
+            }
+          });
+    },
+
+    findPetByName() {
+      this.pet = this.$store.state.pets.find(
+        (pet) => pet.name === this.petName
+      );
+      this.petName = '';
+    },
+    togglePetQuestion() {
+      let petQuestionElement = document.getElementById("petName");
+      if (this.petName == "") {
+        petQuestionElement.classList.remove("d-none");
+      } else {
+        petQuestionElement.classList.add("d-none");
+      }
+    }
   },
 };
 </script>

@@ -3,7 +3,7 @@
     <div class="card">
     <h3 class="card-title">{{ pet.name }}</h3>
     <img class="pet-pic card-img-top" v-if="pet.pic" v-bind:src="pet.pic" />
-    <img class="pet-pic card-img-top" v-else src="@/assets/noPetPic.png" />
+    <img class="pet-pic card-img-top default-pic" v-else src="@/assets/paws-default-white.png" />
     </div>
     </div>
 </template>
@@ -46,5 +46,10 @@ h3 {
   border-radius: 2%;
   cursor: pointer;
 }
+
+/* .default-pic {
+  border: 1px solid hsla(240, 1%, 40%, 0.2);
+  border-radius: 2%;
+} */
 
 </style>
