@@ -47,11 +47,11 @@ export default {
         "https://www.gstatic.com/earth/images/stockicons/190201-2016-animal-paw_4x.png",
       //POINT_MARKER_ICON_CONFIG
     });
-    // this.google.maps.event.addListener(this.marker,'click', () => {
-    //   console.log("clicked");
-    //   this.map.setZoom(8);
-    //   this.map.setCenter(this.marker.getPosition());
-    // });
+    this.google.maps.event.addListener(this.marker,'click', () => {
+      console.log("clicked");
+      this.map.setZoom(8);
+      this.map.setCenter(this.marker.getPosition());
+    });
     // this.$store.state.playdateList.forEach(element => {
     //   const id = element.playdayId
     //   this.displayDetails.id = false})
