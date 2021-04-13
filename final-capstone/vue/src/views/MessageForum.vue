@@ -10,7 +10,7 @@ import userService from "@/services/UserService";
 import messageService from "@/services/MessageService";
 
 export default {
-  name: "messageform",
+  name: "messageforum",
   components: {
     MessageForm,
   },

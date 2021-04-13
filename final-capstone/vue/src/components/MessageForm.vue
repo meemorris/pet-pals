@@ -16,7 +16,7 @@
 import messageService from "@/services/MessageService";
 
 export default {
-  name: "messages",
+  name: "messageforum",
   data() {
     return {
       displayType: "List",
@@ -46,6 +46,7 @@ export default {
       messageService
         .getListofMessages()
         .then((response) => {
+          console.log(response);
           this.$store.commit("SET_MESSAGE_LIST", response.data);
         })
         .catch((error) => {
