@@ -1,6 +1,7 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.PlaydateDAO;
+import com.techelevator.dao.UserDAO;
 import com.techelevator.model.CreatePlaydateDTO;
 import com.techelevator.model.Pet;
 import com.techelevator.model.Playdate;
@@ -18,10 +19,12 @@ import java.util.List;
 public class PlaydateController {
 
     private PlaydateDAO playdateDAO;
+    private UserDAO userDAO;
     private MapService mapService;
 
-    public PlaydateController(PlaydateDAO playdateDAO, MapService mapService) {
+    public PlaydateController(PlaydateDAO playdateDAO, UserDAO userDAO, MapService mapService) {
         this.playdateDAO = playdateDAO;
+        this.userDAO = userDAO;
         this.mapService = mapService;
     }
 
@@ -37,8 +40,9 @@ public class PlaydateController {
     }
 
     @RequestMapping(path = "/playdates", method = RequestMethod.GET)
-    public List<Playdate> getAllPlaydates() {
-        return playdateDAO.getAllPlaydates();
+    public List<Playdate> getAllPlaydates(Principal principal) {
+        int userId = userDAO.findIdByUsername(principal.getName());
+        return playdateDAO.getAllPlaydates(mapService, userId);
     }
 
     @ResponseStatus(HttpStatus.CREATED)

@@ -120,6 +120,7 @@ export default {
         date: "",
         lat: "",
         lng: "",
+        distanceFromUser: "",
       },
       markers: [],
     };
