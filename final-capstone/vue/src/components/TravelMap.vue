@@ -10,8 +10,8 @@
       :marker="marker"
       :google="google"
       :map="map"
+    
     />
-
   </template>
 </GoogleMapLoader>
 </template>
@@ -33,6 +33,7 @@ export default {
   props: ["playdateList", "markers"],
 
   methods:{
+
    
   },
 
