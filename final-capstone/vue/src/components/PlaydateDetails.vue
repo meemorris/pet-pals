@@ -132,6 +132,7 @@
 <script>
 import userService from "@/services/UserService";
 import playdateService from "@/services/PlaydateService";
+// import GoogleMapLoader from "./GoogleMapLoader";
 export default {
   name: "playdateDetails",
   props: ["playdate"],
@@ -191,8 +192,15 @@ export default {
         .getProfile(this.playdate.pet.userId)
         .then((response) => {
           this.owner = response.data;
+          // this.getDistance();
         });
     },
+    // getDistance(){
+    //   return GoogleMapLoader.getDistance(Number(this.$store.state.accountInfo.lat), Number(this.$store.state.accountInfo.lng), Number(this.playdate.lat), Number(this.playdate.lng))
+    //   .then((response) => {
+    //     this.distance = response.data;
+    //   })
+    // },
     toggleDisplay() {
       if (this.showSmall && !this.showForm) {
         this.showSmall = false;
