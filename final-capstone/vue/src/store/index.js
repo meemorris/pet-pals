@@ -96,9 +96,9 @@ export default new Vuex.Store({
     SET_PLAYDATE_LIST(state, data){
       state.playdateList = data;
     },
-    ADD_PLAYDATE_DISTANCE(state, id, data){
-      const index = state.playdateList.findIndex(element => element.playdateId === id)
-      state.playdateList[index].distance = data;
+    ADD_PLAYDATE_DISTANCE(state, data){
+      const index = state.playdateList.findIndex(element => element.playdateId == data.id)
+      state.playdateList[index].distance = data.distance;
     }
   }
 })

@@ -10,6 +10,7 @@
 
 <script>
 import GoogleMapsApiLoader from "google-maps-api-loader";
+import store from '@/store/index'
 
 export default {
   props: {
@@ -29,75 +30,88 @@ export default {
     this.google = googleMapApi;
     this.initializeMap();
     this.$store.state.playdateList.forEach((element) => {
-      this.getDistance(
-        Number(this.$store.state.accountInfo.lat),
-        Number(this.$store.state.accountInfo.lng),
-        Number(element.lat),
-        Number(element.lng)
-      )
-        .then((response) => {
-          if (response.status === 200) {
-            this.$store.commit(
-              "ADD_PLAYDATE_DISTANCE",
-              element.playdateId,
-              response.data
-            );
+      
+      const LatOrigin = Number(this.$store.state.accountInfo.lat);
+      const LngOrigin =  Number(this.$store.state.accountInfo.lng);
+      const LatDest = Number(element.lat);
+      const LngDest =  Number(element.lng);
+      const origin = new this.google.maps.LatLng(LatOrigin, LngOrigin);
+      const destination = new this.google.maps.LatLng(LatDest, LngDest);
+      const service = new this.google.maps.DistanceMatrixService();
+      //  return new Promise((resolve, reject) => {
+        service.getDistanceMatrix(
+          {
+            origins: [origin],
+            destinations: [destination],
+            travelMode: "DRIVING",
+            unitSystem: this.google.maps.UnitSystem.IMPERIAL,
+            // avoidHighways: false,
+            // avoidTolls: false,
+          },
+          function (resp, status) {
+            if (status == "OK") {
+              // var origins = response.originAddresses;
+              // var destinations = response.destinationAddresses;
+              const resultat = resp.rows[0].elements[0].distance.text;
+              console.log("distance : " + resultat);
+              const distanceArray = resultat.split(" ");
+              const distance = distanceArray[0];
+              const id = element.playdateId;
+              const data = {
+                "id": id,
+                "distance": Number(distance)
+              }
+              store.commit(
+                "ADD_PLAYDATE_DISTANCE",
+                data
+              );
+            } 
           }
-        })
-        .catch((error) => {
-          if (error.response) {
-            alert(
-              "Distance could not be calculated. Response was " +
-                error.response.statusText
-            );
-          } else if (error.request) {
-            alert(
-              "Distance could not be calculated. Server could not be reached"
-            );
-          } else {
-            alert(
-              "Distance could not be calculated. Request could not be created."
-            );
-          }
-        });
-    });
-  },
-
+        );
+    // })
+    })},
   methods: {
     initializeMap() {
       const mapContainer = this.$refs.googleMap;
       this.map = new this.google.maps.Map(mapContainer, this.mapConfig);
     },
-    async getDistance(LatOrigin, LngOrigin, LatDest, LngDest) {
-      const origin = new this.google.maps.LatLng(LatOrigin, LngOrigin);
-      const destination = new this.google.maps.LatLng(LatDest, LngDest);
-      const service = new this.google.maps.DistanceMatrixService();
+    // async getDistance(LatOrigin, LngOrigin, LatDest, LngDest, element) {
+    //   const origin = new this.google.maps.LatLng(LatOrigin, LngOrigin);
+    //   const destination = new this.google.maps.LatLng(LatDest, LngDest);
+    //   const service = new this.google.maps.DistanceMatrixService();
 
-      let response;
-      service.getDistanceMatrix(
-        {
-          origins: [origin],
-          destinations: [destination],
-          travelMode: "DRIVING",
-          unitSystem: this.google.maps.UnitSystem.imperial,
-          // avoidHighways: false,
-          // avoidTolls: false,
-        },
-        function (resp, status) {
-          if (status == "OK") {
-            // var origins = response.originAddresses;
-            // var destinations = response.destinationAddresses;
-            var resultat = resp.rows[0].elements[0].distance.text;
-            console.log("distance : " + resultat); // display 1.2km
-//            resolve(resp);
-            response = resp;
-          }
-        }
-              
-      );
-      return response;
-
-    },
+    //   return new Promise((resolve, reject) => {
+    //     let response;
+    //     service.getDistanceMatrix(
+    //       {
+    //         origins: [origin],
+    //         destinations: [destination],
+    //         travelMode: "DRIVING",
+    //         unitSystem: this.google.maps.UnitSystem.IMPERIAL,
+    //         // avoidHighways: false,
+    //         // avoidTolls: false,
+    //       },
+    //       function (resp, status) {
+    //         if (status == "OK") {
+    //           // var origins = response.originAddresses;
+    //           // var destinations = response.destinationAddresses;
+    //           var resultat = resp.rows[0].elements[0].distance.text;
+    //           console.log("distance : " + resultat);
+    //           this.$store.commit(
+    //             "ADD_PLAYDATE_DISTANCE",
+    //             element.playdateId,
+    //             resultat
+    //           );
+    //           // resolve(resp);
+    //           response = resultat;
+    //         } else {
+    //           response = reject(status);
+    //         }
+    //       }
+    //     );
+    //     return response;
+    //   });
+    // },
   },
 };
 </script>
