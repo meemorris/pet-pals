@@ -64,15 +64,15 @@
       </div>
 
       <div id="distance-group">
-        <select name="distance" id="distance">
+        <select name="distance" id="distance" v-model="filter.distanceFromUser">
           <option value="" default selected disabled>Max Distance</option>
           <option value="">Any Distance</option>
-          <option value="fiveMiles">5 miles</option>
-          <option value="tenMiles">10 miles</option>
-          <option value="fifteenMiles">15 miles</option>
-          <option value="twentyMiles">20 miles</option>
-          <option value="twentyFiveMiles">25 miles</option>
-          <option value="fiftyMiles">50 miles</option>
+          <option value="5">5 miles</option>
+          <option value="10">10 miles</option>
+          <option value="15">15 miles</option>
+          <option value="20">20 miles</option>
+          <option value="25">25 miles</option>
+          <option value="50">50 miles</option>
         </select>
       </div>
     </div>
@@ -120,6 +120,7 @@ export default {
         date: "",
         lat: "",
         lng: "",
+        distanceFromUser: "",
       },
       markers: [],
     };
@@ -173,6 +174,12 @@ export default {
           (playdate) =>
             playdate.pet.apatheticCurious == this.filter.pet.apatheticCurious
         );
+      }
+      if (this.filter.distanceFromUser != "") {
+        filteredPlaydates = filteredPlaydates.filter(
+          (playdate) => 
+          Number(playdate.distanceFromUser.split(" ")[0]) <= Number(this.filter.distanceFromUser)
+        )
       }
       this.repopulateMarkers(filteredPlaydates)
       return filteredPlaydates;

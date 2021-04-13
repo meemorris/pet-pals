@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.CreatePlaydateDTO;
+import com.techelevator.model.Pet;
 import com.techelevator.model.Playdate;
 import com.techelevator.services.MapService;
 
@@ -11,9 +12,11 @@ public interface PlaydateDAO {
 
     Playdate getPlaydate(int id);
 
-    List<Playdate> getAllPlaydates();
+    List<Playdate> getAllPlaydates(MapService mapService, int userId);
 
     long joinPlaydate(int playdateId, int petId);
 
     List<Playdate> getScheduledPlaydates(int petId);
+
+
 }

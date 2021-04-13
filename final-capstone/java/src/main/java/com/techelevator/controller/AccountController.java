@@ -4,6 +4,7 @@ import com.techelevator.dao.AccountDAO;
 import com.techelevator.dao.UserDAO;
 import com.techelevator.model.Account;
 import com.techelevator.model.AccountDTO;
+import com.techelevator.model.Location;
 import com.techelevator.services.MapService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +29,13 @@ public class AccountController {
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/profile", method = RequestMethod.POST)
     public void create(@Valid @RequestBody AccountDTO accountDTO, Principal principal) {
+        //get user id
         int userId = userDAO.findIdByUsername(principal.getName());
-        accountDAO.create(accountDTO, userId, mapService);
+
+        //get lat and lng
+        Location location = mapService.getLocation(accountDTO.getAddress(), accountDTO.getCity(), accountDTO.getState());
+
+        accountDAO.create(accountDTO, userId, location);
     }
 
     @RequestMapping(path = "/profile/{id}", method = RequestMethod.GET)
@@ -38,7 +44,10 @@ public class AccountController {
     }
 
     @RequestMapping(path = "/profile/{id}", method = RequestMethod.PUT)
-    public void updateAccount(@PathVariable int id, @Valid @RequestBody AccountDTO accountDTO, MapService mapService){
-        accountDAO.updateAccount(id, accountDTO, mapService);
+    public void updateAccount(@PathVariable int id, @Valid @RequestBody AccountDTO accountDTO){
+        //get lat and lng
+        Location location = mapService.getLocation(accountDTO.getAddress(), accountDTO.getCity(), accountDTO.getState());
+
+        accountDAO.updateAccount(id, accountDTO, location);
     }
 }

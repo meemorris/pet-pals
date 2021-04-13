@@ -100,9 +100,9 @@ export default new Vuex.Store({
     SET_MESSAGE_LIST(state, data) {
       state.messageList = data;
     },
-    ADD_PLAYDATE_DISTANCE(state, data){
-      const index = state.playdateList.findIndex(element => element.playdateId == data.id)
-      state.playdateList[index].distance = data.distance;
-    }
+    // ADD_PLAYDATE_DISTANCE(state, data){
+    //   const index = state.playdateList.findIndex(element => element.playdateId == data.id)
+    //   state.playdateList[index].distance = data.distance;
+    // }
   }
 })
