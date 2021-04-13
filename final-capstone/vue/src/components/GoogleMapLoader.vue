@@ -68,21 +68,35 @@ export default {
       const mapContainer = this.$refs.googleMap;
       this.map = new this.google.maps.Map(mapContainer, this.mapConfig);
     },
-    getDistance(LatOrigin, LngOrigin, LatDest, LngDest) {
+    async getDistance(LatOrigin, LngOrigin, LatDest, LngDest) {
       const origin = new this.google.maps.LatLng(LatOrigin, LngOrigin);
       const destination = new this.google.maps.LatLng(LatDest, LngDest);
       const service = new this.google.maps.DistanceMatrixService();
-      console.log(origin);
-      console.log(destination);
-      console.log(service);
-      return service.getDistanceMatrix({
-        origins: [origin],
-        destinations: [destination],
-        travelMode: "DRIVING",
-        unitSystem: this.google.maps.UnitSystem.imperial,
-        // avoidHighways: false,
-        // avoidTolls: false,
-      });
+
+      let response;
+      service.getDistanceMatrix(
+        {
+          origins: [origin],
+          destinations: [destination],
+          travelMode: "DRIVING",
+          unitSystem: this.google.maps.UnitSystem.imperial,
+          // avoidHighways: false,
+          // avoidTolls: false,
+        },
+        function (resp, status) {
+          if (status == "OK") {
+            // var origins = response.originAddresses;
+            // var destinations = response.destinationAddresses;
+            var resultat = resp.rows[0].elements[0].distance.text;
+            console.log("distance : " + resultat); // display 1.2km
+//            resolve(resp);
+            response = resp;
+          }
+        }
+              
+      );
+      return response;
+
     },
   },
 };
