@@ -5,7 +5,7 @@
       {{ displayType === "List" ? "View Map" : "Back to List" }}
     </button>
 
-    <div id="filters">
+    <div id="filters" v-show="displayTypeIsList">
       <div id="species-group">
         <select
           name="species"
@@ -84,7 +84,7 @@
         <playdate-details v-bind:playdate="playdate" />
       </div>
     </div>
-    <TravelMap v-else class="travel-map" v-bind:playdateList="playdateList" v-bind:markers="markers"/>
+    <TravelMap v-else class="travel-map" v-bind:playdateList="filteredList" v-bind:markers="markers"/>
   </div>
 </template>
 <script>
@@ -97,7 +97,6 @@ export default {
   data() {
     return {
       displayType: "List",
-      playdateList: [],
       filter: {
         playdate_id: "",
         pet: {
@@ -138,7 +137,7 @@ export default {
       return this.displayType === "List";
     },
     filteredList() {
-      let filteredPlaydates = this.playdateList;
+      let filteredPlaydates = this.$store.state.playdateList;
       const isListedOption =
         this.filter.pet.species === "dog" ||
         this.filter.pet.species === "cat" ||
@@ -200,7 +199,7 @@ export default {
       playdateService
         .getListOfPlaydates()
         .then((response) => {
-          this.playdateList = response.data;
+          this.$store.commit("SET_PLAYDATE_LIST", response.data);
           this.populateMarkers();
         })
         .catch((error) => {
@@ -222,7 +221,7 @@ export default {
     },
     populateMarkers(){
 
-      this.playdateList.forEach(element => {
+      this.filteredList.forEach(element => {
         let marker = {
           id : element.playdateId,
           position: { lat: Number(element.lat), lng: Number(element.lng) }

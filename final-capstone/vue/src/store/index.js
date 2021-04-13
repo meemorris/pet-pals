@@ -49,6 +49,7 @@ export default new Vuex.Store({
       lat: '',
       lng: '',
     },
+    playdateList: [],
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -91,6 +92,13 @@ export default new Vuex.Store({
     },
     SET_ACCOUNT_INFO(state, data) {
       state.accountInfo = data;
+    },
+    SET_PLAYDATE_LIST(state, data){
+      state.playdateList = data;
+    },
+    ADD_PLAYDATE_DISTANCE(state, id, data){
+      const index = state.playdateList.findIndex(element => element.playdateId === id)
+      state.playdateList[index].distance = data;
     }
   }
 })
