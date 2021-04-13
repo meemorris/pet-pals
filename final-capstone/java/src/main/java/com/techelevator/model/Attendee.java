@@ -6,6 +6,7 @@ public class Attendee {
     private long playdateId;
     private String name;
     private long userId;
+    private boolean isHost;
     private String species;
     private String breed;
     private int weight;
@@ -118,5 +119,13 @@ public class Attendee {
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    public boolean isHost() {
+        return isHost;
+    }
+
+    public void setHost(boolean host) {
+        isHost = host;
     }
 }

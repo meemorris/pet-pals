@@ -13,6 +13,7 @@ import UpdateProfile from '@/views/UpdateProfile.vue'
 import CreateProfile from '@/views/CreateProfile.vue'
 import CreatePlaydate from '@/views/CreatePlaydate.vue'
 import Playdates from '@/views/Playdates.vue'
+import UpdatePlaydate from '@/views/UpdatePlaydate.vue'
 //import MapView from '@/views/MapView.vue'
 
 Vue.use(Router)
@@ -124,6 +125,14 @@ const router = new Router({
       component: Playdates,
       meta: {
         requiresAuth: false
+      }
+    },
+    {
+      path: "/playdate/update",
+      name: "updatePlaydate",
+      component: UpdatePlaydate,
+      meta: {
+        requiresAuth: true
       }
     },
     // {

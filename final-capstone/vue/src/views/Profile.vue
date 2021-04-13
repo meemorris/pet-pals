@@ -28,14 +28,19 @@
       <div id="playdateColumn">
         <h2>Current Playdates</h2>
         <div id="playdate-info">
-          </div>
-          <router-link
-            :to="{ name: 'createPlaydate' }"
-            id="createPlaydate"
-            tag="button"
-            class="btn btn-primary"
-            >Schedule Playdate</router-link
-          >
+          <div v-for="pet in $store.state.pets"
+          v-bind:key="pet.petId">
+          <h3 id="playdate-scheduled-header"> Playdates scheduled for {{pet.name}}:</h3>
+          <scheduled-playdates v-bind:petId="pet.petId"/>
+        </div>
+        </div>
+        <router-link
+          :to="{ name: 'createPlaydate' }"
+          id="createPlaydate"
+          tag="button"
+          class="btn btn-primary"
+          >Schedule Playdate</router-link
+        >
       </div>
     </div>
   </div>
@@ -46,6 +51,7 @@ import petService from "@/services/PetService";
 import petPreview from "@/components/PetPreview.vue";
 import userService from "@/services/UserService";
 import accountInfo from "@/components/AccountInfo.vue";
+import ScheduledPlaydates from "@/components/ScheduledPlaydates.vue";
 
 export default {
   created() {
@@ -55,6 +61,7 @@ export default {
   components: {
     petPreview,
     accountInfo,
+    ScheduledPlaydates,
   },
 
   methods: {
@@ -158,5 +165,15 @@ h1 {
   background-color: #fff;
   box-shadow: 1px 3px 7px 0 rgba(134, 130, 130, 0.4),
     0 1px 2px 0 rgba(56, 56, 56, 0.3);
+}
+
+#createPlaydate {
+  margin-bottom: 50px;
+}
+
+#playdate-scheduled-header {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #07475f;
 }
 </style>

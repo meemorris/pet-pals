@@ -1,25 +1,49 @@
 <template>
-  <div>
-    <h3>Scheduled Playdates</h3>
-    <div class="playdate-card" v-for="playdate in playdateList" v-bind:key="playdate.playdateId">
-      <h4>Playdate hosted by {{ playdate.pet.name }}</h4>
-      <p><span class="playdate-header">
-        Date/Time:</span>
-        {{ moment(playdate.date).format("dddd, MMMM Do YYYY, h:mm a") }}
-      </p>
-      <p>
-        <span class="playdate-header">Location:</span> {{ playdate.address }}, {{ playdate.city }},
-        {{ playdate.state }}
-        {{ playdate.zip }}
-      </p>
-        <h5 v-show="playdate.attendeeList.length != 0">Attendees:</h5>
-        <div
-          v-for="attendee in playdate.attendeeList"
-          v-bind:key="attendee.petId"
-          id="attendee-list-block"
-        >
-          <p id="attendee-list-names">{{ attendee.name }}</p>
+  <div id="scheduled-playdates-card">
+      <div v-show="$route.path != '/profile'">
+        <h3>Scheduled Playdates</h3>
+      </div>
+
+    <div
+      class="playdate-card"
+      v-for="playdate in playdateList"
+      v-bind:key="playdate.playdateId"
+    >
+      <div id="scheduled-playdate-grid">
+        <h4>Playdate hosted by {{ playdate.pet.name }}</h4>
+        <p id="playdate-date-time">
+          <span class="playdate-header"> Date/Time:</span>
+          {{ moment(playdate.date).format("dddd, MMMM Do YYYY, h:mm a") }}
+        </p>
+        <p id="playdate-address">
+          <span class="playdate-header">Location:</span> {{ playdate.address }},
+          {{ playdate.city }},
+          {{ playdate.state }}
+          {{ playdate.zip }}
+        </p>
+        <div id="attendee-list-group">
+          <h5 v-show="playdate.attendeeList.length != 0">Attendees:</h5>
+          <div
+            v-for="attendee in playdate.attendeeList"
+            v-bind:key="attendee.petId"
+            id="attendee-list-block"
+          >
+            <p id="attendee-list-names">{{ attendee.name }}</p>
+          </div>
         </div>
+
+        <div id="playdate-buttons">
+          <div v-show="isHost(playdate.playdateId)">
+            <router-link :to="{ name: 'updatePlaydate' }" id="updatePlaydate"
+              ><button>Update Playdate</button></router-link
+            >
+          </div>
+
+          <div v-show="isHost(playdate.playdateId)">
+            <button>Cancel Playdate</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -45,17 +69,37 @@ export default {
           this.playdateList = response.data;
         });
     },
+    isHost(playdateId) {
+      let result = false;
+      this.playdateList.forEach((playdate) => {
+        if (playdate.playdateId == playdateId) {
+          if (this.petId == playdate.pet.petId) {
+            result = true;
+          }
+        }
+      });
+      return result;
+    },
   },
 };
 </script>
 
 <style scoped>
-
 .playdate-card {
   border: 2px solid hsla(240, 1%, 40%, 0.2);
   border-radius: 1.5%;
   padding: 15px;
   margin-bottom: 10px;
+}
+
+#scheduled-playdate-grid {
+  display: grid;
+  grid-template-columns: 1fr, 1fr;
+  grid-template-areas:
+    "host host"
+    "dt dt"
+    "location location"
+    "attendees links";
 }
 
 .playdate-header {
@@ -65,6 +109,23 @@ export default {
 h4 {
   font-size: 1.1rem;
   font-style: italic;
+  grid-area: host;
+}
+
+#playdate-date-time {
+  grid-area: dt;
+}
+
+#playdate-address {
+  grid-area: location;
+}
+
+#attendee-list-group {
+  grid-area: attendees;
+}
+
+#playdate-buttons {
+  grid-area: links;
 }
 
 h5 {
@@ -86,7 +147,32 @@ h5 {
 
 h3 {
   margin-bottom: 20px;
+  font-family: "Rock Salt", cursive;
+  color: #949494;
+  font-size: 1.4rem;
+  text-align: center;
 }
 
+button {
+  background-color: transparent;
+  border: none;
+  color: #cd704c;
+}
+
+button:hover {
+  color: #07475f;
+}
+
+#playdate-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+/* #scheduled-playdates-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+} */
 
 </style>
