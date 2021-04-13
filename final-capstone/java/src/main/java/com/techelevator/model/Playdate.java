@@ -1,12 +1,15 @@
 package com.techelevator.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Playdate {
 
     private long playdateId;
 
     private Pet pet;
+
+    private List<Attendee> attendeeList;
 
     private String address;
 
@@ -23,9 +26,10 @@ public class Playdate {
     private String lng;
 
     public Playdate(){}
-    public Playdate(long playdateId, Pet pet, String address, String city, String state, String zip, LocalDateTime date, String lat, String lng) {
+    public Playdate(long playdateId, Pet pet, List<Attendee> attendeeList, String address, String city, String state, String zip, LocalDateTime date, String lat, String lng) {
         this.playdateId = playdateId;
         this.pet = pet;
+        this.attendeeList = attendeeList;
         this.address = address;
         this.city = city;
         this.state = state;
@@ -41,6 +45,14 @@ public class Playdate {
 
     public void setPet(Pet pet) {
         this.pet = pet;
+    }
+
+    public List<Attendee> getAttendeeList() {
+        return attendeeList;
+    }
+
+    public void setAttendeeList(List<Attendee> attendeeList) {
+        this.attendeeList = attendeeList;
     }
 
     public String getAddress() {

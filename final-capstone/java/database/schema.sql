@@ -106,5 +106,8 @@ CREATE TABLE playdates_pets (
 INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (1, 2, true);
 INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (2, 3, true);
 INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (3, 4, true);
+INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (3, 2, false);
+INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (3, 3, false);
+INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (1, 1, false);
 
 COMMIT TRANSACTION;

@@ -8,7 +8,6 @@
     <img class="pet-pic default-pic" v-else src="@/assets/paws-default-white.png" />
 
     <div id="playdates">
-      <h3>Scheduled Playdates</h3>
       <scheduled-playdates v-bind:petId="id"/>
     </div>
 
@@ -170,7 +169,7 @@ h3 {
   border-radius: 2%;
   grid-area: image;
   max-width: 25vw;
-  margin-left: 30%;
+  margin-left: 22%;
 }
 
 .default-pic {
@@ -187,6 +186,7 @@ h3 {
   background-color: #fff;
   box-shadow: 1px 3px 7px 0 rgba(134, 130, 130, 0.4),
     0 1px 2px 0 rgba(56, 56, 56, 0.3);
+  max-width: 30vw;
 }
 
 .profile-card {

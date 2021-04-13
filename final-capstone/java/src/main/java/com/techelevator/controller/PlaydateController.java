@@ -2,6 +2,7 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.PlaydateDAO;
 import com.techelevator.model.CreatePlaydateDTO;
+import com.techelevator.model.Pet;
 import com.techelevator.model.Playdate;
 import com.techelevator.services.MapService;
 import org.springframework.http.HttpStatus;

@@ -16,5 +16,9 @@ export default {
 
   getScheduledPlaydates(petId) {
     return axios.get(`${petId}/schedule/playdates`)
+  },
+
+  getAttendees(playdateId) {
+    return axios.get(`/schedule/playdates/${playdateId}/attendees`)
   }
 }

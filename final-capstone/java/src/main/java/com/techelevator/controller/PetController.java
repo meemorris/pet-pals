@@ -2,6 +2,7 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.PetDAO;
 import com.techelevator.dao.UserDAO;
+import com.techelevator.model.Attendee;
 import com.techelevator.model.Pet;
 import com.techelevator.model.PetDTO;
 import org.springframework.http.HttpStatus;
