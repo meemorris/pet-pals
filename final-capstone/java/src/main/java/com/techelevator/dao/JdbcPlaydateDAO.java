@@ -1,5 +1,6 @@
 package com.techelevator.dao;
 
+import com.techelevator.model.Account;
 import com.techelevator.model.CreatePlaydateDTO;
 import com.techelevator.model.Location;
 import com.techelevator.model.Playdate;
@@ -16,13 +17,14 @@ public class JdbcPlaydateDAO implements PlaydateDAO {
 
     private JdbcTemplate jdbcTemplate;
     private PetDAO petDAO;
+    private AccountDAO accountDAO;
     private static final boolean IS_HOST = true;
     private static final boolean IS_NOT_HOST = false;
 
-    public JdbcPlaydateDAO(JdbcTemplate jdbcTemplate, PetDAO petDAO) {
+    public JdbcPlaydateDAO(JdbcTemplate jdbcTemplate, PetDAO petDAO, AccountDAO accountDAO) {
         this.jdbcTemplate = jdbcTemplate;
         this.petDAO = petDAO;
-
+        this.accountDAO = accountDAO;
     }
 
 
@@ -57,14 +59,29 @@ public class JdbcPlaydateDAO implements PlaydateDAO {
     }
 
     @Override
-    public List<Playdate> getAllPlaydates() {
+    public List<Playdate> getAllPlaydates(MapService mapService, int userId) {
         List<Playdate> playdates = new ArrayList<>();
 
         String sql = "SELECT playdate_id, pet_id, address, city, state, zip, date, lat, lng FROM playdates";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+        String destinations = "";
         while(results.next()) {
-            playdates.add(mapRowToPlaydate(results));
+            Playdate playdate = mapRowToPlaydate(results);
+            playdates.add(playdate);
+            destinations += playdate.getLat() + "," + playdate.getLng() + "|";
         }
+        destinations = destinations.substring(0,destinations.length()-1);
+
+        //get location of current user
+        Account currentAccount = accountDAO.getAccount(userId);
+        String origin = currentAccount.getLat() + "," + currentAccount.getLng();
+
+        //get distances from current user
+        List<String> distances = mapService.getDistances(origin, destinations);
+        for (int i = 0; i < distances.size(); i++){
+            playdates.get(i).setDistanceFromUser(distances.get(i));
+        }
+
         return playdates;
     }
 

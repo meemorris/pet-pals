@@ -18,9 +18,7 @@ public class JdbcAccountDAO implements AccountDAO{
     }
 
     @Override
-    public void create(AccountDTO accountDTO, int userId, MapService mapService) {
-        //get lat and lng
-        Location location = mapService.getLocation(accountDTO.getAddress(), accountDTO.getCity(), accountDTO.getState());
+    public void create(AccountDTO accountDTO, int userId, Location location) {
 
         //create account
         String sql = "INSERT INTO accounts (user_id, first_name, last_name, email, phone, address, city, state, " +
@@ -34,9 +32,9 @@ public class JdbcAccountDAO implements AccountDAO{
     }
 
     @Override
-    public void updateAccount(int id, AccountDTO accountDTO, MapService mapService) {
+    public void updateAccount(int id, AccountDTO accountDTO, Location location) {
         //get lat and long
-        Location location = mapService.getLocation(accountDTO.getAddress(), accountDTO.getCity(), accountDTO.getState());
+
 
         String sql = "UPDATE accounts SET first_name = ?, last_name = ?, email = ?, phone = ?, address = ?, " +
                 "city = ?, state = ?, zip = ?, bio = ?, pic = ?, lat=?, lng=? WHERE user_id = ?";

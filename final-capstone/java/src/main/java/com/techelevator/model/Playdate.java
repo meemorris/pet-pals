@@ -22,8 +22,10 @@ public class Playdate {
 
     private String lng;
 
+    private String distanceFromUser;
+
     public Playdate(){}
-    public Playdate(long playdateId, Pet pet, String address, String city, String state, String zip, LocalDateTime date, String lat, String lng) {
+    public Playdate(long playdateId, Pet pet, String address, String city, String state, String zip, LocalDateTime date, String lat, String lng, String distanceFromUser) {
         this.playdateId = playdateId;
         this.pet = pet;
         this.address = address;
@@ -33,6 +35,7 @@ public class Playdate {
         this.date = date;
         this.lat = lat;
         this.lng = lng;
+        this.distanceFromUser = distanceFromUser;
     }
 
     public Pet getPet() {
@@ -105,6 +108,14 @@ public class Playdate {
 
     public void setLng(String lng) {
         this.lng = lng;
+    }
+
+    public String getDistanceFromUser() {
+        return distanceFromUser;
+    }
+
+    public void setDistanceFromUser(String distanceFromUser) {
+        this.distanceFromUser = distanceFromUser;
     }
 }
 
