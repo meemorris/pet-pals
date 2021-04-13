@@ -1,5 +1,6 @@
 BEGIN TRANSACTION;
 
+DROP TABLE IF EXISTS messages;
 DROP TABLE IF EXISTS playdates_pets;
 DROP TABLE IF EXISTS playdates;
 DROP TABLE IF EXISTS accounts;
@@ -107,4 +108,16 @@ INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (1, 2, true);
 INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (2, 3, true);
 INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (3, 4, true);
 
+CREATE TABLE messages (
+        message_id SERIAL,
+        user_id int NOT NULL,
+        message varchar(1000),
+        
+        CONSTRAINT PK_message PRIMARY KEY(message_id),
+        CONSTRAINT FK_user FOREIGN KEY(user_id) REFERENCES users(user_id)
+);
+
+INSERT INTO messages (message_id, user_id, message) VALUES (1, 2, 'Pet message trash talk here');
+
 COMMIT TRANSACTION;
+
