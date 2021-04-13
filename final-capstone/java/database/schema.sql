@@ -103,4 +103,8 @@ CREATE TABLE playdates_pets (
         CONSTRAINT FK_pet FOREIGN KEY(pet_id) REFERENCES pets(pet_id)
 );
 
+INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (1, 2, true);
+INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (2, 3, true);
+INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (3, 4, true);
+
 COMMIT TRANSACTION;

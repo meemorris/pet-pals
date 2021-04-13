@@ -9,6 +9,7 @@
 
     <div id="playdates">
       <h3>Scheduled Playdates</h3>
+      <scheduled-playdates v-bind:petId="id"/>
     </div>
 
     <div class="profile-card">
@@ -76,8 +77,10 @@
 
 <script>
 import petService from "@/services/PetService";
+import ScheduledPlaydates from './ScheduledPlaydates.vue';
 
 export default {
+  components: { ScheduledPlaydates },
   name: "pet",
   props: ["id"],
   created() {

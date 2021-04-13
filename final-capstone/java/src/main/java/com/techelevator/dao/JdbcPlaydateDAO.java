@@ -69,9 +69,26 @@ public class JdbcPlaydateDAO implements PlaydateDAO {
     }
 
     @Override
-    public long joinPlaydate(int petId, int playdateId) {
+    public long joinPlaydate(int playdateId, int petId) {
         String sql = "INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES(?,?,?)";
         return jdbcTemplate.update(sql, playdateId, petId, IS_NOT_HOST);
+    }
+
+    @Override
+    public List<Playdate> getScheduledPlaydates(int petId) {
+        List<Playdate> playdates = new ArrayList<>();
+
+        String sql = "SELECT p.playdate_id, p.pet_id, address, city, state, zip, date, lat, lng " +
+        "FROM playdates p " +
+        "JOIN playdates_pets pp ON p.playdate_id = pp.playdate_id " +
+        "WHERE pp.pet_id = ?";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, petId);
+        while(results.next()) {
+            playdates.add(mapRowToPlaydate(results));
+        }
+
+        return playdates;
     }
 
 

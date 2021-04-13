@@ -45,4 +45,9 @@ public class PlaydateController {
     public long addPetToPlaydate(@PathVariable int petId, @PathVariable int playdateId) {
         return playdateDAO.joinPlaydate(petId, playdateId);
     }
+
+    @RequestMapping(path = "{petId}/schedule/playdates", method = RequestMethod.GET)
+    public List<Playdate> getScheduledPlaydates(@PathVariable int petId) {
+        return playdateDAO.getScheduledPlaydates(petId);
+    }
 }

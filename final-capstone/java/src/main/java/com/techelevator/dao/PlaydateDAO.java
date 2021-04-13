@@ -13,5 +13,7 @@ public interface PlaydateDAO {
 
     List<Playdate> getAllPlaydates();
 
-    long joinPlaydate(int petId, int playdateId);
+    long joinPlaydate(int playdateId, int petId);
+
+    List<Playdate> getScheduledPlaydates(int petId);
 }

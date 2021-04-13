@@ -1,5 +1,20 @@
 <template>
   <div id="details" v-on:click="toggleDisplay">
+    <div
+      v-show="successMsg"
+      class="alert alert-success playdate-joined-message"
+      role="alert"
+    >
+      {{ successMsg }}
+    </div>
+
+    <div
+      v-show="errorMsg"
+      class="alert alert-danger playdate-error-message"
+      role="alert"
+    >
+      {{ playdate.pet.name + errorMsg }}
+    </div>
     <div id="small" v-show="showSmall">
       <img
         class="pet-pic"
@@ -76,35 +91,40 @@
         </div>
       </div>
       <div id="join-playdate">
-        <!-- <router-link
-          :to="{ name: 'createPlaydate' }"
-          id="createPlaydate"
-          tag="button"
+        <button
+          id="button-join-playdate"
           class="btn btn-primary"
-          >Join Playdate</router-link
-        > -->
-        <button class="btn btn-primary">
+          v-on:click="
+            toggleShowForm();
+            maintainLargeDisplay();
+          "
+        >
           Join Playdate
         </button>
-
-        <div id="selectPet">
-          <div>
-            <select
-              name="petName"
-              id="petName"
-              v-on:click="findPetByName"
-              v-on:change="togglePetQuestion"
-              v-model="petName"
-              required
-            >
-              <option value="" default disabled>Pet Name</option>
-              <option v-for="pet in $store.state.pets" v-bind:key="pet.petId">
-                {{ pet.name }}
-              </option>
-            </select>
-          </div>
-        </div>
       </div>
+    </div>
+    <div v-show="showForm">
+      <form class="form-user" id="form" v-on:submit.prevent="addPetToPlaydate">
+        <p>Which pet?</p>
+        <label
+          v-for="pet in $store.state.pets"
+          v-bind:key="pet.petId"
+          for="pet-name"
+          class="label-pet-name"
+        >
+          <input
+            class="input-pet-name"
+            type="radio"
+            id="pet-name"
+            v-on:change="findPetByName"
+            v-bind:value="pet.name"
+            v-model="petName"
+          />{{ pet.name }}</label
+        >
+        <button id="button-add-pet" class="btn btn-primary" type="submit">
+          Join Playdate
+        </button>
+      </form>
     </div>
   </div>
 </template>
@@ -120,11 +140,27 @@ export default {
   },
   data() {
     return {
+      errorMsg: "",
+      successMsg: "",
       owner: {},
       showSmall: true,
       showLarge: false,
-      pet: {},
-      petName: ""
+      showForm: false,
+      pet: {
+        petId: "",
+        name: "",
+        userId: "",
+        species: "",
+        breed: "",
+        weight: "",
+        birthYear: "",
+        energeticRelaxed: "",
+        shyFriendly: "",
+        apatheticCurious: "",
+        bio: "",
+        pic: "",
+      },
+      petName: "",
     };
   },
   computed: {
@@ -136,6 +172,20 @@ export default {
     maintainLargeDisplay() {
       this.showSmall = false;
     },
+
+    findPetByName() {
+      this.pet = this.$store.state.pets.find(
+        (pet) => pet.name === this.petName
+      );
+    },
+
+    toggleShowForm() {
+      if (this.showForm) {
+        this.showForm = false;
+      } else {
+        this.showForm = true;
+      }
+    },
     getOwner() {
       return userService
         .getProfile(this.playdate.pet.userId)
@@ -144,23 +194,33 @@ export default {
         });
     },
     toggleDisplay() {
-      if (this.showSmall) {
+      if (this.showSmall && !this.showForm) {
         this.showSmall = false;
         this.showLarge = true;
       } else {
         this.showSmall = true;
         this.showLarge = false;
+        this.errorMsg = "";
+        this.successMsg = "";
       }
     },
     addPetToPlaydate() {
-      playdateService
-      .joinPlaydate(this.playdate.playdateId, this.pet.petId)
-      .then((response) => {
-        if (response.status === 201) {
-          this.$router.push('/playdates');
-        }
-      })
-      .catch((error) => {
+      if (this.playdate.pet.name == this.pet.name) {
+        this.errorMsg = " is already hosting this playdate.";
+        this.showForm = false;
+        this.toggleDisplay();
+      } else {
+        playdateService
+          .joinPlaydate(this.playdate.playdateId, this.pet.petId)
+          .then((response) => {
+            if (response.status === 201) {
+              this.successMsg = "Playdate joined, yay!";
+            }
+            this.showForm = false;
+            this.toggleDisplay();
+            this.pet = {};
+          })
+          .catch((error) => {
             if (error.response) {
               alert(
                 "Playdate could not be joined. Response was " +
@@ -176,27 +236,33 @@ export default {
               );
             }
           });
-    },
-
-    findPetByName() {
-      this.pet = this.$store.state.pets.find(
-        (pet) => pet.name === this.petName
-      );
-      this.petName = '';
-    },
-    togglePetQuestion() {
-      let petQuestionElement = document.getElementById("petName");
-      if (this.petName == "") {
-        petQuestionElement.classList.remove("d-none");
-      } else {
-        petQuestionElement.classList.add("d-none");
       }
-    }
+    },
   },
 };
 </script>
 
 <style scoped>
+.playdate-joined-message {
+  max-width: 200px;
+}
+
+.playdate-error-message {
+  max-width: 350px;
+}
+
+#form {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 10vw;
+}
+
+.label-pet-name,
+.input-pet-name {
+  display: inline-block;
+  margin: 0.5rem;
+}
+
 #large {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;

@@ -12,5 +12,9 @@ export default {
 
   joinPlaydate(petId, playdateId) {
     return axios.post(`${petId}/join/playdate/${playdateId}`)
+  },
+
+  getScheduledPlaydates(petId) {
+    return axios.get(`${petId}/schedule/playdates`)
   }
 }
