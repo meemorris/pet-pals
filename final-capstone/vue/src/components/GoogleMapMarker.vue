@@ -1,5 +1,5 @@
 <script>
-import { POINT_MARKER_ICON_CONFIG } from '@/constants/mapSettings'
+//import { POINT_MARKER_ICON_CONFIG } from '@/constants/mapSettings'
 
 export default {
   props: {
@@ -22,7 +22,9 @@ export default {
       position: this.marker.position,
       marker: this.marker,
       map: this.map,
-      icon: POINT_MARKER_ICON_CONFIG
+      icon: "https://www.gstatic.com/earth/images/stockicons/190201-2016-animal-paw_4x.png"
+      //POINT_MARKER_ICON_CONFIG
+      
     })
   },
     // render() {},
