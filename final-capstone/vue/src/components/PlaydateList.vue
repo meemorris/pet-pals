@@ -84,7 +84,7 @@
         <playdate-details v-bind:playdate="playdate" />
       </div>
     </div>
-    <TravelMap v-else class="travel-map" v-bind:playdateList="filteredList" v-bind:markers="markers"/>
+    <TravelMap v-else class="travel-map" v-bind:playdateList="filteredList" v-bind:markers="markers" v-show="filteredList.length != 0"/>
   </div>
 </template>
 <script>
