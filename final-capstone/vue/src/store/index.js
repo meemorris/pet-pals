@@ -50,6 +50,7 @@ export default new Vuex.Store({
       lng: '',
     },
     playdateList: [],
+    messageList: [],
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -96,6 +97,12 @@ export default new Vuex.Store({
     SET_PLAYDATE_LIST(state, data){
       state.playdateList = data;
     },
-
+    SET_MESSAGE_LIST(state, data) {
+      state.messageList = data;
+    },
+    // ADD_PLAYDATE_DISTANCE(state, data){
+    //   const index = state.playdateList.findIndex(element => element.playdateId == data.id)
+    //   state.playdateList[index].distance = data.distance;
+    // }
   }
 })

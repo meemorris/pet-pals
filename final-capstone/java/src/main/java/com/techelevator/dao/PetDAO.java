@@ -1,5 +1,6 @@
 package com.techelevator.dao;
 
+import com.techelevator.model.Attendee;
 import com.techelevator.model.Pet;
 import com.techelevator.model.PetDTO;
 

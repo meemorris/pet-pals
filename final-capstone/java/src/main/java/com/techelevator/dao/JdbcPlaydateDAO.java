@@ -3,6 +3,7 @@ package com.techelevator.dao;
 import com.techelevator.model.Account;
 import com.techelevator.model.CreatePlaydateDTO;
 import com.techelevator.model.Location;
+import com.techelevator.model.Pet;
 import com.techelevator.model.Playdate;
 import com.techelevator.services.MapService;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,13 +18,15 @@ public class JdbcPlaydateDAO implements PlaydateDAO {
 
     private JdbcTemplate jdbcTemplate;
     private PetDAO petDAO;
+    private AttendeeDAO attendeeDAO;
     private AccountDAO accountDAO;
     private static final boolean IS_HOST = true;
     private static final boolean IS_NOT_HOST = false;
 
-    public JdbcPlaydateDAO(JdbcTemplate jdbcTemplate, PetDAO petDAO, AccountDAO accountDAO) {
+    public JdbcPlaydateDAO(JdbcTemplate jdbcTemplate, PetDAO petDAO, AttendeeDAO attendeeDAO, AccountDAO accountDAO) {
         this.jdbcTemplate = jdbcTemplate;
         this.petDAO = petDAO;
+        this.attendeeDAO = attendeeDAO;
         this.accountDAO = accountDAO;
     }
 
@@ -114,6 +117,7 @@ public class JdbcPlaydateDAO implements PlaydateDAO {
         playdate.setPlaydateId(results.getLong("playdate_id"));
         int petId = results.getInt("pet_id");
         playdate.setPet(petDAO.getPet(petId));
+        playdate.setAttendeeList(attendeeDAO.getAttendees(results.getInt("playdate_id")));
         playdate.setAddress(results.getString("address"));
         playdate.setCity(results.getString("city"));
         playdate.setState(results.getString("state"));
