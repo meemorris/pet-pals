@@ -2,23 +2,25 @@
   <GoogleMapLoader
   :mapConfig="mapConfig"
   apiKey="AIzaSyCMDIDFLUZUj0iH6vHHsSb-hFw4ZQmhgus"
+  :markers="markers"
+  :playdateList="playdateList"
 >
-  <template slot-scope="{ google, map }">
+  <!-- <template slot-scope="{ google, map }">
     <GoogleMapMarker
       v-for="marker in markers"
       :key="marker.id"
       :marker="marker"
       :google="google"
       :map="map"
+    
     />
-
-  </template>
+  </template> -->
 </GoogleMapLoader>
 </template>
 
 <script>
 import GoogleMapLoader from "./GoogleMapLoader";
-import GoogleMapMarker from "./GoogleMapMarker";
+// import GoogleMapMarker from "./GoogleMapMarker";
 
 
 import { mapSettings } from "@/constants/mapSettings";
@@ -27,12 +29,13 @@ export default {
   name: "travelMap",
   components: {
     GoogleMapLoader,
-    GoogleMapMarker,
+    // GoogleMapMarker,
 
   },
   props: ["playdateList", "markers"],
 
   methods:{
+
    
   },
 

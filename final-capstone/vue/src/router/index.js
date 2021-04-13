@@ -14,6 +14,7 @@ import CreateProfile from '@/views/CreateProfile.vue'
 import CreatePlaydate from '@/views/CreatePlaydate.vue'
 import Playdates from '@/views/Playdates.vue'
 import UpdatePlaydate from '@/views/UpdatePlaydate.vue'
+import MessageForum from '@/views/MessageForum.vue'
 //import MapView from '@/views/MapView.vue'
 
 Vue.use(Router)
@@ -77,7 +78,7 @@ const router = new Router({
       component: PetProfile,
       meta: {
         requiresAuth: false
-      } 
+      }
     },
     {
       path: "/profile",
@@ -135,6 +136,14 @@ const router = new Router({
         requiresAuth: true
       }
     },
+    {
+      path: "/messageforum",
+      name: "messageforum",
+      component: MessageForum,
+      meta: {
+        requiresAuth: true
+      }
+    }
     // {
     //   path: "/map",
     //   name: "map",

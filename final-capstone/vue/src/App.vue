@@ -29,7 +29,7 @@
 
         <router-link v-bind:to="{name: 'playdates'}">Playdates</router-link>
         <span v-show="$store.state.token != ''">&nbsp;|&nbsp;</span>
-        <a href="#" v-show="$store.state.token != ''">Message Forum</a>
+        <router-link v-bind:to="{name: 'messageforum'}" v-show="$store.state.token != ''">Message Forum</router-link>
       </nav>
     </header>
     <router-view />
