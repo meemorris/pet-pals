@@ -9,21 +9,21 @@
         <div v-for="message in messageList" v-bind:key="message.messageId">
           <div id="detail-view">
             <!-- Use this one -->
-            <!-- <img class="profile-pic" v-bind:src="message.pic" alt="user profile picture" /> -->
-
+            <img v-if="message.pic" class="profile-pic" v-bind:src="message.pic" alt="user profile picture" />
+            <img class="profile-pic" v-else src="@/assets/default-user-pic.jpg" alt="profile picture">
             <!-- Test -->
-            <img
+            <!-- <img
               class="profile-pic"
               src="@/assets/paws-default.png"
               alt="user profile picture"
-            />
+            /> -->
 
             <div id="message-container">
               <!-- Test -->
-              <h2><span class="message-header">User Name:</span> Test</h2>
+              <!-- <h2><span class="message-header">User Name:</span> Test</h2> -->
 
               <!-- Use this one -->
-              <!-- <h2><span class="message-header">User Name: </span> {{ message.name }}</h2> -->
+              <h2><span class="message-header">User Name: </span> {{ message.name }}</h2>
 
               <p>
                 <span class="message-header">Message: </span
@@ -154,7 +154,6 @@ h1 {
   "pic body"
   "pic body";
 
-
   /* box-sizing: border-box; */
   max-width: 450px;
   clear: both;
@@ -209,9 +208,12 @@ h2 {
 }
 
 #message-container {
-  /* display: flex;
-  align-items: flex-start;
-  flex-direction: column; */
   grid-area: body;
+}
+
+#list-view {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 </style>
