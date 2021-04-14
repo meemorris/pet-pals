@@ -45,10 +45,10 @@ body{
   background-color: #FAFAFA !important;
 }
 
-/* * {
+* {
   border-style: dotted;
   border-color: red;
-} */
+}
 
 /* * {
   border: 0.01px dotted hsla(0, 0%, 100%, 0.0);
