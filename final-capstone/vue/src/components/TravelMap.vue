@@ -1,7 +1,6 @@
 <template>
   <GoogleMapLoader
   :mapConfig="mapConfig"
-  apiKey="AIzaSyCMDIDFLUZUj0iH6vHHsSb-hFw4ZQmhgus"
   :markers="markers"
   :playdateList="playdateList"
 >
@@ -31,7 +30,6 @@ export default {
 
   data() {
     return {
-     
     };
   },
 

@@ -65,25 +65,38 @@
       </div>
     </div>
     <div v-show="showForm">
-        <JoinPlaydateForm/>
+        <join-playdate-form v-bind:playdate="playdate"/>
+    </div>
+    <div>
+    <router-link
+      :to="{ name: 'playdates' }"
+      id="backToList"
+      tag="button"
+      class="btn btn-primary"
+      >Back to Playdates List</router-link
+    >
     </div>
   </div>
 </template>
 
 <script>
-import JoinPlaydateForm from "@/components/JoinPlaydateForm"
+import userService from '@/services/UserService';
+import playdateService from '@/services/PlaydateService';
+import JoinPlaydateForm from '@/components/JoinPlaydateForm.vue';
+
 export default {
   name: "PlaydateDetailsLarge",
-  props: ["playdate", "owner"],
   components: {
-      JoinPlaydateForm,
+    JoinPlaydateForm,
   },
   created() {
-    this.getOwner();
+    this.getPlaydate();
   },
   data() {
     return {
         showForm: false,
+        owner: [],
+        playdate: {}
     };
   },
   computed: {
@@ -98,6 +111,19 @@ export default {
       } else {
         this.showForm = true;
       }
+    },
+    getPlaydate(){
+        playdateService
+        .getPlaydate(this.$route.params.id)
+        .then((response) => this.playdate = response.data)
+        this.getOwner();
+    },
+    getOwner() {
+      userService
+        .getProfile(this.playdate.pet.userId)
+        .then((response) => {
+          this.owner = response.data;
+        });
     },
   },
 };

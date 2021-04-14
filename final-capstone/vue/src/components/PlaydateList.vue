@@ -91,6 +91,8 @@
 </template>
 <script>
 import playdateService from "@/services/PlaydateService";
+import userService from "@/services/UserService";
+
 import PlaydateDetails from "@/components/PlaydateDetails.vue";
 import TravelMap from "@/components/TravelMap";
 
@@ -129,6 +131,7 @@ export default {
   },
   created() {
     this.createPlaydatesList();
+    this.retrieveAccountInfo();
   },
 
   components: {
@@ -203,6 +206,33 @@ export default {
       } else {
         otherSpeciesElement.classList.add("d-none");
       }
+    },
+     retrieveAccountInfo() {
+      userService
+        .getProfile(this.$store.state.user.id)
+        .then((response) => {
+          if (response.data.firstName === null) {
+            this.$router.push("/profile/create");
+          } else {
+            this.$store.commit("SET_ACCOUNT_INFO", response.data);
+          }
+        })
+        .catch((error) => {
+          if (error.response) {
+            alert(
+              "Account information could not be found. Response was " +
+                error.response.statusText
+            );
+          } else if (error.request) {
+            alert(
+              "Account information could not be found. Server could not be reached"
+            );
+          } else {
+            alert(
+              "Account information could not be found. Request could not be created."
+            );
+          }
+        });
     },
     createPlaydatesList() {
       playdateService
