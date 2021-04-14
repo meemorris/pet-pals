@@ -1,0 +1,122 @@
+<template>
+  <form class="message-form" v-on:submit.prevent="postMessage">
+    <label for="message" class="sr-only">First Name</label>
+    <textarea
+      id="message"
+      class="form-control"
+      placeholder="Type Your Message Here..."
+      v-model="message.message"
+      required
+      autofocus
+    />
+    <p>Are you posting about a pet? Select them here:</p>
+    <label
+      v-for="pet in $store.state.pets"
+      v-bind:key="pet.petId"
+      for="pet-name"
+      class="label-pet-name"
+    >
+      <input
+        class="input-pet-name"
+        type="radio"
+        id="pet-name"
+        v-on:change="findPetByName()"
+        v-bind:value="pet.name"
+        v-model="petName"
+        required
+      />{{ pet.name }}</label
+    >
+
+    <button class="btn btn-lg btn-primary form-submit" type="submit">
+      Post Message
+    </button>
+    <div id="extra-space"></div>
+  </form>
+</template>
+
+<script>
+import userService from "../services/UserService";
+import petService from "@/services/PetService";
+export default {
+  name: "userForm",
+  props: ["button"],
+  data() {
+    return {
+      message: {
+        message: "",
+        date: "",
+        pet: "",
+      },
+    };
+  },
+  created() {
+    this.retrievePetList();
+  },
+
+  methods: {
+    retrievePetList() {
+      petService
+        .getPetsByUserId()
+        .then((response) => {
+          this.$store.commit("SET_PETS", response.data);
+        })
+        .catch((error) => {
+          if (error.response) {
+            alert(
+              "Pet list could not be found. Response was " +
+                error.response.statusText
+            );
+          } else if (error.request) {
+            alert("Pet list could not be found. Server could not be reached");
+          } else {
+            alert("Pet list could not be found. Request could not be created.");
+          }
+        });
+    },
+    postMessage() {
+        this.message.date = new Date();
+        userService
+          .createProfile(this.user)
+          .then((response) => {
+            if (response.status === 201) {
+              this.$router.push("/messages");
+            }
+          })
+          .catch((error) => {
+            if (error.response) {
+              alert(
+                "Message could not be posted. Response was " +
+                  error.response.statusText
+              );
+            } else if (error.request) {
+              alert(
+                "Message could not be posted. Server could not be reached"
+              );
+            } else {
+              alert(
+                "Message could not be posted. Request could not be created."
+              );
+            }
+          });
+      }
+    },
+
+};
+</script>
+
+<style scoped>
+.personality {
+  display: block;
+}
+.personality label {
+  display: inline-block;
+  margin: 0.5rem;
+}
+
+.personality p {
+  display: inline-block;
+  margin: 0.5rem;
+  font-family: "Raleway", sans-serif;
+  font-weight: 600;
+}
+</style>
