@@ -117,7 +117,7 @@
           <input
             class="input-pet-name"
             type="radio"
-            id="pet-name"
+            name="pet-name"
             v-on:change="
               findPetByName();
             "

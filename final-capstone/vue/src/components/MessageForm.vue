@@ -3,13 +3,16 @@
     <label for="message" class="sr-only">First Name</label>
     <textarea
       id="message"
+      name="message"
+      rows="8"
+      cols="60"
       class="form-control"
       placeholder="Type Your Message Here..."
       v-model="message.message"
       required
       autofocus
-    />
-    <p>Are you posting about a pet? Select them here:</p>
+    ></textarea>
+    <p>Are you posting about a pet?</p>
     <label
       v-for="pet in $store.state.pets"
       v-bind:key="pet.petId"
@@ -19,7 +22,7 @@
       <input
         class="input-pet-name"
         type="radio"
-        id="pet-name"
+        name="pet-name"
         v-on:change="findPetByName()"
         v-bind:value="pet.name"
         v-model="petName"
@@ -45,8 +48,23 @@ export default {
       message: {
         message: "",
         date: "",
-        pet: "",
+        petId: "",
       },
+      pet: {
+        petId: "",
+        name: "",
+        userId: "",
+        species: "",
+        breed: "",
+        weight: "",
+        birthYear: "",
+        energeticRelaxed: "",
+        shyFriendly: "",
+        apatheticCurious: "",
+        bio: "",
+        pic: "",
+      },
+      petName: "",
     };
   },
   created() {
@@ -54,6 +72,11 @@ export default {
   },
 
   methods: {
+    findPetByName() {
+      this.pet = this.$store.state.pets.find(
+        (pet) => pet.name === this.petName
+      );
+    },
     retrievePetList() {
       petService
         .getPetsByUserId()
@@ -74,41 +97,35 @@ export default {
         });
     },
     postMessage() {
-        this.message.date = new Date();
-        userService
-          .createProfile(this.user)
-          .then((response) => {
-            if (response.status === 201) {
-              this.$router.push("/messages");
-            }
-          })
-          .catch((error) => {
-            if (error.response) {
-              alert(
-                "Message could not be posted. Response was " +
-                  error.response.statusText
-              );
-            } else if (error.request) {
-              alert(
-                "Message could not be posted. Server could not be reached"
-              );
-            } else {
-              alert(
-                "Message could not be posted. Request could not be created."
-              );
-            }
-          });
-      }
+      this.message.petId = this.pet.petId;
+      this.message.date = new Date();
+      userService
+        .createProfile(this.user)
+        .then((response) => {
+          if (response.status === 201) {
+            this.$router.push("/messages");
+          }
+        })
+        .catch((error) => {
+          if (error.response) {
+            alert(
+              "Message could not be posted. Response was " +
+                error.response.statusText
+            );
+          } else if (error.request) {
+            alert("Message could not be posted. Server could not be reached");
+          } else {
+            alert("Message could not be posted. Request could not be created.");
+          }
+        });
     },
-
+  },
 };
 </script>
 
 <style scoped>
-.personality {
-  display: block;
-}
-.personality label {
+.label-pet-name,
+.input-pet-name {
   display: inline-block;
   margin: 0.5rem;
 }

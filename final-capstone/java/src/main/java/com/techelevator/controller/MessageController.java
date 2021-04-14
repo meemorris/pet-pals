@@ -10,6 +10,7 @@ import com.techelevator.model.Message;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -28,7 +29,8 @@ public class MessageController {
     @RequestMapping(path = "/messages", method = RequestMethod.POST)
     public long register(@Valid @RequestBody MessageDTO messageDTO, Principal principal) {
         int userId = userDAO.findIdByUsername(principal.getName());
-        return messageDAO.create(messageDTO, userId);
+        LocalDateTime postedDate = LocalDateTime.now();
+        return messageDAO.create(messageDTO, userId, postedDate);
     }
 
     @RequestMapping(path = "/messages/{id}", method = RequestMethod.GET)
