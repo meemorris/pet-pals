@@ -132,9 +132,9 @@ export default {
 #message-text-area{
     margin-top:20vh;
 }
-#create-message, .message-form{
-    margin-left:10px;
-    margin-right:10px;
+#create-message {
+    display: flex;
+    justify-content: center;
 }
 .message-form p {
     margin-top: 10px;
