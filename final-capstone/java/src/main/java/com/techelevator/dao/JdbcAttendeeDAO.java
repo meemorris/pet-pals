@@ -22,12 +22,13 @@ public class JdbcAttendeeDAO implements AttendeeDAO {
     public List<Attendee> getAttendees(int playdateId) {
         List<Attendee> attendees = new ArrayList<>();
 
-        String sql = "SELECT p.pet_id, pp.playdate_id, name, user_id, species, breed, weight, birth_year, " +
+        String sql = "SELECT p.pet_id, pp.playdate_id, name, user_id, species, breed, weight, birth_year, pp.is_host, " +
                 "energetic_relaxed, shy_friendly, apathetic_curious, bio, pic " +
                 "FROM pets p " +
                 "JOIN playdates_pets pp ON pp.pet_id = p.pet_id " +
-                "WHERE pp.playdate_id = ? AND pp.is_host = false ";
+                "WHERE pp.playdate_id = ? AND pp.is_host = false";
 
+//        AND pp.is_host = false
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, playdateId);
         while(results.next()) {
             attendees.add(mapRowToAttendee(results));
@@ -46,6 +47,7 @@ public class JdbcAttendeeDAO implements AttendeeDAO {
         attendee.setBreed(results.getString("breed"));
         attendee.setWeight(results.getInt("weight"));
         attendee.setBirthYear(results.getInt("birth_year"));
+        attendee.setHost(results.getBoolean("is_host"));
         attendee.setEnergeticRelaxed(results.getString("energetic_relaxed"));
         attendee.setShyFriendly(results.getString("shy_friendly"));
         attendee.setApatheticCurious(results.getString("apathetic_curious"));
