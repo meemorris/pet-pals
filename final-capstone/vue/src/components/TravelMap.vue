@@ -44,8 +44,11 @@ export default {
     },
 
     mapCenter() {
-      //return this.markers[0].position;
-      return { lat: Number(this.$store.state.accountInfo.lat), lng: Number(this.$store.state.accountInfo.lng) }
+      let mapCenter = this.markers[0].position
+      if(this.$store.state.token != ''){
+        mapCenter = { lat: Number(this.$store.state.accountInfo.lat), lng: Number(this.$store.state.accountInfo.lng) }
+      }
+      return mapCenter;
     }
   }
 };

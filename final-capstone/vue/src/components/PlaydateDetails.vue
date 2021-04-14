@@ -39,7 +39,7 @@
       </p>
     </div>
 
-    <div id="large" v-show="showLarge">
+<div id="large" v-show="showLarge">
       <div id="pet-pic">
         <img
           class="pet-pic"
@@ -136,6 +136,8 @@ import playdateService from "@/services/PlaydateService";
 export default {
   name: "playdateDetails",
   props: ["playdate"],
+  components: {
+  },
   created() {
     this.getOwner();
   },
@@ -263,6 +265,7 @@ export default {
   display: inline-block;
   margin: 0.5rem;
 }
+
 
 #large {
   display: grid;

@@ -15,7 +15,7 @@ import CreatePlaydate from '@/views/CreatePlaydate.vue'
 import Playdates from '@/views/Playdates.vue'
 import UpdatePlaydate from '@/views/UpdatePlaydate.vue'
 import MessageForum from '@/views/MessageForum.vue'
-//import MapView from '@/views/MapView.vue'
+import JoinPlaydate from '@/views/JoinPlaydate.vue'
 
 Vue.use(Router)
 
@@ -33,7 +33,7 @@ const router = new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/home',
+      path: '/',
       name: 'home',
       component: Home,
       meta: {
@@ -129,6 +129,14 @@ const router = new Router({
       }
     },
     {
+      path: "/playdates/:id",
+      name: "joinPlaydate",
+      component: JoinPlaydate,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
       path: "/playdate/update",
       name: "updatePlaydate",
       component: UpdatePlaydate,
@@ -144,14 +152,7 @@ const router = new Router({
         requiresAuth: true
       }
     }
-    // {
-    //   path: "/map",
-    //   name: "map",
-    //   component: MapView,
-    //   meta: {
-    //     requiresAuth: false
-    //   }
-    // }
+
   ]
 })
 
@@ -161,7 +162,7 @@ router.beforeEach((to, from, next) => {
 
   // If it does and they are not logged in, send the user to "/login"
   if (requiresAuth && store.state.token === '') {
-    next("/home");
+    next("/");
   } else {
     // Else let them go to their next destination
     next();

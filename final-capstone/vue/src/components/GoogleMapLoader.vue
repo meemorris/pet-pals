@@ -146,7 +146,7 @@ export default {
         "</p>" +
 
         "<p>" +
-        "<a href='#'>Join Playdate</a>"
+        "<a href='/profile'>Join Playdate</a>"
         "</p>";
 
         return contentString;
