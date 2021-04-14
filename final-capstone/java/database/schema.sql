@@ -124,7 +124,7 @@ CREATE TABLE messages (
         CONSTRAINT FK_user FOREIGN KEY(user_id) REFERENCES users(user_id)
 );
 
-INSERT INTO messages (user_id, message, posted_date) VALUES (2, 'Pet message trash talk here', '2021-04-14 09:00:00');
+INSERT INTO messages (user_id, message, posted_date, pet_id) VALUES (2, 'Pet message trash talk here', '2021-04-14 09:00:00', 1);
 INSERT INTO messages (user_id, message, posted_date) VALUES (1, 'Pet Pals is amazing!', '2021-04-13 10:00:00');
 
 COMMIT TRANSACTION;

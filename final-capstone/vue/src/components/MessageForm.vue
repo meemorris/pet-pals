@@ -1,8 +1,9 @@
 <template>
+<div id="create-message">
   <form class="message-form" v-on:submit.prevent="postMessage">
     <label for="message" class="sr-only">First Name</label>
     <textarea
-      id="message"
+      id="message-text-area"
       name="message"
       rows="8"
       cols="60"
@@ -35,10 +36,11 @@
     </button>
     <div id="extra-space"></div>
   </form>
+  </div>
 </template>
 
 <script>
-import userService from "../services/UserService";
+import messageService from "@/services/MessageService";
 import petService from "@/services/PetService";
 export default {
   name: "userForm",
@@ -47,7 +49,6 @@ export default {
     return {
       message: {
         message: "",
-        date: "",
         petId: "",
       },
       pet: {
@@ -98,12 +99,11 @@ export default {
     },
     postMessage() {
       this.message.petId = this.pet.petId;
-      this.message.date = new Date();
-      userService
-        .createProfile(this.user)
+      messageService
+        .createMessage(this.message)
         .then((response) => {
           if (response.status === 201) {
-            this.$router.push("/messages");
+            this.$router.push("/messageforum");
           }
         })
         .catch((error) => {
@@ -130,6 +130,16 @@ export default {
   margin: 0.5rem;
 }
 
+#message-text-area{
+    margin-top:20vh;
+}
+#create-message, .message-form{
+    margin-left:10px;
+    margin-right:10px;
+}
+.message-form p {
+    margin-top: 10px;
+}
 .personality p {
   display: inline-block;
   margin: 0.5rem;
