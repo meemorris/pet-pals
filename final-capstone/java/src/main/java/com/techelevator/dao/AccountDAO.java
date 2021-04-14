@@ -2,8 +2,7 @@ package com.techelevator.dao;
 
 import com.techelevator.model.Account;
 import com.techelevator.model.AccountDTO;
-import com.techelevator.model.Location;
-import com.techelevator.services.MapService;
+import com.techelevator.model.distanceMatrix.Location;
 
 public interface AccountDAO {
     void create(AccountDTO accountDTO, int userId, Location location);

@@ -37,4 +37,8 @@ public class MessageController {
         return messageDAO.getMessageByUserId(userId);
     }
 
+    @RequestMapping(path = "/message/{id}", method = RequestMethod.GET)
+    public Message getMessage(@PathVariable int id) {
+        return messageDAO.getMessage(id);
+    }
 }

@@ -1,7 +1,10 @@
-package com.techelevator.model;
+package com.techelevator.model.geocode;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.techelevator.model.AddressComponent;
+import com.techelevator.model.geocode.GeocodeGeometry;
+
 import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GeocodeObject {

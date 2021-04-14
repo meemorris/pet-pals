@@ -18,10 +18,10 @@
         v-on:change="toggleOtherSpecies"
       >
         <option value="" default disabled>Species</option>
-        <option value="dog">Dog</option>
-        <option value="cat">Cat</option>
-        <option value="rabbit">Rabbit</option>
-        <option value="hedgehog">Hedgehog</option>
+        <option value="Dog">Dog</option>
+        <option value="Cat">Cat</option>
+        <option value="Rabbit">Rabbit</option>
+        <option value="Hedgehog">Hedgehog</option>
         <option value="other">Other (please describe)</option>
       </select>
 
@@ -70,7 +70,7 @@
         <label for="energetic">
           <input
             type="radio"
-            id="energetic"
+            id="Energetic"
             name="energetic_relaxed"
             v-model="pet.energeticRelaxed"
             value="energetic"
@@ -81,7 +81,7 @@
         <label for="relaxed">
           <input
             type="radio"
-            id="relaxed"
+            id="Relaxed"
             name="energetic_relaxed"
             v-model="pet.energeticRelaxed"
             value="relaxed"
@@ -95,7 +95,7 @@
         <label for="shy">
           <input
             type="radio"
-            id="shy"
+            id="Shy"
             name="shy_friendly"
             v-model="pet.shyFriendly"
             value="shy"
@@ -105,7 +105,7 @@
         <label for="friendly">
           <input
             type="radio"
-            id="friendly"
+            id="Friendly"
             name="shy_friendly"
             v-model="pet.shyFriendly"
             value="friendly"
@@ -119,7 +119,7 @@
         <label for="apathetic">
           <input
             type="radio"
-            id="apathetic"
+            id="Apathetic"
             name="apathetic_curious"
             v-model="pet.apatheticCurious"
             value="apathetic"
@@ -130,7 +130,7 @@
         <label for="curious">
           <input
             type="radio"
-            id="curious"
+            id="Curious"
             name="apathetic_curious"
             v-model="pet.apatheticCurious"
             value="curious"

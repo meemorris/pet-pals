@@ -1,4 +1,4 @@
-package com.techelevator.model;
+package com.techelevator.model.distanceMatrix;
 
 public class Location {
     private String lat;

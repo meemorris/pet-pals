@@ -2,8 +2,7 @@ package com.techelevator.dao;
 
 import com.techelevator.model.Account;
 import com.techelevator.model.AccountDTO;
-import com.techelevator.model.Location;
-import com.techelevator.services.MapService;
+import com.techelevator.model.distanceMatrix.Location;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
