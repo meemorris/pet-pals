@@ -2,6 +2,7 @@ package com.techelevator.dao;
 
 import com.techelevator.model.Account;
 import com.techelevator.model.CreatePlaydateDTO;
+import com.techelevator.model.UpdatePlaydateDTO;
 import com.techelevator.model.distanceMatrix.Location;
 import com.techelevator.model.Playdate;
 import com.techelevator.services.MapService;
@@ -124,12 +125,15 @@ public class JdbcPlaydateDAO implements PlaydateDAO {
     }
 
     @Override
-    public long updatePlaydate(int playdateId, Playdate playdate) {
+    public long updatePlaydate(int playdateId, UpdatePlaydateDTO playdateDTO, MapService mapService) {
+        //get lat and lng
+        Location location = mapService.getLocation(playdateDTO.getAddress(), playdateDTO.getCity(), playdateDTO.getState());
+
         String sql = "UPDATE playdates SET pet_id = ?, address = ?, city = ?, state = ?, zip = ?, " +
                 "date = ?, lat = ?, lng = ? WHERE playdate_id = ?";
 
-        return jdbcTemplate.update(sql, playdate.getPet().getPetId(), playdate.getAddress(), playdate.getCity(),
-                playdate.getState(), playdate.getZip(), playdate.getDate(), playdate.getLat(), playdate.getLng(),
+        return jdbcTemplate.update(sql, playdateDTO.getPet().getPetId(), playdateDTO.getAddress(), playdateDTO.getCity(),
+                playdateDTO.getState(), playdateDTO.getZip(), playdateDTO.getDate(), location.getLat(), location.getLng(),
                 playdateId);
     }
 

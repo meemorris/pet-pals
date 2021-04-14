@@ -3,6 +3,7 @@ package com.techelevator.dao;
 import com.techelevator.model.CreatePlaydateDTO;
 import com.techelevator.model.Pet;
 import com.techelevator.model.Playdate;
+import com.techelevator.model.UpdatePlaydateDTO;
 import com.techelevator.services.MapService;
 
 import java.util.List;
@@ -20,5 +21,5 @@ public interface PlaydateDAO {
 
     long cancelPlaydate(int playdateId);
 
-    long updatePlaydate(int playdateId, Playdate playdate);
+    long updatePlaydate(int playdateId, UpdatePlaydateDTO playdateDTO, MapService mapService);
 }
