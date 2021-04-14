@@ -17,10 +17,10 @@
         >
           <option value="" default selected disabled>Species</option>
           <option value="">View All</option>
-          <option value="dog">Dog</option>
-          <option value="cat">Cat</option>
-          <option value="rabbit">Rabbit</option>
-          <option value="hedgehog">Hedgehog</option>
+          <option value="Dog">Dog</option>
+          <option value="Cat">Cat</option>
+          <option value="Rabbit">Rabbit</option>
+          <option value="Hedgehog">Hedgehog</option>
           <option value="other">Other (please describe)</option>
         </select>
 
@@ -38,8 +38,8 @@
         <select name="energy" id="energy" v-model="filter.pet.energeticRelaxed">
           <option value="" default selected disabled>Energy</option>
           <option value="">View All</option>
-          <option value="energetic">Energetic</option>
-          <option value="relaxed">Relaxed</option>
+          <option value="Energetic">Energetic</option>
+          <option value="Relaxed">Relaxed</option>
         </select>
       </div>
 
@@ -47,8 +47,8 @@
         <select name="timidity" id="timidity" v-model="filter.pet.shyFriendly">
           <option value="" default selected disabled>Timidity</option>
           <option value="">View All</option>
-          <option value="shy">Shy</option>
-          <option value="friendly">Friendly</option>
+          <option value="Shy">Shy</option>
+          <option value="Friendly">Friendly</option>
         </select>
       </div>
 
@@ -60,8 +60,8 @@
         >
           <option value="" default selected disabled>Curiosity</option>
           <option value="">View All</option>
-          <option value="apathetic">Apathetic</option>
-          <option value="curious">Curious</option>
+          <option value="Apathetic">Apathetic</option>
+          <option value="Curious">Curious</option>
         </select>
       </div>
 
@@ -142,10 +142,10 @@ export default {
     filteredList() {
       let filteredPlaydates = this.$store.state.playdateList;
       const isListedOption =
-        this.filter.pet.species === "dog" ||
-        this.filter.pet.species === "cat" ||
-        this.filter.pet.species === "rabbit" ||
-        this.filter.pet.species === "hedgehog";
+        this.filter.pet.species === "Dog" ||
+        this.filter.pet.species === "Cat" ||
+        this.filter.pet.species === "Rabbit" ||
+        this.filter.pet.species === "Hedgehog";
       if (this.filter.pet.species != "" && !isListedOption) {
         filteredPlaydates = filteredPlaydates.filter(
           (playdate) =>
