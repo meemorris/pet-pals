@@ -1,20 +1,23 @@
 <template>
   <div>
-    <message-list/>
+    <message-list />
+    <message-form />
   </div>
 </template>
 
 <script>
-import MessageList from "../components/MessageList.vue";
+import messageList from "../components/MessageList.vue";
 import userService from "@/services/UserService";
 import messageService from "@/services/MessageService";
+import messageForm from "@/components/MessageForm.vue";
 
 export default {
   name: "messageforum",
   components: {
-    MessageList,
+    messageList,
+    messageForm,
   },
-  created(){
+  created() {
     this.retrieveAccountInfo;
     this.retrieveMessages;
   },
@@ -59,16 +62,12 @@ export default {
                 error.response.statusText
             );
           } else if (error.request) {
-            alert(
-              "Messages could not be found. Server could not be reached"
-            );
+            alert("Messages could not be found. Server could not be reached");
           } else {
-            alert(
-              "Messages could not be found. Request could not be created."
-            );
+            alert("Messages could not be found. Request could not be created.");
           }
         });
     },
-  }
-}
+  },
+};
 </script>

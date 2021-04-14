@@ -142,4 +142,9 @@ export default {
 </script>
 
 <style>
+.label-pet-name,
+.input-pet-name {
+  display: inline-block;
+  margin: 0.5rem;
+}
 </style>

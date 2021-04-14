@@ -3,7 +3,7 @@ import axios from 'axios';
 export default {
 
   createMessage(message){
-    return axios.post('/message', message)
+    return axios.post('/messages', message)
   },
 
   getListOfMessages(){
