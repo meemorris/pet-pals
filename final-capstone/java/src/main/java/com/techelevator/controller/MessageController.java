@@ -31,14 +31,14 @@ public class MessageController {
         return messageDAO.create(messageDTO, userId);
     }
 
-    @RequestMapping(path = "/message", method = RequestMethod.GET)
-    public List<Message> getMessageByUserId(Principal principal) {
-        int userId = userDAO.findIdByUsername(principal.getName());
-        return messageDAO.getMessageByUserId(userId);
+    @RequestMapping(path = "/message/{id}", method = RequestMethod.GET)
+    public List<Message> getMessageByUserId(@PathVariable int id) {
+        //int userId = userDAO.findIdByUsername(id.getName());
+        return messageDAO.getMessageByUserId(id);
     }
 
-    @RequestMapping(path = "/message/{id}", method = RequestMethod.GET)
-    public Message getMessage(@PathVariable int id) {
-        return messageDAO.getMessage(id);
+    @RequestMapping(path = "/messages", method = RequestMethod.GET)
+    public Message getMessages() {
+        return messageDAO.getMessages();
     }
 }

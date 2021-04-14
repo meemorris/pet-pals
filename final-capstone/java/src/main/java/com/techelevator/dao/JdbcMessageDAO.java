@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -19,11 +20,11 @@ public class JdbcMessageDAO implements MessageDAO  {
     }
 
     @Override
-    public Message getMessage(int id) {
+    public Message getMessages() {
         Message message = new Message();
 
-        String sql = "SELECT message_id, user_id, message FROM messages WHERE message_id = ?";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
+        String sql = "SELECT * FROM messages";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
             if(results.next()) {
                 message = mapRowToMessage(results);
             }
@@ -33,13 +34,19 @@ public class JdbcMessageDAO implements MessageDAO  {
 
     @Override
     public List<Message> getMessageByUserId(int userId) {
-        return null;
+        List<Message> messageList = new ArrayList<>();
+        String sql = "SELECT * FROM messages WHERE user_id = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
+        while(results.next()) {
+            messageList.add(mapRowToMessage(results));
+        }
+        return messageList;
     }
 
     @Override
     public long create(MessageDTO messageDTO, int userId) {
 
-        String sql = "INSERT INTO messages (user_id, message) VALUES (?,?) RETURNING message_id";
+        String sql = "INSERT INTO messages (message, user_id) VALUES (?,?) RETURNING message_id";
         Long messageId = jdbcTemplate.queryForObject(sql, Long.class, messageDTO.getMessage(), userId);
 
         return messageId;
