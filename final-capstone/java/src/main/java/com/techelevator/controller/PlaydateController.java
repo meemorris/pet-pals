@@ -5,6 +5,7 @@ import com.techelevator.dao.UserDAO;
 import com.techelevator.model.CreatePlaydateDTO;
 import com.techelevator.model.Pet;
 import com.techelevator.model.Playdate;
+import com.techelevator.model.UpdatePlaydateDTO;
 import com.techelevator.services.MapService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -58,4 +59,15 @@ public class PlaydateController {
     public List<Playdate> getScheduledPlaydates(@PathVariable int petId) {
         return playdateDAO.getScheduledPlaydates(petId);
     }
+
+    @RequestMapping(path = "/playdates/{playdateId}/update", method = RequestMethod.PUT)
+    public long updatePlaydate(@PathVariable int playdateId, @Valid @RequestBody UpdatePlaydateDTO playdateDTO) {
+        return playdateDAO.updatePlaydate(playdateId, playdateDTO, mapService);
+    }
+
+    @RequestMapping(path = "/cancel/playdate/{playdateId}", method = RequestMethod.DELETE)
+    public long cancelPlaydate(@PathVariable int playdateId) {
+        return playdateDAO.cancelPlaydate(playdateId);
+    }
+
 }

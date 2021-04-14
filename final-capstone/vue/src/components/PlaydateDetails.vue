@@ -13,7 +13,7 @@
       class="alert alert-danger playdate-error-message"
       role="alert"
     >
-      {{ playdate.pet.name + errorMsg }}
+      {{ errorMsg }}
     </div>
     <div id="small" v-show="showSmall">
       <img
@@ -136,6 +136,7 @@ import playdateService from "@/services/PlaydateService";
 export default {
   name: "playdateDetails",
   props: ["playdate"],
+  components: {},
   created() {
     this.getOwner();
   },
@@ -188,11 +189,9 @@ export default {
       }
     },
     getOwner() {
-      return userService
-        .getProfile(this.playdate.pet.userId)
-        .then((response) => {
-          this.owner = response.data;
-        });
+      userService.getProfile(this.playdate.pet.userId).then((response) => {
+        this.owner = response.data;
+      });
     },
     toggleDisplay() {
       if (this.showSmall && !this.showForm) {
@@ -207,7 +206,11 @@ export default {
     },
     addPetToPlaydate() {
       if (this.playdate.pet.name == this.pet.name) {
-        this.errorMsg = " is already hosting this playdate.";
+        this.errorMsg = this.playdate.pet.name + " is already hosting this playdate.";
+        this.showForm = false;
+        this.toggleDisplay();
+      } else if(this.playdate.attendeeList.some(attendee => attendee.name == this.pet.name)){
+        this.errorMsg = this.pet.name + " is already attending this playdate.";
         this.showForm = false;
         this.toggleDisplay();
       } else {

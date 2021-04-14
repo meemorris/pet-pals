@@ -2,8 +2,8 @@
   <div id="preview">
     <div class="card">
     <h3 class="card-title">{{ pet.name }}</h3>
-    <img class="pet-pic card-img-top" v-if="pet.pic" v-bind:src="pet.pic" />
-    <img class="pet-pic card-img-top default-pic" v-else src="@/assets/paws-default-white.png" />
+    <img class="pet-pic card-img-top" v-if="pet.pic" v-bind:src="pet.pic" alt="pet profile picture"/>
+    <img class="pet-pic card-img-top default-pic" v-else src="@/assets/paws-default-white.png" alt="pet profile picture"/>
     </div>
     </div>
 </template>

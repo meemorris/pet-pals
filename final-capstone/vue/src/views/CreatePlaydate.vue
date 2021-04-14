@@ -2,7 +2,7 @@
   <div>
     <div class="outline">
       <h1 class="form-header">Schedule Playdate</h1>
-      <playdate-form></playdate-form>
+      <playdate-form v-bind:button="text"></playdate-form>
     </div>
   </div>
 </template>
@@ -13,6 +13,11 @@ export default {
   name: "createPlaydate",
   components: {
     PlaydateForm,
+  },
+  data() {
+    return {
+      text: "Schedule",
+    };
   },
 };
 </script>

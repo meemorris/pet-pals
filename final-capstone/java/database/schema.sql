@@ -86,6 +86,7 @@ CREATE TABLE playdates (
         date timestamp NOT NULL,
         lat varchar(32),
         lng varchar(32),
+        deleted_date date,
         CONSTRAINT PK_playdate PRIMARY KEY (playdate_id),
         CONSTRAINT FK_pet FOREIGN KEY (pet_id) REFERENCES pets(pet_id)
         
@@ -99,6 +100,7 @@ CREATE TABLE playdates_pets (
         playdate_id int NOT NULL,
         pet_id int NOT NULL,
         is_host boolean NOT NULL,
+        deleted_date date,
         
         CONSTRAINT FK_playdate FOREIGN KEY(playdate_id) REFERENCES playdates(playdate_id),
         CONSTRAINT FK_pet FOREIGN KEY(pet_id) REFERENCES pets(pet_id)

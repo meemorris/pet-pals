@@ -1,8 +1,12 @@
 <template>
   <div id="scheduled-playdates-card">
-      <div v-show="$route.path != '/profile'">
-        <h3>Scheduled Playdates</h3>
-      </div>
+    <div v-show="$route.path != '/profile'">
+      <h3>Scheduled Playdates</h3>
+    </div>
+
+    <div v-show="playdateList.length == 0">
+      <p>No playdates at the moment</p>
+    </div>
 
     <div
       class="playdate-card"
@@ -34,13 +38,50 @@
 
         <div id="playdate-buttons">
           <div v-show="isHost(playdate.playdateId)">
-            <router-link :to="{ name: 'updatePlaydate' }" id="updatePlaydate"
-              ><button>Update Playdate</button></router-link
-            >
+            <!-- <router-link :to="{name: 'updatePlaydate'}" id="updatePlaydate">
+              <button>Update Playdate</button></router-link
+            > -->
+
+           
+              <button v-on:click="updatePlaydate(playdate.playdateId)">Update Playdate</button>
+
+            <!-- <router-link to='/playdates/2/update'><button>Update Playdate
+              </button>
+            </router-link> -->
           </div>
 
-          <div v-show="isHost(playdate.playdateId)">
-            <button>Cancel Playdate</button>
+          <div
+            v-show="
+              confirmCancelMsg && playdate.playdateId == playdateIdToCancel
+            "
+            class="alert alert-danger confirm-cancel-msg"
+            role="alert"
+          >
+            {{ confirmCancelMsg }}
+          </div>
+
+          <div
+            v-show="
+              confirmCancelMsg && playdate.playdateId == playdateIdToCancel
+            "
+          >
+            <form
+              class="form-user"
+              id="form-cancel-playdate"
+              v-on:submit.prevent="cancel(playdate.playdateId)"
+            >
+              <div id="cancel-playdate-buttons">
+                <button v-on:click="keepPlaydate">Keep Playdate</button>
+                <button type="submit">Cancel Playdate</button>
+              </div>
+            </form>
+          </div>
+
+          <div v-show="isHost(playdate.playdateId) && !confirmCancelMsg">
+            <button v-on:click="confirmCancel(playdate.playdateId)">
+              <!-- <button v-on:click="cancel(playdate.playdateId)"> -->
+              Cancel Playdate
+            </button>
           </div>
         </div>
       </div>
@@ -56,6 +97,8 @@ export default {
   data() {
     return {
       playdateList: [],
+      confirmCancelMsg: "",
+      playdateIdToCancel: "",
     };
   },
   created() {
@@ -79,6 +122,43 @@ export default {
         }
       });
       return result;
+    },
+    confirmCancel(playdateId) {
+      this.confirmCancelMsg = "Are you sure you want to cancel this playdate?";
+      this.playdateIdToCancel = playdateId;
+    },
+    keepPlaydate() {
+      this.confirmCancelMsg = "";
+    },
+    updatePlaydate(id) {
+      this.$router.push(`/playdates/${id}/update`)
+    },
+    cancel(playdateId) {
+      if (this.confirmCancelMsg) {
+        return playdateService
+          .cancelPlaydate(playdateId)
+          .then((response) => {
+            if (response.status === 200) {
+              location.reload();
+            }
+          })
+          .catch((error) => {
+            if (error.response) {
+              alert(
+                "Playdate could not be cancelled. Response was " +
+                  error.response.statusText
+              );
+            } else if (error.request) {
+              alert(
+                "Playdate could not be cancelled. Server could not be reached"
+              );
+            } else {
+              alert(
+                "Playdate could not be cancelled. Request could not be created."
+              );
+            }
+          });
+      }
     },
   },
 };
@@ -169,10 +249,18 @@ button:hover {
   align-items: flex-end;
 }
 
+#scheduled-playdates-card {
+  min-width: 24vw;
+}
+
+#cancel-playdate-buttons {
+  display: flex;
+  flex-direction: column;
+}
+
 /* #scheduled-playdates-card {
   display: flex;
   flex-direction: column;
   align-items: center;
 } */
-
 </style>

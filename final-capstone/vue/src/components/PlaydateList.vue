@@ -2,9 +2,9 @@
   <div id="list">
     <h1>Playdates</h1>
     <div>
-    <button class="btn btn-primary" v-on:click="toggleDisplayType">
-      {{ displayType === "List" ? "View Map" : "Back to List" }}
-    </button>
+      <button class="btn btn-primary" v-on:click="toggleDisplayType">
+        {{ displayType === "List" ? "View Map" : "Back to List" }}
+      </button>
     </div>
 
     <div id="filters" v-show="displayTypeIsList">
@@ -77,6 +77,11 @@
           <option value="50">50 miles</option>
         </select>
       </div>
+      <div id="clear-filters">
+        <button id="clear-filter" class="btn btn-primary" v-on:click="clearFilter">
+          Clear Filters
+        </button>
+      </div>
     </div>
 
     <p v-show="filteredList.length == 0" id="no-results">No results found</p>
@@ -86,11 +91,19 @@
         <playdate-details v-bind:playdate="playdate" />
       </div>
     </div>
-    <TravelMap v-else class="travel-map" v-bind:playdateList="filteredList" v-bind:markers="markers" v-show="filteredList.length != 0"/>
+    <TravelMap
+      v-else
+      class="travel-map"
+      v-bind:playdateList="filteredList"
+      v-bind:markers="markers"
+      v-show="filteredList.length != 0"
+    />
   </div>
 </template>
 <script>
 import playdateService from "@/services/PlaydateService";
+import userService from "@/services/UserService";
+
 import PlaydateDetails from "@/components/PlaydateDetails.vue";
 import TravelMap from "@/components/TravelMap";
 
@@ -129,6 +142,7 @@ export default {
   },
   created() {
     this.createPlaydatesList();
+    this.retrieveAccountInfo();
   },
 
   components: {
@@ -179,11 +193,12 @@ export default {
       }
       if (this.filter.distanceFromUser != "") {
         filteredPlaydates = filteredPlaydates.filter(
-          (playdate) => 
-          Number(playdate.distanceFromUser.split(" ")[0]) <= Number(this.filter.distanceFromUser)
-        )
+          (playdate) =>
+            Number(playdate.distanceFromUser.split(" ")[0]) <=
+            Number(this.filter.distanceFromUser)
+        );
       }
-      this.repopulateMarkers(filteredPlaydates)
+      this.repopulateMarkers(filteredPlaydates);
       return filteredPlaydates;
     },
   },
@@ -202,6 +217,35 @@ export default {
         otherSpeciesElement.classList.remove("d-none");
       } else {
         otherSpeciesElement.classList.add("d-none");
+      }
+    },
+    retrieveAccountInfo() {
+      if (this.$store.state.token != "") {
+        userService
+          .getProfile(this.$store.state.user.id)
+          .then((response) => {
+            if (response.data.firstName === null) {
+              this.$router.push("/profile/create");
+            } else {
+              this.$store.commit("SET_ACCOUNT_INFO", response.data);
+            }
+          })
+          .catch((error) => {
+            if (error.response) {
+              alert(
+                "Account information could not be found. Response was " +
+                  error.response.statusText
+              );
+            } else if (error.request) {
+              alert(
+                "Account information could not be found. Server could not be reached"
+              );
+            } else {
+              alert(
+                "Account information could not be found. Request could not be created."
+              );
+            }
+          });
       }
     },
     createPlaydatesList() {
@@ -228,24 +272,51 @@ export default {
           }
         });
     },
-    populateMarkers(){
-      this.filteredList.forEach(element => {
+    populateMarkers() {
+      this.filteredList.forEach((element) => {
         let marker = {
-          id : element.playdateId,
-          position: { lat: Number(element.lat), lng: Number(element.lng) }
+          id: element.playdateId,
+          position: { lat: Number(element.lat), lng: Number(element.lng) },
         };
         this.markers.push(marker);
-      })
+      });
     },
-    repopulateMarkers(list){
-      this.markers = []
-      list.forEach(element => {
+    repopulateMarkers(list) {
+      this.markers = [];
+      list.forEach((element) => {
         const marker = {
-          id : element.playdateId,
-          position: { lat: Number(element.lat), lng: Number(element.lng) }
+          id: element.playdateId,
+          position: { lat: Number(element.lat), lng: Number(element.lng) },
         };
         this.markers.push(marker);
-      })
+      });
+    },
+    clearFilter() {
+      this.filter = {
+        playdate_id: "",
+        pet: {
+          petId: "",
+          name: "",
+          userId: "",
+          species: "",
+          breed: "",
+          weight: "",
+          birthYear: "",
+          energeticRelaxed: "",
+          shyFriendly: "",
+          apatheticCurious: "",
+          bio: "",
+          pic: "",
+        },
+        address: "",
+        city: "",
+        state: "",
+        zip: "",
+        date: "",
+        lat: "",
+        lng: "",
+        distanceFromUser: "",
+      };
     },
   },
 };
@@ -258,6 +329,10 @@ export default {
   margin: 10px;
   align-self: center;
 }
+#clear-filter {
+  margin-top: 0px;
+}
+
 #list {
   display: flex;
   flex-direction: column;

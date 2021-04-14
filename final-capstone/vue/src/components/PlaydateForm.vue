@@ -3,14 +3,14 @@
     <div id="dateTimePicker">
       <label for="date-time" class="sr-only">Date and Time</label>
       <input
-          type="datetime-local"
-          id="date-time"
-          name="dateTime"
-          class="form-control"
-          v-model="playdate.date"
-          required
-          autofocus
-        />
+        type="datetime-local"
+        id="date-time"
+        name="dateTime"
+        class="form-control"
+        v-model="playdate.date"
+        required
+        autofocus
+      />
     </div>
 
     <label for="address" class="sr-only">Address</label>
@@ -64,7 +64,8 @@
           required
         >
           <option value="" default disabled>Pet Name</option>
-          <option v-for="pet in $store.state.pets" v-bind:key="pet.petId">
+          <option v-for="pet in $store.state.pets" v-bind:key="pet.petId"
+          v-bind:value="pet.name">
             {{ pet.name }}
           </option>
         </select>
@@ -82,18 +83,27 @@ import playdateService from "@/services/PlaydateService.js";
 
 export default {
   name: "playdateForm",
+  props: ["button", "id"],
   data() {
     return {
       playdate: {
+        playdate_id: "",
+        pet_id: "",
         date: "",
         address: "",
         city: "",
         state: "",
         zip: "",
         pet: {},
+        lat: "",
+        lng: "",
+        distanceFromUser: "",
       },
       petName: "",
     };
+  },
+  created() {
+    this.completeFormForPlaydate();
   },
   computed: {
     today() {
@@ -107,34 +117,64 @@ export default {
   },
   methods: {
     sendPlaydate() {
-      playdateService
-        .createPlaydate(this.playdate)
+      if (this.button === "Schedule") {
+        playdateService
+          .createPlaydate(this.playdate)
+          .then((response) => {
+            if (response.status === 201) {
+              this.$router.push("/profile");
+            }
+          })
+          .catch((error) => {
+            if (error.response) {
+              alert(
+                "Playdate could not be scheduled. Response was " +
+                  error.response.statusText
+              );
+            } else if (error.request) {
+              alert(
+                "Playdate could not be scheduled. Server could not be reached"
+              );
+            } else {
+              alert(
+                "Playdate could not be scheduled. Request could not be created."
+              );
+            }
+          });
+      } else if (this.button === "Update") {
+        playdateService
+        .updatePlaydate(this.id, this.playdate)
         .then((response) => {
-          if (response.status === 201) {
-            this.$router.push("/profile");
+          if (response.status === 200) {
+            this.$router.push('/profile');
           }
         })
         .catch((error) => {
-          if (error.response) {
-            alert(
-              "Playdate could not be scheduled. Response was " +
-                error.response.statusText
-            );
-          } else if (error.request) {
-            alert(
-              "Playdate could not be scheduled. Server could not be reached"
-            );
-          } else {
-            alert(
-              "Playdate could not be scheduled. Request could not be created."
-            );
-          }
-        });
+            if (error.response) {
+              alert(
+                "Playdate could not be updated. Response was " +
+                  error.response.statusText
+              );
+            } else if (error.request) {
+              alert("Playdate could not be updated. Server could not be reached");
+            } else {
+              alert("Playdate could not be updated. Request could not be created.");
+            }
+          });
+      }
     },
     findPetByName() {
       this.playdate.pet = this.$store.state.pets.find(
         (pet) => pet.name === this.petName
       );
+    },
+    completeFormForPlaydate() {
+      if (this.button === "Update") {
+        playdateService.getPlaydate(this.id).then((response) => {
+          this.playdate = response.data;
+          this.petName = this.playdate.pet.name;
+        });
+      }
     },
   },
 };

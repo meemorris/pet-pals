@@ -14,7 +14,6 @@ import GoogleMapsApiLoader from "google-maps-api-loader";
 export default {
   props: {
     mapConfig: Object,
-    apiKey: String,
     markers: Array,
     playdateList: Array,
   },
@@ -26,7 +25,7 @@ export default {
   },
   async mounted() {
     const googleMapApi = await GoogleMapsApiLoader({
-      apiKey: this.apiKey,
+      apiKey: process.env.VUE_APP_GOOGLE_API_KEY,
     });
     this.google = googleMapApi;
     this.initializeMap();
@@ -146,7 +145,7 @@ export default {
         "</p>" +
 
         "<p>" +
-        "<a href='#'>Join Playdate</a>"
+        "<a href='/playdates/" + playdate.playdateId +"'>Join Playdate</a>"
         "</p>";
 
         return contentString;

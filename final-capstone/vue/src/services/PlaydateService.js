@@ -20,5 +20,17 @@ export default {
 
   getAttendees(playdateId) {
     return axios.get(`/schedule/playdates/${playdateId}/attendees`)
+  },
+
+  cancelPlaydate(playdateId) {
+    return axios.delete(`/cancel/playdate/${playdateId}`)
+  },
+
+  getPlaydate(playdateId) {
+    return axios.get(`/playdates/${playdateId}`)
+  },
+
+  updatePlaydate(playdateId, playdate) {
+    return axios.put(`/playdates/${playdateId}/update`, playdate)
   }
 }
