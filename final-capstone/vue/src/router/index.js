@@ -16,6 +16,7 @@ import Playdates from '@/views/Playdates.vue'
 import UpdatePlaydate from '@/views/UpdatePlaydate.vue'
 import MessageForum from '@/views/MessageForum.vue'
 import JoinPlaydate from '@/views/JoinPlaydate.vue'
+import WriteMessage from '@/views/WriteMessage.vue'
 
 Vue.use(Router)
 
@@ -151,7 +152,15 @@ const router = new Router({
       meta: {
         requiresAuth: true
       }
-    }
+    },
+    {
+      path: "/messageforum/write",
+      name: "writeMessage",
+      component: WriteMessage,
+      meta: {
+        requiresAuth: true
+      }
+    },
 
   ]
 })

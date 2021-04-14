@@ -1,7 +1,13 @@
 <template>
   <div>
     <message-list />
-    <message-form />
+    <router-link
+          :to="{ name: 'writeMessage' }"
+          id="writeMessage"
+          tag="button"
+          class="btn btn-primary"
+          >Write Message</router-link
+        >
   </div>
 </template>
 
@@ -9,13 +15,12 @@
 import messageList from "../components/MessageList.vue";
 import userService from "@/services/UserService";
 import messageService from "@/services/MessageService";
-import messageForm from "@/components/MessageForm.vue";
+
 
 export default {
   name: "messageforum",
   components: {
     messageList,
-    messageForm,
   },
   created() {
     this.retrieveAccountInfo;
