@@ -20,16 +20,16 @@ public class JdbcMessageDAO implements MessageDAO  {
     }
 
     @Override
-    public Message getMessages() {
-        Message message = new Message();
+    public List<Message> getMessages() {
+        List<Message> messageList = new ArrayList<>();
 
         String sql = "SELECT * FROM messages";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
-            if(results.next()) {
-                message = mapRowToMessage(results);
+            while(results.next()) {
+                messageList.add(mapRowToMessage(results));
             }
 
-            return message;
+            return messageList;
         }
 
     @Override

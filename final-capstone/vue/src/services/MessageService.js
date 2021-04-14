@@ -3,10 +3,10 @@ import axios from 'axios';
 export default {
 
   createMessage(message){
-    return axios.post('/messageforum', message)
+    return axios.post('/message', message)
   },
 
   getListOfMessages(){
-    return axios.get('/messageforum')
+    return axios.get('/messages')
   },
 }

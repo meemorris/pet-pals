@@ -38,7 +38,7 @@ public class MessageController {
     }
 
     @RequestMapping(path = "/messages", method = RequestMethod.GET)
-    public Message getMessages() {
+    public List<Message> getMessages() {
         return messageDAO.getMessages();
     }
 }

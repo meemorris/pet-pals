@@ -122,7 +122,8 @@ CREATE TABLE messages (
         CONSTRAINT FK_user FOREIGN KEY(user_id) REFERENCES users(user_id)
 );
 
-INSERT INTO messages (message_id, user_id, message) VALUES (1, 2, 'Pet message trash talk here');
+INSERT INTO messages (user_id, message) VALUES (2, 'Pet message trash talk here');
+INSERT INTO messages (user_id, message) VALUES (1, 'Pet Pals is amazing!');
 
 COMMIT TRANSACTION;
 

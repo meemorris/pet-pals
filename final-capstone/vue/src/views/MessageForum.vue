@@ -1,18 +1,18 @@
 <template>
   <div>
-    <message-form/>
+    <message-list/>
   </div>
 </template>
 
 <script>
-import MessageForm from "../components/MessageForm.vue";
+import MessageList from "../components/MessageList.vue";
 import userService from "@/services/UserService";
 import messageService from "@/services/MessageService";
 
 export default {
   name: "messageforum",
   components: {
-    MessageForm,
+    MessageList,
   },
   created(){
     this.retrieveAccountInfo;
