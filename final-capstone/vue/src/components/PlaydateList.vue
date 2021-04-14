@@ -1,9 +1,11 @@
 <template>
   <div id="list">
     <h1>Playdates</h1>
+    <div>
     <button class="btn btn-primary" v-on:click="toggleDisplayType">
       {{ displayType === "List" ? "View Map" : "Back to List" }}
     </button>
+    </div>
 
     <div id="filters" v-show="displayTypeIsList">
       <div id="species-group">
@@ -63,7 +65,7 @@
         </select>
       </div>
 
-      <div id="distance-group">
+      <div id="distance-group" v-show="$store.state.token != ''">
         <select name="distance" id="distance" v-model="filter.distanceFromUser">
           <option value="" default selected disabled>Max Distance</option>
           <option value="">Any Distance</option>
@@ -227,7 +229,6 @@ export default {
         });
     },
     populateMarkers(){
-
       this.filteredList.forEach(element => {
         let marker = {
           id : element.playdateId,
@@ -252,12 +253,16 @@ export default {
 
 <style scoped>
 .travel-map {
-  height: 400px;
+  height: 100%;
+  width: 80%;
+  margin: 10px;
+  align-self: center;
 }
 #list {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  justify-content: flex-start;
 }
 
 h1 {

@@ -42,7 +42,7 @@
 <style>
 body{
   color: #2a2b2a !important;
-  /* background-color: #fcf7ff !important; */
+  background-color: #FAFAFA !important;
 }
 
 /* * {
@@ -63,11 +63,9 @@ header {
   align-items: center; 
   justify-content: space-between;
   background-color: #07475f;
-  /* color: #fcf7ff !important; */
   color: #FAFAFA;
 }
 nav a {
-  /* color: #fcf7ff !important; */
   color: #FAFAFA;
   padding-left: 10px;
   padding-right: 10px;

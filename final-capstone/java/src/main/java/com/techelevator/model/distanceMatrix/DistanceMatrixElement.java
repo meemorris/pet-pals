@@ -1,4 +1,7 @@
-package com.techelevator.model;
+package com.techelevator.model.distanceMatrix;
+
+import com.techelevator.model.distanceMatrix.DistanceMatrixDistance;
+import com.techelevator.model.distanceMatrix.DistanceMatrixDuration;
 
 public class DistanceMatrixElement {
     DistanceMatrixDistance distance;

@@ -1,9 +1,9 @@
 package com.techelevator.services;
 
-import com.techelevator.model.DistanceMatrixElement;
-import com.techelevator.model.DistanceMatrixResult;
-import com.techelevator.model.GeocodeResult;
-import com.techelevator.model.Location;
+import com.techelevator.model.distanceMatrix.DistanceMatrixElement;
+import com.techelevator.model.distanceMatrix.DistanceMatrixResult;
+import com.techelevator.model.geocode.GeocodeResult;
+import com.techelevator.model.distanceMatrix.Location;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientResponseException;

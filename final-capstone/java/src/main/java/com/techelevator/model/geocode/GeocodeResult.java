@@ -1,6 +1,7 @@
-package com.techelevator.model;
+package com.techelevator.model.geocode;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.techelevator.model.geocode.GeocodeObject;
 
 import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)

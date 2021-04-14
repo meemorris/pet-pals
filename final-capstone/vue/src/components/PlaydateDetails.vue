@@ -34,7 +34,7 @@
         {{ playdate.state }} {{ playdate.zip }}
       </p>
       <p>
-        Date/Time:
+        Date & Time:
         {{ moment(this.playdate.date).format("dddd, MMMM Do YYYY, h:mm a") }}
       </p>
     </div>
@@ -77,7 +77,7 @@
           {{ playdate.state }} {{ playdate.zip }}
         </p>
         <p>
-          Date/Time:
+          Date & Time:
           {{ moment(this.playdate.date).format("dddd, MMMM Do YYYY, h:mm a") }}
         </p>
       </div>
@@ -98,6 +98,7 @@
             toggleShowForm();
             maintainLargeDisplay();
           "
+          v-show="$store.state.token != ''"
         >
           Join Playdate
         </button>
@@ -192,7 +193,6 @@ export default {
         .getProfile(this.playdate.pet.userId)
         .then((response) => {
           this.owner = response.data;
-          // this.getDistance();
         });
     },
     toggleDisplay() {

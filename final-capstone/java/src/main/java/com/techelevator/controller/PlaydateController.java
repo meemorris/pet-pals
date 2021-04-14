@@ -41,7 +41,10 @@ public class PlaydateController {
 
     @RequestMapping(path = "/playdates", method = RequestMethod.GET)
     public List<Playdate> getAllPlaydates(Principal principal) {
-        int userId = userDAO.findIdByUsername(principal.getName());
+        int userId = 0;
+        if (principal != null) {
+            userId = userDAO.findIdByUsername(principal.getName());
+        }
         return playdateDAO.getAllPlaydates(mapService, userId);
     }
 
