@@ -1,13 +1,6 @@
 <template>
   <div>
     <message-list />
-    <router-link
-          :to="{ name: 'writeMessage' }"
-          id="writeMessage"
-          tag="button"
-          class="btn btn-primary"
-          >Write Message</router-link
-        >
   </div>
 </template>
 
