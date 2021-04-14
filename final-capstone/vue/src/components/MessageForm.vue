@@ -27,7 +27,6 @@
         v-on:change="findPetByName()"
         v-bind:value="pet.name"
         v-model="petName"
-        required
       />{{ pet.name }}</label
     >
 
