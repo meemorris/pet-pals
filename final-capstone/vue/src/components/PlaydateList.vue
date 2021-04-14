@@ -77,6 +77,11 @@
           <option value="50">50 miles</option>
         </select>
       </div>
+      <div id="clear-filters">
+        <button id="clear-filter" class="btn btn-primary" v-on:click="clearFilter">
+          Clear Filters
+        </button>
+      </div>
     </div>
 
     <p v-show="filteredList.length == 0" id="no-results">No results found</p>
@@ -286,6 +291,33 @@ export default {
         this.markers.push(marker);
       });
     },
+    clearFilter() {
+      this.filter = {
+        playdate_id: "",
+        pet: {
+          petId: "",
+          name: "",
+          userId: "",
+          species: "",
+          breed: "",
+          weight: "",
+          birthYear: "",
+          energeticRelaxed: "",
+          shyFriendly: "",
+          apatheticCurious: "",
+          bio: "",
+          pic: "",
+        },
+        address: "",
+        city: "",
+        state: "",
+        zip: "",
+        date: "",
+        lat: "",
+        lng: "",
+        distanceFromUser: "",
+      };
+    },
   },
 };
 </script>
@@ -297,6 +329,10 @@ export default {
   margin: 10px;
   align-self: center;
 }
+#clear-filter {
+  margin-top: 0px;
+}
+
 #list {
   display: flex;
   flex-direction: column;
