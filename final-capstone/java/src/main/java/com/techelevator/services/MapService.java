@@ -1,6 +1,6 @@
 package com.techelevator.services;
 
-import com.techelevator.model.Location;
+import com.techelevator.model.distanceMatrix.Location;
 
 import java.util.List;
 

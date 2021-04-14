@@ -2,8 +2,7 @@ package com.techelevator.dao;
 
 import com.techelevator.model.Account;
 import com.techelevator.model.CreatePlaydateDTO;
-import com.techelevator.model.Location;
-import com.techelevator.model.Pet;
+import com.techelevator.model.distanceMatrix.Location;
 import com.techelevator.model.Playdate;
 import com.techelevator.services.MapService;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -75,14 +74,16 @@ public class JdbcPlaydateDAO implements PlaydateDAO {
         }
         destinations = destinations.substring(0,destinations.length()-1);
 
-        //get location of current user
-        Account currentAccount = accountDAO.getAccount(userId);
-        String origin = currentAccount.getLat() + "," + currentAccount.getLng();
+        if (userId != 0) {
+            //get location of current user
+            Account currentAccount = accountDAO.getAccount(userId);
+            String origin = currentAccount.getLat() + "," + currentAccount.getLng();
 
-        //get distances from current user
-        List<String> distances = mapService.getDistances(origin, destinations);
-        for (int i = 0; i < distances.size(); i++){
-            playdates.get(i).setDistanceFromUser(distances.get(i));
+            //get distances from current user
+            List<String> distances = mapService.getDistances(origin, destinations);
+            for (int i = 0; i < distances.size(); i++) {
+                playdates.get(i).setDistanceFromUser(distances.get(i));
+            }
         }
 
         return playdates;

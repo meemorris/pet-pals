@@ -1,4 +1,6 @@
-package com.techelevator.model;
+package com.techelevator.model.distanceMatrix;
+
+import com.techelevator.model.distanceMatrix.DistanceMatrixElement;
 
 import java.util.List;
 

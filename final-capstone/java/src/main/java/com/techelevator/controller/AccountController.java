@@ -4,7 +4,7 @@ import com.techelevator.dao.AccountDAO;
 import com.techelevator.dao.UserDAO;
 import com.techelevator.model.Account;
 import com.techelevator.model.AccountDTO;
-import com.techelevator.model.Location;
+import com.techelevator.model.distanceMatrix.Location;
 import com.techelevator.services.MapService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

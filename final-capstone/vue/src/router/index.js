@@ -13,6 +13,7 @@ import UpdateProfile from '@/views/UpdateProfile.vue'
 import CreateProfile from '@/views/CreateProfile.vue'
 import CreatePlaydate from '@/views/CreatePlaydate.vue'
 import Playdates from '@/views/Playdates.vue'
+import UpdatePlaydate from '@/views/UpdatePlaydate.vue'
 import MessageForum from '@/views/MessageForum.vue'
 //import MapView from '@/views/MapView.vue'
 
@@ -32,7 +33,7 @@ const router = new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
+      path: '/home',
       name: 'home',
       component: Home,
       meta: {
@@ -77,7 +78,7 @@ const router = new Router({
       component: PetProfile,
       meta: {
         requiresAuth: false
-      } 
+      }
     },
     {
       path: "/profile",
@@ -128,13 +129,21 @@ const router = new Router({
       }
     },
     {
+      path: "/playdate/update",
+      name: "updatePlaydate",
+      component: UpdatePlaydate,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
       path: "/messageforum",
       name: "messageforum",
       component: MessageForum,
       meta: {
         requiresAuth: true
       }
-    },
+    }
     // {
     //   path: "/map",
     //   name: "map",

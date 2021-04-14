@@ -169,7 +169,7 @@ h3 {
   border-radius: 2%;
   grid-area: image;
   max-width: 25vw;
-  margin-left: 22%;
+  margin-left: 2%;
 }
 
 .default-pic {
