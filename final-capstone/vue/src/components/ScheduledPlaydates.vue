@@ -37,17 +37,8 @@
         </div>
 
         <div id="playdate-buttons">
-          <div v-show="isHost(playdate.playdateId)">
-            <!-- <router-link :to="{name: 'updatePlaydate'}" id="updatePlaydate">
-              <button>Update Playdate</button></router-link
-            > -->
-
-           
+          <div v-show="isHost(playdate.playdateId)">     
               <button v-on:click="updatePlaydate(playdate.playdateId)">Update Playdate</button>
-
-            <!-- <router-link to='/playdates/2/update'><button>Update Playdate
-              </button>
-            </router-link> -->
           </div>
 
           <div

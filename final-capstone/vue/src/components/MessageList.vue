@@ -7,41 +7,47 @@
     <div id="list-view">
       <div>
         <div v-for="message in messageList" v-bind:key="message.messageId">
-          <div id="detail-view">
-            <!-- Use this one -->
-            <img v-if="message.pic" class="profile-pic" v-bind:src="message.pic" alt="user profile picture" />
-            <img class="profile-pic" v-else src="@/assets/default-user-pic.jpg" alt="profile picture">
-            <!-- Test -->
-            <!-- <img
+          <div id="detail-view" class="card">
+            <img
+              v-if="message.pic"
               class="profile-pic"
-              src="@/assets/paws-default.png"
+              v-bind:src="message.pic"
               alt="user profile picture"
-            /> -->
+            />
+            <img
+              class="default-profile-pic"
+              v-else
+              src="@/assets/default-user-pic.jpg"
+              alt="profile picture"
+            />
 
-            <div id="message-container">
-              <!-- Test -->
-              <!-- <h2><span class="message-header">User Name:</span> Test</h2> -->
+            <div id="message-container" class="card-body">
+              <p class="card-title">
+                <span class="message-header">Username: </span>
+                {{ message.name }}
+              </p>
 
-              <!-- Use this one -->
-              <h2><span class="message-header">User Name: </span> {{ message.name }}</h2>
-
-              <p>
+              <p class="card-text">
                 <span class="message-header">Message: </span
                 >{{ message.message }}
               </p>
-              <!-- {{message.userId}}:  {{message.message}} -->
+            </div>
+
+            <div id="message-info">
+              <p id="date-posted" v-show="message.postedDate">{{ moment(message.postedDate).format("dddd, MMMM Do YYYY, h:mm a") }}</p>
+              <p id="pet-tag" v-show="message.pet.name">#{{ message.pet.name }}</p>
             </div>
           </div>
         </div>
       </div>
     </div>
     <router-link
-          :to="{ name: 'writeMessage' }"
-          id="writeMessage"
-          tag="button"
-          class="btn btn-primary"
-          >Write Message</router-link
-        >
+      :to="{ name: 'writeMessage' }"
+      id="writeMessage"
+      tag="button"
+      class="btn btn-primary"
+      >Write Message</router-link
+    >
   </div>
 </template>
 
@@ -78,6 +84,11 @@ export default {
       let listOfMessages = this.$store.state.messageList;
       return listOfMessages;
     },
+    // sortedMessageList() {
+    //   let listOfMessages = this.$store.state.messageList;
+    //   this.listOfMessages.sort((a, b) => (a.messageId > b.messageId) ? 1 : -1)
+    //   return listOfMessages;
+    // },
   },
   methods: {
     createMessageList() {
@@ -104,41 +115,12 @@ export default {
           }
         });
     },
-    // retrieveAccountInfo() {
-    //   userService
-    //     .getProfile(this.message.userId)
-    //     .then((response) => {
-    //       if (response.data.firstName === null) {
-    //         this.$router.push("/profile/create");
-    //       } else {
-    //         this.$store.commit("SET_ACCOUNT_INFO", response.data);
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       if (error.response) {
-    //         alert(
-    //           "Account information could not be found. Response was " +
-    //             error.response.statusText
-    //         );
-    //       } else if (error.request) {
-    //         alert(
-    //           "Account information could not be found. Server could not be reached"
-    //         );
-    //       } else {
-    //         alert(
-    //           "Account information could not be found. Request could not be created."
-    //         );
-    //       }
-    //     });
-    // },
   },
 };
 </script>
 
 <style scoped>
 #list {
-  /* display: flex;
-  flex-direction: column; */
   height: 100vh;
 }
 
@@ -154,68 +136,34 @@ h1 {
 }
 
 #detail-view {
-
-  display: grid;
-  grid-template-columns: 1fr, 1fr;
-  grid-template-areas:
-  "pic body"
-  "pic body";
-
-  /* box-sizing: border-box; */
-  max-width: 450px;
-  clear: both;
-
-  background: #949494;
-  background-image: -webkit-gradient(
-    linear,
-    left bottom,
-    left top,
-    color-stop(0.15, #bee2ff),
-    color-stop(1, #95c2fd)
-  );
-  background-image: -webkit-linear-gradient(bottom, #d1d5d8 15%, #97a3b4 100%);
-  background-image: -moz-linear-gradient(bottom, #d1d5d8 15%, #97a3b4 100%);
-  background-image: -ms-linear-gradient(bottom, #d1d5d8 15%, #97a3b4 100%);
-  background-image: -o-linear-gradient(bottom, #d1d5d8 15%, #97a3b4 100%);
-  background-image: linear-gradient(to top, #d1d5d8 15%, #97a3b4 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#97a3b4', endColorstr='#d1d5d8');
-
-  border: solid 1px rgba(0, 0, 0, 0.5);
-  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
-  border-radius: 20px;
-
-  -webkit-box-shadow: inset 0 8px 5px rgba(255, 255, 255, 0.65),
-    0 1px 2px rgba(0, 0, 0, 0.2);
-  -moz-box-shadow: inset 0 8px 5px rgba(255, 255, 255, 0.65),
-    0 1px 2px rgba(0, 0, 0, 0.2);
-  box-shadow: inset 0 8px 5px rgba(255, 255, 255, 0.65),
-    0 1px 2px rgba(0, 0, 0, 0.2);
-  margin-bottom: 20px;
-  padding: 6px 20px;
-  color: #000;
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
-  word-wrap: break-word;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 55vw;
+  margin-bottom: 10px;
+  border: 2px solid hsla(240, 1%, 40%, 0.2);
 }
 
-h2 {
-  font-size: 1.2rem;
+#detail-view:hover {
+  background-color: #fafafa;
 }
 
 .message-header {
   font-weight: 600;
 }
 
-.profile-pic {
+.default-profile-pic {
   max-width: 100px;
-  /* min-width: 150px; */
   border-radius: 5%;
   align-self: center;
-  grid-area: pic;
+  padding: 13px;
 }
 
-#message-container {
-  grid-area: body;
+.profile-pic {
+  max-width: 100px;
+  border-radius: 5%;
+  align-self: center;
+  padding: 20px;
 }
 
 #list-view {
@@ -226,5 +174,23 @@ h2 {
 
 #writeMessage {
   margin-bottom: 30px;
+}
+
+#message-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-right: 15px;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+
+#pet-tag {
+  color: #cd704c;
+}
+
+#date-posted {
+  color: hsla(196, 86%, 20%, 0.75);
+  font-weight: 600;
 }
 </style>
