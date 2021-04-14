@@ -13,8 +13,6 @@
       class="alert alert-danger playdate-error-message"
       role="alert"
     >
-      <!-- <div v-show="hostNameSelected">{{ hostNameSelected }}</div>
-      <div v-show="petAlreadyAttending">{{ petAlreadyAttending }}</div> -->
       {{ errorMsg }}
     </div>
     <div id="small" v-show="showSmall">
@@ -97,13 +95,13 @@
         <button
           id="button-join-playdate"
           class="btn btn-primary"
-          v-on:click="toggleShowForm"
+          v-on:click="toggleShowForm(); attemptingJoin();"
         >
           Join Playdate
         </button>
       </div>
     </div>
-    <div v-show="showForm">
+    <div v-if="$store.state.pets.length != 0" v-show="showForm">
       <form
         class="form-user"
         id="form-join-playdate"
@@ -122,8 +120,6 @@
             id="pet-name"
             v-on:change="
               findPetByName();
-              isAttendee();
-              hostSelected();
             "
             v-bind:value="pet.name"
             v-model="petName"
@@ -140,6 +136,8 @@
         </div>
       </form>
     </div>
+    <div v-show="preemptiveJoinAttempt" class="alert alert-danger playdate-error-message"
+      role="alert">Please register a pet before joining a playdate.</div>
   </div>
 </template>
 
@@ -164,8 +162,7 @@ export default {
       showLarge: false,
       showForm: false,
       isPetAttendee: false,
-      petAlreadyAttending: "",
-      hostNameSelected: "",
+      preemptiveJoinAttempt: false,
       pet: {
         petId: "",
         name: "",
@@ -207,11 +204,9 @@ export default {
       }
     },
     getOwner() {
-      return userService
-        .getProfile(this.playdate.pet.userId)
-        .then((response) => {
-          this.owner = response.data;
-        });
+      userService.getProfile(this.playdate.pet.userId).then((response) => {
+        this.owner = response.data;
+      });
     },
     toggleDisplay() {
       if (this.showSmall && !this.showForm) {
@@ -223,27 +218,24 @@ export default {
         this.showLarge = false;
         this.errorMsg = "";
         this.successMsg = "";
-        // this.petAlreadyAttending = "";
-        // this.hostNameSelected = "";
-
       }
     },
     addPetToPlaydate() {
-      if (
-        this.playdate.pet.name == this.pet.name &&
-        !this.joinPlaydateCancelled
-      ) {
-        this.errorMsg = " is already hosting this playdate.";
+      if (this.playdate.pet.name == this.pet.name && !this.joinPlaydateCancelled) {
+        this.errorMsg = this.playdate.pet.name + " is already hosting this playdate.";
         this.clearData();
-      } else if (this.isPetAttendee && !this.joinPlaydateCancelled) {
-        this.errorMsg = " is already attending this playdate.";
+
+      } else if(this.playdate.attendeeList.some(attendee => attendee.name == this.pet.name)){
+        this.errorMsg = this.pet.name + " is already attending this playdate.";
         this.clearData();
+
       } else if (!this.joinPlaydateCancelled) {
         playdateService
           .joinPlaydate(this.playdate.playdateId, this.pet.petId)
           .then((response) => {
             if (response.status === 201) {
               this.successMsg = "Playdate joined, yay!";
+              this.createPlaydatesList();
             }
             this.clearData();
           })
@@ -265,23 +257,18 @@ export default {
           });
       }
     },
+    createPlaydatesList() {
+      playdateService
+        .getListOfPlaydates()
+        .then((response) => {
+          this.$store.commit("SET_PLAYDATE_LIST", response.data);
+          this.populateMarkers();
+        })
+    },
     cancelJoinPlaydate() {
       this.joinPlaydateCancelled = true;
       this.showForm = false;
       this.showSmall = false;
-    },
-    isAttendee() {
-      this.playdate.attendeeList.forEach((attendee) => {
-        if (attendee.name == this.petName) {
-          this.petAlreadyAttending = attendee.name;
-          this.isPetAttendee = true;
-        }
-      });
-    },
-    hostSelected() {
-      if (this.playdate.pet.name == this.petName) {
-        this.hostNameSelected = this.petName;
-      }
     },
     clearData() {
       this.showForm = false;
@@ -289,6 +276,11 @@ export default {
       this.pet = {};
       this.toggleDisplay();
     },
+    attemptingJoin() {
+      if (this.$store.state.pets.length == 0) {
+        this.preemptiveJoinAttempt = true;
+      }
+    }
   },
 };
 </script>

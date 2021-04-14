@@ -1,17 +1,17 @@
 <template>
   <div>
-    <playdate-list/>
+    <playdate-details-large/>
   </div>
 </template>
 
 <script>
-import PlaydateList from "../components/PlaydateList.vue";
+import PlaydateDetailsLarge from "../components/PlaydateDetailsLarge.vue";
 
 
 export default {
-  name: "playdates",
+  name: "joinPlaydate",
   components: {
-    PlaydateList,
+    PlaydateDetailsLarge,
   },
   created(){
 
