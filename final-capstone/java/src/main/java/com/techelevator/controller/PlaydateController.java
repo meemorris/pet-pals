@@ -55,4 +55,15 @@ public class PlaydateController {
     public List<Playdate> getScheduledPlaydates(@PathVariable int petId) {
         return playdateDAO.getScheduledPlaydates(petId);
     }
+
+    @RequestMapping(path = "/playdates/{playdateId}/update", method = RequestMethod.PUT)
+    public long updatePlaydate(@PathVariable int playdateId, @Valid @RequestBody Playdate playdate) {
+        return playdateDAO.updatePlaydate(playdateId, playdate);
+    }
+
+    @RequestMapping(path = "/cancel/playdate/{playdateId}", method = RequestMethod.DELETE)
+    public long cancelPlaydate(@PathVariable int playdateId) {
+        return playdateDAO.cancelPlaydate(playdateId);
+    }
+
 }

@@ -1,5 +1,10 @@
 <template>
-  <playdate-form />
+  <div>
+    <div class="outline">
+      <h1 class="form-header">Update Playdate</h1>
+      <playdate-form v-bind:button="text" v-bind:id="$route.params.id"></playdate-form>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -10,8 +15,13 @@ export default {
   components: {
     PlaydateForm,
   },
+   data() {
+    return {
+      text: "Update",
+    };
+  },
 };
 </script>
 
-<style>
+<style scoped>
 </style>
