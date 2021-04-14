@@ -37,6 +37,9 @@ export default {
       const mapContainer = this.$refs.googleMap;
       this.map = new this.google.maps.Map(mapContainer, this.mapConfig);
 
+      const playdateIcon = "https://www.gstatic.com/earth/images/stockicons/190201-2016-animal-paw_4x.png";
+      const homeIcon = "http://maps.google.com/mapfiles/kml/pal3/icon56.png";
+
       //create markers and infowindows for each playdate
       this.markers.forEach((element) => {
         const playdate = this.playdateList.find(
@@ -45,13 +48,22 @@ export default {
 
         const contentString = this.createContentString(playdate);
 
-        const infoWindow = this.createInfoWindow(contentString)
-        const marker = this.createMarker(element);
+        const infoWindow = this.createInfoWindow(contentString);
+        const title = "Playdate with " + playdate.pet.name;
+        const marker = this.createMarker(element,playdateIcon, title);
         
+
         marker.addListener("click", () => {
           infoWindow.open(this.map, marker);
         });
       });
+
+      //create marker for user home
+      const homeMarker = {
+        id: "home",
+        position: { lat: Number(this.$store.state.accountInfo.lat), lng: Number(this.$store.state.accountInfo.lng) }
+      }
+      this.createMarker(homeMarker, homeIcon, homeMarker.id);
     },
     formatDate(roughDate) {
       const date = new Date(roughDate);
@@ -147,14 +159,14 @@ export default {
         });
         return infoWindow;
     },
-    createMarker(element){
+    createMarker(element, icon, title){
       const marker = new this.google.maps.Marker({
           position: element.position,
           marker: element,
           map: this.map,
-          icon:
-            "https://www.gstatic.com/earth/images/stockicons/190201-2016-animal-paw_4x.png",
-          title: "Playdate " + element.id,
+          icon: icon,
+          title: title,
+          animation: this.google.maps.Animation.DROP,
         });
         return marker;
 

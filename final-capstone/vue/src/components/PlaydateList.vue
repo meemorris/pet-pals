@@ -240,7 +240,7 @@ export default {
     repopulateMarkers(list){
       this.markers = []
       list.forEach(element => {
-        let marker = {
+        const marker = {
           id : element.playdateId,
           position: { lat: Number(element.lat), lng: Number(element.lng) }
         };

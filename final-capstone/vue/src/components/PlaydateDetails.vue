@@ -83,14 +83,14 @@
       </div>
       <div id="owner-details">
         <img class="owner-pic" v-if="owner.pic" v-bind:src="owner.pic" />
-        <img class="owner-pic" v-else src="@/assets/noPetPic.png" />
+        <img class="owner-pic" v-else src="@/assets/paw-outline-light.png" />
         <div id="owner-content">
           <h5>Owner</h5>
           <h6>{{ owner.firstName }} {{ owner.lastName }}</h6>
           <p v-if="owner.bio">{{ owner.bio }}</p>
         </div>
       </div>
-      <div id="join-playdate">
+      <div id="join-playdate" v-show="$store.state.token != ''">
         <button
           id="button-join-playdate"
           class="btn btn-primary"
@@ -98,7 +98,6 @@
             toggleShowForm();
             maintainLargeDisplay();
           "
-          v-show="$store.state.token != ''"
         >
           Join Playdate
         </button>
