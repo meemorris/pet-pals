@@ -37,8 +37,14 @@
         </div>
 
         <div id="playdate-buttons">
-          <div v-show="isHost(playdate.playdateId)">     
-              <button v-on:click="updatePlaydate(playdate.playdateId)">Update Playdate</button>
+          <div
+            v-show="
+              isHost(playdate.playdateId) && playdate.attendeeList.length != 0
+            "
+          >
+            <button v-on:click="updatePlaydate(playdate.playdateId)">
+              Update Playdate
+            </button>
           </div>
 
           <div
@@ -122,7 +128,7 @@ export default {
       this.confirmCancelMsg = "";
     },
     updatePlaydate(id) {
-      this.$router.push(`/playdates/${id}/update`)
+      this.$router.push(`/playdates/${id}/update`);
     },
     cancel(playdateId) {
       if (this.confirmCancelMsg) {
