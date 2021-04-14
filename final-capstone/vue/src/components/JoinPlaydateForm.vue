@@ -13,7 +13,7 @@
       class="alert alert-danger playdate-error-message"
       role="alert"
     >
-      {{ playdate.pet.name + errorMsg }}
+      {{ errorMsg }}
     </div>
     <div v-show="displayForm">
       <form class="form-user" id="form" v-on:submit.prevent="addPetToPlaydate">
@@ -100,10 +100,14 @@ export default {
     },
     addPetToPlaydate() {
       if (this.playdate.pet.name == this.pet.name) {
-        this.errorMsg = " is already hosting this playdate.";
+        this.errorMsg =this.playdate.pet.name + " is already hosting this playdate.";
         // this.showForm = false;
         // this.toggleDisplay();
-      } else {
+      } else if(this.playdate.attendeeList.some(attendee => attendee.name == this.pet.name)){
+        this.errorMsg = this.pet.name + " is already attending this playdate.";
+        this.showForm = false;
+        this.toggleDisplay();
+      }else {
         playdateService
           .joinPlaydate(this.playdate.playdateId, this.pet.petId)
           .then((response) => {
