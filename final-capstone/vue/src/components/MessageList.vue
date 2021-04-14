@@ -35,6 +35,13 @@
         </div>
       </div>
     </div>
+    <router-link
+          :to="{ name: 'writeMessage' }"
+          id="writeMessage"
+          tag="button"
+          class="btn btn-primary"
+          >Write Message</router-link
+        >
   </div>
 </template>
 
@@ -215,5 +222,9 @@ h2 {
   display: flex;
   align-items: center;
   flex-direction: column;
+}
+
+#writeMessage {
+  margin-bottom: 30px;
 }
 </style>
