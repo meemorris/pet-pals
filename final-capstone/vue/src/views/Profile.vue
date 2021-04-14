@@ -22,6 +22,7 @@
       </div>
 
       <div id="accountColumn">
+        <h2>Your Profile</h2>
         <account-info></account-info>
       </div>
 
@@ -146,9 +147,14 @@ h2 {
   margin-bottom: 3vh;
 }
 
+h2 {
+  color: #949494;
+  font-size: 1.6rem;
+}
+
 h1 {
   margin-top: 45px;
-  margin-bottom: 45px;
+  margin-bottom: 65px;
   color: #cd704c;
 }
 

@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,7 +65,7 @@ public class JdbcPlaydateDAO implements PlaydateDAO {
     public List<Playdate> getAllPlaydates(MapService mapService, int userId) {
         List<Playdate> playdates = new ArrayList<>();
 
-        String sql = "SELECT playdate_id, pet_id, address, city, state, zip, date, lat, lng FROM playdates";
+        String sql = "SELECT playdate_id, pet_id, address, city, state, zip, date, lat, lng FROM playdates WHERE deleted_date IS NULL";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         String destinations = "";
         while(results.next()) {
@@ -102,7 +103,7 @@ public class JdbcPlaydateDAO implements PlaydateDAO {
         String sql = "SELECT p.playdate_id, p.pet_id, address, city, state, zip, date, lat, lng " +
         "FROM playdates p " +
         "JOIN playdates_pets pp ON p.playdate_id = pp.playdate_id " +
-        "WHERE pp.pet_id = ?";
+        "WHERE pp.pet_id = ? AND p.deleted_date IS NULL";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, petId);
         while(results.next()) {
@@ -110,6 +111,26 @@ public class JdbcPlaydateDAO implements PlaydateDAO {
         }
 
         return playdates;
+    }
+
+    @Override
+    public long cancelPlaydate(int playdateId) {
+        String sqlPlaydatesPets = "UPDATE playdates_pets SET deleted_date = ? WHERE playdate_id = ?";
+        String sqlPlaydates = "UPDATE playdates SET deleted_date = ? WHERE playdate_id = ?";
+
+        long playdatesPetsUpdated = jdbcTemplate.update(sqlPlaydatesPets, LocalDate.now(), playdateId);
+        long playdatesUpdated = jdbcTemplate.update(sqlPlaydates, LocalDate.now(), playdateId);
+        return playdatesPetsUpdated + playdatesUpdated;
+    }
+
+    @Override
+    public long updatePlaydate(int playdateId, Playdate playdate) {
+        String sql = "UPDATE playdates SET pet_id = ?, address = ?, city = ?, state = ?, zip = ?, " +
+                "date = ?, lat = ?, lng = ? WHERE playdate_id = ?";
+
+        return jdbcTemplate.update(sql, playdate.getPet().getPetId(), playdate.getAddress(), playdate.getCity(),
+                playdate.getState(), playdate.getZip(), playdate.getDate(), playdate.getLat(), playdate.getLng(),
+                playdateId);
     }
 
 

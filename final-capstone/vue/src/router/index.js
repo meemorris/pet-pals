@@ -137,7 +137,7 @@ const router = new Router({
       }
     },
     {
-      path: "/playdate/update",
+      path: "/playdates/:id/update",
       name: "updatePlaydate",
       component: UpdatePlaydate,
       meta: {

@@ -18,5 +18,7 @@ public interface PlaydateDAO {
 
     List<Playdate> getScheduledPlaydates(int petId);
 
+    long cancelPlaydate(int playdateId);
 
+    long updatePlaydate(int playdateId, Playdate playdate);
 }
