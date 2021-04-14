@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface MessageDAO {
 
-    Message getMessage (int id);
+    Message getMessages ();
 
     List<Message> getMessageByUserId(int userId);
 
