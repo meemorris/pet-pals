@@ -1,5 +1,5 @@
 <template>
-  <div id="details">
+  <div id="details" v-bind:class="areMoreDetailsDisplayed ? 'alwaysGray' : ''">
     <div id="small">
       <img
         class="pet-pic"
@@ -23,7 +23,12 @@
         <span class="bolded">Date & Time: </span>
         {{ moment(this.playdate.date).format("dddd, MMMM Do YYYY, h:mm a") }}
       </p>
-      <b-button v-b-toggle="playdateCollapse" class="m-1">More Details</b-button>
+      <b-button
+        v-b-toggle="playdateCollapse"
+        class="m-1"
+        v-on:click="toggleDisplay"
+        >{{ areMoreDetailsDisplayed ? "Less" : "More" }} Details</b-button
+      >
     </div>
 
     <b-collapse :id="playdateCollapse">
@@ -67,10 +72,63 @@
           </div>
         </div>
         <div id="join-playdate" v-show="$store.state.token != ''">
-          <b-button id="button-join-playdate" v-b-toggle="formCollapse" class="m-1">
+          <b-button
+            id="button-join-playdate"
+            v-b-toggle="formCollapse"
+            class="m-1"
+            v-on:click="clearMessagesAndData"
+          >
             Join Playdate
           </b-button>
         </div>
+        <b-collapse :id="formCollapse" class="join-form">
+        <div v-if="$store.state.pets.length != 0">
+          <form id="form-join-playdate" v-on:submit.prevent="addPetToPlaydate">
+            <p>Which pet?</p>
+            <div>
+              <label
+                v-for="pet in $store.state.pets"
+                v-bind:key="pet.petId"
+                for="pet-name"
+                class="label-pet-name"
+              >
+                <input
+                  class="input-pet-name"
+                  type="radio"
+                  name="pet-name"
+                  v-on:change="findPetByName"
+                  v-bind:value="pet.name"
+                  v-model="petName"
+                  required
+                />{{ pet.name }}</label
+              >
+            </div>
+
+            <div id="cancel-join-playdate-buttons">
+              <b-button
+                v-b-toggle="formCollapse"
+                id="button-add-pet"
+                type="submit"
+                >Confirm</b-button
+              >
+              <b-button
+                v-b-toggle="formCollapse"
+                id="button-cancel-add-pet"
+                v-on:click="clearMessagesAndData"
+              >
+                Cancel
+              </b-button>
+            </div>
+          </form>
+        </div>
+        <div
+          v-else
+          class="alert alert-danger playdate-error-message"
+          role="alert"
+        >
+          Please register a pet before joining a playdate.
+        </div>
+      </b-collapse>
       </div>
       <div id="not-logged-in" v-else>
         <h4>
@@ -84,65 +142,22 @@
           >Back To Home</router-link
         >
       </div>
-      <b-collapse :id="formCollapse" class="join-form">
-        <div v-if="$store.state.pets.length != 0">
-          <form id="form-join-playdate" v-on:submit.prevent="addPetToPlaydate">
-            <p>Which pet?</p>
-            <div>
-            <label
-              v-for="pet in $store.state.pets"
-              v-bind:key="pet.petId"
-              for="pet-name"
-              class="label-pet-name"
-            >
-              <input
-                class="input-pet-name"
-                type="radio"
-                name="pet-name"
-                v-on:change="findPetByName"
-                v-bind:value="pet.name"
-                v-model="petName"
-                required
-              />{{ pet.name }}</label
-            >
-            </div>
-          
-            <div id="cancel-join-playdate-buttons">
-              <button id="button-add-pet" type="submit">Join Playdate</button>
-              <div id="button-divider"><span>&nbsp;|&nbsp;</span></div>
-              <b-button
-                v-b-toggle="formCollapse"
-                id="button-cancel-add-pet"
-                v-on:click="cancelJoin"
-              >
-                Cancel
-              </b-button>
-            </div>
-          </form>
-          <div
-              v-show="successMsg"
-              class="alert alert-success playdate-joined-message"
-              role="alert"
-            >
-              {{ successMsg }}
-            </div>
+      
+      <div
+        v-show="successMsg"
+        class="alert alert-success playdate-joined-message"
+        role="alert"
+      >
+        {{ successMsg }}
+      </div>
 
-            <div
-              v-show="errorMsg"
-              class="alert alert-danger playdate-error-message"
-              role="alert"
-            >
-              {{ errorMsg }}
-            </div>
-        </div>
-        <div
-          v-else
-          class="alert alert-danger playdate-error-message"
-          role="alert"
-        >
-          Please register a pet before joining a playdate.
-        </div>
-      </b-collapse>
+      <div
+        v-show="errorMsg"
+        class="alert alert-danger playdate-error-message"
+        role="alert"
+      >
+        {{ errorMsg }}
+      </div>
     </b-collapse>
   </div>
 </template>
@@ -159,8 +174,7 @@ export default {
     return {
       errorMsg: "",
       successMsg: "",
-      joinPlaydateCancelled: false,
-      showForm: false,
+      areMoreDetailsDisplayed: false,
       isPetAttendee: false,
       pet: {
         petId: "",
@@ -188,9 +202,16 @@ export default {
     },
     formCollapse() {
       return "collapse-form" + this.playdate.playdateId;
-    }
+    },
   },
   methods: {
+    toggleDisplay() {
+      if (this.areMoreDetailsDisplayed) {
+        this.areMoreDetailsDisplayed = false;
+      } else {
+        this.areMoreDetailsDisplayed = true;
+      }
+    },
 
     findPetByName() {
       this.pet = this.$store.state.pets.find(
@@ -199,10 +220,8 @@ export default {
     },
 
     addPetToPlaydate() {
-      if (
-        this.playdate.pet.name == this.pet.name &&
-        !this.joinPlaydateCancelled
-      ) {
+      if (this.playdate.pet.name == this.pet.name) {
+        this.successMsg = "";
         this.errorMsg =
           this.playdate.pet.name + " is already hosting this playdate.";
         this.clearData();
@@ -211,13 +230,15 @@ export default {
           (attendee) => attendee.name == this.pet.name
         )
       ) {
+        this.successMsg = "";
         this.errorMsg = this.pet.name + " is already attending this playdate.";
         this.clearData();
-      } else if (!this.joinPlaydateCancelled) {
+      } else {
         playdateService
           .joinPlaydate(this.playdate.playdateId, this.pet.petId)
           .then((response) => {
             if (response.status === 201) {
+              this.errorMsg = "";
               this.successMsg = "Playdate joined, yay!";
               this.createPlaydatesList();
             }
@@ -244,11 +265,11 @@ export default {
     createPlaydatesList() {
       playdateService.getListOfPlaydates().then((response) => {
         this.$store.commit("SET_PLAYDATE_LIST", response.data);
-        this.populateMarkers();
       });
     },
-    cancelJoin() {
+    clearMessagesAndData() {
       this.errorMsg = "";
+      this.successMsg = "";
       this.clearData();
     },
     clearData() {
@@ -260,14 +281,14 @@ export default {
 </script>
 
 <style scoped>
-.playdate-error-message {
+.playdate-error-message,
+.playdate-joined-message {
   margin-top: 20px;
   margin-bottom: 0px;
+  margin-left: auto;
+  margin-right: auto;
 }
-#owner-details,
-#playdate-details {
-  margin-right: 30px;
-}
+
 #not-logged-in {
   height: 120px;
   display: flex;
@@ -297,7 +318,7 @@ export default {
   justify-content: center;
 }
 
-#join-form p {
+.join-form p {
   text-align: center;
   margin-bottom: 0;
   font-family: "Raleway", sans-serif;
@@ -318,10 +339,10 @@ export default {
 
 #large {
   display: grid;
-  grid-template-columns: 3fr 2fr;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-template-areas:
-    "pet owner"
-    "pet join";
+    "pet owner join"
+    "pet owner form";
 }
 #large p {
   font-size: 1.1rem;
@@ -329,26 +350,25 @@ export default {
 
 #pet-details {
   grid-area: pet;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left:auto;
+
 }
 
 #owner-details {
   grid-area: owner;
+  display: flex;
   margin-left: auto;
   margin-right: auto;
 }
+
 #join-playdate {
   grid-area: join;
-  align-self: center;
+
   margin-bottom: 0;
   justify-self: center;
 }
-
-#small .pet-pic {
-  width: 100px;
-  border-radius: 2%;
-  margin: 10px;
+#join-form {
+  grid-area: form;
 }
 
 #large .pet-pic {
@@ -360,7 +380,20 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 120px;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+#small .pet-pic {
+  width: 100px;
+  border-radius: 2%;
+  margin-right: 10px;
+}
+
+#small h4,
+#small p {
+  margin-bottom: 0;
+  margin-right: 10px;
 }
 
 .owner-pic {
@@ -373,18 +406,19 @@ export default {
   margin-bottom: auto;
 }
 
+.alwaysGray {
+  background-color: #c4cad0;
+  border-radius: 2%;
+}
+
 #details:hover {
   background-color: #c4cad0;
   border-radius: 2%;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 #details {
   padding: 20px;
-}
-
-#owner-details {
-  display: flex;
 }
 
 #owner-content {
@@ -393,7 +427,11 @@ export default {
   justify-content: center;
 }
 
-#button-add-pet,
+#button-add-pet {
+  margin-right: 10px;
+}
+
+/* #button-add-pet,
 #button-cancel-add-pet {
   background-color: transparent;
   border: none;
@@ -404,7 +442,7 @@ export default {
 #button-add-pet:hover,
 #button-cancel-add-pet:hover {
   color: #cd704c;
-}
+} */
 
 #cancel-join-playdate-buttons {
   display: flex;
