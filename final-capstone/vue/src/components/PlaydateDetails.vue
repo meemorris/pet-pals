@@ -205,12 +205,16 @@ export default {
     },
   },
   methods: {
+    // maintainHighlightedBackground() {
+
+    // },
     toggleDisplay() {
       if (this.areMoreDetailsDisplayed) {
         this.areMoreDetailsDisplayed = false;
       } else {
         this.areMoreDetailsDisplayed = true;
       }
+      this.clearMessagesAndData();
     },
 
     findPetByName() {
@@ -358,7 +362,7 @@ export default {
   grid-area: owner;
   display: flex;
   margin-left: auto;
-  margin-right: auto;
+
 }
 
 #join-playdate {
@@ -402,6 +406,7 @@ export default {
   object-fit: cover;
   border-radius: 50%;
   margin-right: 10px;
+  margin-left: 20px;
   margin-top: auto;
   margin-bottom: auto;
 }
@@ -467,5 +472,8 @@ export default {
 
 #pet-stats p {
   margin: 0px;
+}
+#form-join-playdate button{
+  width: 100px;
 }
 </style>

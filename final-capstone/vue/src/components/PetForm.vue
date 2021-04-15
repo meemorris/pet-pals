@@ -73,7 +73,7 @@
             id="Energetic"
             name="energetic_relaxed"
             v-model="pet.energeticRelaxed"
-            value="energetic"
+            value="Energetic"
           />
           Energetic</label
         >
@@ -84,7 +84,7 @@
             id="Relaxed"
             name="energetic_relaxed"
             v-model="pet.energeticRelaxed"
-            value="relaxed"
+            value="Relaxed"
           />
           Relaxed</label
         >
@@ -98,7 +98,7 @@
             id="Shy"
             name="shy_friendly"
             v-model="pet.shyFriendly"
-            value="shy"
+            value="Shy"
           />
           Shy
         </label>
@@ -108,7 +108,7 @@
             id="Friendly"
             name="shy_friendly"
             v-model="pet.shyFriendly"
-            value="friendly"
+            value="Friendly"
           />
           Friendly
         </label>
@@ -122,7 +122,7 @@
             id="Apathetic"
             name="apathetic_curious"
             v-model="pet.apatheticCurious"
-            value="apathetic"
+            value="Apathetic"
           />
           Apathetic</label
         >
@@ -133,7 +133,7 @@
             id="Curious"
             name="apathetic_curious"
             v-model="pet.apatheticCurious"
-            value="curious"
+            value="Curious"
           />
           Curious</label
         >
