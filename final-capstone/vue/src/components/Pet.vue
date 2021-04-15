@@ -121,6 +121,7 @@ export default {
 </script>
 
 <style scoped>
+
 .pet-profile {
   display: grid;
   grid-template-columns: 1fr, 1fr, 1fr;
@@ -168,8 +169,9 @@ h3 {
 .pet-pic {
   border-radius: 2%;
   grid-area: image;
+  min-width: 20vw;
   max-width: 25vw;
-  margin-left: 2%;
+  margin-left: 8%;
 }
 
 .default-pic {
@@ -177,8 +179,8 @@ h3 {
 }
 
 #playdates {
-  display: flex;
   grid-area: pd;
+  display: flex;
   border: 2px solid #cd704c;
   border-radius: 0.25rem;
   margin: 20px 10px;

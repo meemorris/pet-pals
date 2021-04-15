@@ -75,7 +75,7 @@
           </div>
 
           <div v-show="isHost(playdate.playdateId) && !confirmCancelMsg">
-            <button v-on:click="confirmCancel(playdate.playdateId)">
+            <button id="cancel-button" v-on:click="confirmCancel(playdate.playdateId)">
               <!-- <button v-on:click="cancel(playdate.playdateId)"> -->
               Cancel Playdate
             </button>
@@ -176,7 +176,8 @@ export default {
     "host host"
     "dt dt"
     "location location"
-    "attendees links";
+    "attendees attendees"
+    ". links";
 }
 
 .playdate-header {
@@ -234,6 +235,7 @@ button {
   background-color: transparent;
   border: none;
   color: #cd704c;
+
 }
 
 button:hover {
@@ -244,15 +246,13 @@ button:hover {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-}
 
-#scheduled-playdates-card {
-  min-width: 24vw;
 }
 
 #cancel-playdate-buttons {
   display: flex;
   flex-direction: column;
+  
 }
 
 #scheduled-playdate-grid h4 {
@@ -267,4 +267,8 @@ button:hover {
   padding: 10px;
 }
 
+#cancel-button {
+  display: flex;
+  justify-content: flex-end;
+}
 </style>
