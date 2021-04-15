@@ -35,10 +35,10 @@
             />{{ pet.name }}</label
           >
         </div>
-        <button id="button-add-pet" class="btn btn-primary" type="submit">
+      </form>
+      <button id="button-add-pet" class="btn btn-primary" type="submit">
           Join Playdate
         </button>
-      </form>
     </div>
   </div>
 </template>
@@ -167,5 +167,13 @@ export default {
 #form label {
   margin-left: auto;
   margin-right: auto;
+}
+
+button {
+  width: 180px;
+}
+
+#form {
+  margin-bottom: 30px;
 }
 </style>
