@@ -113,7 +113,7 @@ INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) VALUES
 INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) VALUES (3, '4686 Old Irwin Simpson Rd', 'Mason', 'Ohio', '45040', '2021-04-11 03:00:00', '39.3090199', '-84.3074929');
 INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) VALUES (4, '4335 Glendale Milford Rd', 'Blue Ash', 'Ohio', '45242', '2021-04-15 10:00:00', '39.2519331', '-84.38789640000002');
 INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) VALUES (5, '5057 Wooster Pike', 'Cincinnati', 'Ohio', ' 45226', '2021-04-15 10:00:00', '39.12185119999999', '-84.403733');
-INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) VALUES (6, '3006 Westwood Northern Blvd', 'Cincinnati', 'Ohio', '45211', '2021-04-15 10:00:00', '39.1575827', '--84.59373169999999');
+INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) VALUES (6, '3006 Westwood Northern Blvd', 'Cincinnati', 'Ohio', '45211', '2021-04-15 10:00:00', '39.1575827', '-84.59373169999999');
 INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) VALUES (7, '4335 Glendale Milford Rd', 'Blue Ash', 'Ohio', '45242', '2021-04-15 10:00:00', '39.2303513', '-84.71075429999999');
 INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) VALUES (9, '6701 Kellogg Rd', 'Cincinnati', 'Ohio', '45230', '2021-04-15 10:00:00', '39.048995', '-84.3972387');
 
