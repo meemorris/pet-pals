@@ -1,40 +1,42 @@
 <template>
-<div id="create-message">
-  <form class="message-form" v-on:submit.prevent="postMessage">
-    <label for="message" class="sr-only">First Name</label>
-    <textarea
-      id="message-text-area"
-      name="message"
-      rows="8"
-      cols="60"
-      class="form-control"
-      placeholder="Type Your Message Here..."
-      v-model="message.message"
-      required
-      autofocus
-    ></textarea>
-    <p>Are you posting about a pet?</p>
-    <label
-      v-for="pet in $store.state.pets"
-      v-bind:key="pet.petId"
-      for="pet-name"
-      class="label-pet-name"
-    >
-      <input
-        class="input-pet-name"
-        type="radio"
-        name="pet-name"
-        v-on:change="findPetByName()"
-        v-bind:value="pet.name"
-        v-model="petName"
-      />{{ pet.name }}</label
-    >
+  <div id="create-message">
+    <form class="message-form" v-on:submit.prevent="postMessage">
+      <label for="message" class="sr-only">First Name</label>
 
-    <button class="btn btn-lg btn-primary form-submit" type="submit">
-      Post Message
-    </button>
-    <div id="extra-space"></div>
-  </form>
+      <textarea
+        id="message-text-area"
+        name="message"
+        rows="8"
+        cols="60"
+        class="form-control"
+        placeholder="Type Your Message Here..."
+        v-model="message.message"
+        required
+        autofocus
+      ></textarea>
+
+      <p>Are you posting about a pet?</p>
+      <label
+        v-for="pet in $store.state.pets"
+        v-bind:key="pet.petId"
+        for="pet-name"
+        class="label-pet-name"
+      >
+        <input
+          class="input-pet-name"
+          type="radio"
+          name="pet-name"
+          v-on:change="findPetByName()"
+          v-bind:value="pet.name"
+          v-model="petName"
+        />{{ pet.name }}</label
+      >
+
+      <button class="btn btn-lg btn-primary form-submit" type="submit">
+        Post Message
+      </button>
+      <div id="extra-space"></div>
+    </form>
   </div>
 </template>
 
@@ -129,20 +131,24 @@ export default {
   margin: 0.5rem;
 }
 
-#message-text-area{
-    margin-top:20vh;
+#message-text-area {
+  margin-top: 20vh;
 }
 #create-message {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 .message-form p {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 .personality p {
   display: inline-block;
   margin: 0.5rem;
   font-family: "Raleway", sans-serif;
   font-weight: 600;
+}
+
+textarea {
+  border: 2px solid hsla(240, 1%, 40%, 0.2);
 }
 </style>

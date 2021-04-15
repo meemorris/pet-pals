@@ -255,9 +255,9 @@ button:hover {
   flex-direction: column;
 }
 
-/* #scheduled-playdates-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-} */
+#scheduled-playdate-grid h4 {
+  color: #949494;
+  margin-bottom: 15px;
+}
+
 </style>
