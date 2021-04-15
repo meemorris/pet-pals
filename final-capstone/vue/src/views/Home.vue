@@ -72,8 +72,11 @@ export default {
 }
 #message {
   grid-area: message;
-  font-size: 1.5rem;
+}
 
+#message p {
+  font-size: 1.8rem;
+  font-family: "Raleway", sans-serif;
 }
 #login {
   grid-area: login;
