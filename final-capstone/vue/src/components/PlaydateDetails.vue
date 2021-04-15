@@ -1,21 +1,6 @@
 <template>
-  <div id="details" v-on:click="toggleDisplay">
-    <div
-      v-show="successMsg"
-      class="alert alert-success playdate-joined-message"
-      role="alert"
-    >
-      {{ successMsg }}
-    </div>
-
-    <div
-      v-show="errorMsg"
-      class="alert alert-danger playdate-error-message"
-      role="alert"
-    >
-      {{ errorMsg }}
-    </div>
-    <div id="small" v-show="showSmall">
+  <div id="details">
+    <div id="small">
       <img
         class="pet-pic"
         v-if="playdate.pet.pic"
@@ -38,54 +23,31 @@
         <span class="bolded">Date & Time: </span>
         {{ moment(this.playdate.date).format("dddd, MMMM Do YYYY, h:mm a") }}
       </p>
+      <b-button v-b-toggle="playdateCollapse" class="m-1">More Details</b-button>
     </div>
 
-    <div >
-      <div id="large"  v-if="$store.state.token != ''" v-show="showLarge">
-        <div id="pet-pic">
-          <img
-            class="pet-pic"
-            v-if="playdate.pet.pic"
-            v-bind:src="playdate.pet.pic"
-          />
-          <img
-            class="pet-pic default-pic"
-            v-else
-            src="@/assets/paws-default-white.png"
-          />
-        </div>
-        <div id="title">
-          <h3>Playdate with {{ playdate.pet.name }}</h3>
-        </div>
+    <b-collapse :id="playdateCollapse">
+      <div id="large" v-if="$store.state.token != ''">
         <div id="pet-details">
-          <p v-if="playdate.pet.bio">{{ playdate.pet.bio }}</p>
+          <p class="italic" v-if="playdate.pet.bio">{{ playdate.pet.bio }}</p>
           <p>
             {{ playdate.pet.energeticRelaxed }} |
             {{ playdate.pet.shyFriendly }} |
             {{ playdate.pet.apatheticCurious }}
           </p>
-          <p>Species: {{ playdate.pet.species }}</p>
-          <p v-if="playdate.pet.breed">Breed: {{ playdate.pet.breed }}</p>
-          <p>
-            Weight: {{ playdate.pet.weight }} pound{{
-              playdate.pet.weight === 1 ? "" : "s"
-            }}
-          </p>
-          <p v-if="age === 0">Less Than 1 Year Old</p>
-          <p v-else>Age: {{ age }} year{{ age === 1 ? "" : "s" }}</p>
+          <div id="pet-stats">
+            <p>Species: {{ playdate.pet.species }}</p>
+            <p v-if="playdate.pet.breed">Breed: {{ playdate.pet.breed }}</p>
+            <p>
+              Weight: {{ playdate.pet.weight }} pound{{
+                playdate.pet.weight === 1 ? "" : "s"
+              }}
+            </p>
+            <p v-if="age === 0">Less Than 1 Year Old</p>
+            <p v-else>Age: {{ age }} year{{ age === 1 ? "" : "s" }}</p>
+          </div>
         </div>
-        <div id="playdate-details">
-          <p>
-            <span class="bolded">Location: </span>{{ playdate.address }},
-            {{ playdate.city }}, {{ playdate.state }} {{ playdate.zip }}
-          </p>
-          <p>
-            <span class="bolded">Date & Time: </span>
-            {{
-              moment(this.playdate.date).format("dddd, MMMM Do YYYY, h:mm a")
-            }}
-          </p>
-        </div>
+
         <div id="owner-details">
           <img
             class="owner-pic"
@@ -96,26 +58,21 @@
           <img class="owner-pic" v-else src="@/assets/default-user-pic.jpg" />
           <div id="owner-content">
             <h4>Owner</h4>
-            <h6>
+            <h5>
               {{ playdate.owner.firstName }} {{ playdate.owner.lastName }}
-            </h6>
-            <p v-if="playdate.owner.bio">{{ playdate.owner.bio }}</p>
+            </h5>
+            <p class="italic" v-if="playdate.owner.bio">
+              {{ playdate.owner.bio }}
+            </p>
           </div>
         </div>
         <div id="join-playdate" v-show="$store.state.token != ''">
-          <button
-            id="button-join-playdate"
-            class="btn btn-primary"
-            v-on:click.stop="
-              toggleShowForm();
-              attemptingJoin();
-            "
-          >
+          <b-button id="button-join-playdate" v-b-toggle="formCollapse" class="m-1">
             Join Playdate
-          </button>
+          </b-button>
         </div>
       </div>
-      <div id="not-logged-in" v-else v-show="showLarge">
+      <div id="not-logged-in" v-else>
         <h4>
           Please log in or register to view more details or join a playdate
         </h4>
@@ -127,47 +84,66 @@
           >Back To Home</router-link
         >
       </div>
-      <div v-if="$store.state.pets.length != 0" v-show="showForm">
-        <form
-          class="form-user"
-          id="form-join-playdate"
-          v-on:submit.prevent.stop="addPetToPlaydate"
-        >
-          <p>Which pet?</p>
-          <label
-            v-for="pet in $store.state.pets"
-            v-bind:key="pet.petId"
-            for="pet-name"
-            class="label-pet-name"
-          >
-            <input
-              class="input-pet-name"
-              type="radio"
-              name="pet-name"
-              v-on:change="findPetByName"
-              v-bind:value="pet.name"
-              v-model="petName"
-              required
-            />{{ pet.name }}</label
-          >
+      <b-collapse :id="formCollapse" class="join-form">
+        <div v-if="$store.state.pets.length != 0">
+          <form id="form-join-playdate" v-on:submit.prevent="addPetToPlaydate">
+            <p>Which pet?</p>
+            <div>
+            <label
+              v-for="pet in $store.state.pets"
+              v-bind:key="pet.petId"
+              for="pet-name"
+              class="label-pet-name"
+            >
+              <input
+                class="input-pet-name"
+                type="radio"
+                name="pet-name"
+                v-on:change="findPetByName"
+                v-bind:value="pet.name"
+                v-model="petName"
+                required
+              />{{ pet.name }}</label
+            >
+            </div>
+          
+            <div id="cancel-join-playdate-buttons">
+              <button id="button-add-pet" type="submit">Join Playdate</button>
+              <div id="button-divider"><span>&nbsp;|&nbsp;</span></div>
+              <b-button
+                v-b-toggle="formCollapse"
+                id="button-cancel-add-pet"
+                v-on:click="cancelJoin"
+              >
+                Cancel
+              </b-button>
+            </div>
+          </form>
+          <div
+              v-show="successMsg"
+              class="alert alert-success playdate-joined-message"
+              role="alert"
+            >
+              {{ successMsg }}
+            </div>
 
-          <div id="cancel-join-playdate-buttons">
-            <button id="button-add-pet" type="submit">Join Playdate</button>
-            <div id="button-divider"><span>&nbsp;|&nbsp;</span></div>
-            <button id="button-cancel-add-pet" v-on:click="cancelJoinPlaydate">
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
-      <div
-        v-show="preemptiveJoinAttempt"
-        class="alert alert-danger playdate-error-message"
-        role="alert"
-      >
-        Please register a pet before joining a playdate.
-      </div>
-    </div>
+            <div
+              v-show="errorMsg"
+              class="alert alert-danger playdate-error-message"
+              role="alert"
+            >
+              {{ errorMsg }}
+            </div>
+        </div>
+        <div
+          v-else
+          class="alert alert-danger playdate-error-message"
+          role="alert"
+        >
+          Please register a pet before joining a playdate.
+        </div>
+      </b-collapse>
+    </b-collapse>
   </div>
 </template>
 
@@ -184,11 +160,8 @@ export default {
       errorMsg: "",
       successMsg: "",
       joinPlaydateCancelled: false,
-      showSmall: true,
-      showLarge: false,
       showForm: false,
       isPetAttendee: false,
-      preemptiveJoinAttempt: false,
       pet: {
         petId: "",
         name: "",
@@ -210,6 +183,12 @@ export default {
     age() {
       return new Date().getFullYear() - this.playdate.pet.birthYear;
     },
+    playdateCollapse() {
+      return "collapse-playdate" + this.playdate.playdateId;
+    },
+    formCollapse() {
+      return "collapse-form" + this.playdate.playdateId;
+    }
   },
   methods: {
     // maintainHighlightedBackground() {
@@ -222,26 +201,6 @@ export default {
       );
     },
 
-    toggleShowForm() {
-      if (this.showForm) {
-        this.showForm = false;
-      } else {
-        this.showForm = true;
-      }
-    },
-
-    toggleDisplay() {
-      if (this.showSmall && !this.showForm) {
-        this.showSmall = false;
-        this.showLarge = true;
-        this.joinPlaydateCancelled = false;
-      } else {
-        this.showSmall = true;
-        this.showLarge = false;
-        this.errorMsg = "";
-        this.successMsg = "";
-      }
-    },
     addPetToPlaydate() {
       if (
         this.playdate.pet.name == this.pet.name &&
@@ -291,27 +250,23 @@ export default {
         this.populateMarkers();
       });
     },
-    cancelJoinPlaydate() {
-      this.joinPlaydateCancelled = true;
-      this.showForm = false;
-      this.showSmall = false;
+    cancelJoin() {
+      this.errorMsg = "";
+      this.clearData();
     },
     clearData() {
-      this.showForm = false;
       this.petName = "";
       this.pet = {};
-      this.toggleDisplay();
-    },
-    attemptingJoin() {
-      if (this.$store.state.pets.length == 0) {
-        this.preemptiveJoinAttempt = true;
-      }
     },
   },
 };
 </script>
 
 <style scoped>
+.playdate-error-message {
+  margin-top: 20px;
+  margin-bottom: 0px;
+}
 #owner-details,
 #playdate-details {
   margin-right: 30px;
@@ -322,7 +277,6 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 20px;
 }
 
 #not-logged-in h4 {
@@ -341,10 +295,22 @@ export default {
   max-width: 350px;
 }
 
-#form {
+.join-form {
   display: flex;
-  justify-content: flex-end;
-  margin-right: 10vw;
+  justify-content: center;
+}
+
+#join-form p {
+  text-align: center;
+  margin-bottom: 0;
+  font-family: "Raleway", sans-serif;
+  font-size: 1.3rem;
+}
+
+#form-join-playdate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .label-pet-name,
@@ -355,38 +321,31 @@ export default {
 
 #large {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 3fr 2fr;
   grid-template-areas:
-    "title title title"
-    "pic pet playdate"
-    "pic pet owner"
-    ". join .";
+    "pet owner"
+    "pet join";
 }
 #large p {
   font-size: 1.1rem;
 }
-#pet-pic {
-  grid-area: pic;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-}
-#title {
-  grid-area: title;
-  margin-top: 10px;
-}
+
 #pet-details {
   grid-area: pet;
+  margin-left: auto;
+  margin-right: auto;
 }
-#playdate-details {
-  grid-area: playdate;
-}
+
 #owner-details {
   grid-area: owner;
+  margin-left: auto;
+  margin-right: auto;
 }
 #join-playdate {
   grid-area: join;
-  margin-bottom: 10px;
+  align-self: center;
+  margin-bottom: 0;
+  justify-self: center;
 }
 
 #small .pet-pic {
@@ -404,7 +363,6 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 20px;
   height: 120px;
 }
 
@@ -414,6 +372,8 @@ export default {
   object-fit: cover;
   border-radius: 50%;
   margin-right: 10px;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 #details:hover {
@@ -422,8 +382,8 @@ export default {
   cursor: pointer;
 }
 
-h3 {
-  text-align: center;
+#details {
+  padding: 20px;
 }
 
 #owner-details {
@@ -451,7 +411,7 @@ h3 {
 
 #cancel-join-playdate-buttons {
   display: flex;
-  margin-left: 35px;
+  justify-content: center;
 }
 
 #button-divider {
@@ -462,7 +422,15 @@ h3 {
   font-weight: 700;
 }
 
+.italic {
+  font-style: italic;
+}
+
 #owner-content h4 {
   text-align: left;
+}
+
+#pet-stats p {
+  margin: 0px;
 }
 </style>
