@@ -40,8 +40,8 @@
       </p>
     </div>
 
-    <div>
-      <div id="large"  v-show="showLarge" v-if="$store.state.token != ''">
+    <div >
+      <div id="large"  v-if="$store.state.token != ''" v-show="showLarge">
         <div id="pet-pic">
           <img
             class="pet-pic"
@@ -114,8 +114,8 @@
             Join Playdate
           </button>
         </div>
-        </div>
-      <div id="not-logged-in" v-else>
+      </div>
+      <div id="not-logged-in" v-else v-show="showLarge">
         <h4>
           Please log in or register to view more details or join a playdate
         </h4>
@@ -127,50 +127,46 @@
           >Back To Home</router-link
         >
       </div>
-        <div v-if="$store.state.pets.length != 0" v-show="showForm">
-          <form
-            class="form-user"
-            id="form-join-playdate"
-            v-on:submit.prevent.stop="addPetToPlaydate"
-          >
-            <p>Which pet?</p>
-            <label
-              v-for="pet in $store.state.pets"
-              v-bind:key="pet.petId"
-              for="pet-name"
-              class="label-pet-name"
-            >
-              <input
-                class="input-pet-name"
-                type="radio"
-                name="pet-name"
-                v-on:change="findPetByName"
-                v-bind:value="pet.name"
-                v-model="petName"
-                required
-              />{{ pet.name }}</label
-            >
-
-            <div id="cancel-join-playdate-buttons">
-              <button id="button-add-pet" type="submit">Join Playdate</button>
-              <div id="button-divider"><span>&nbsp;|&nbsp;</span></div>
-              <button
-                id="button-cancel-add-pet"
-                v-on:click="cancelJoinPlaydate"
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
-        </div>
-        <div
-          v-show="preemptiveJoinAttempt"
-          class="alert alert-danger playdate-error-message"
-          role="alert"
+      <div v-if="$store.state.pets.length != 0" v-show="showForm">
+        <form
+          class="form-user"
+          id="form-join-playdate"
+          v-on:submit.prevent.stop="addPetToPlaydate"
         >
-          Please register a pet before joining a playdate.
-        </div>
-      
+          <p>Which pet?</p>
+          <label
+            v-for="pet in $store.state.pets"
+            v-bind:key="pet.petId"
+            for="pet-name"
+            class="label-pet-name"
+          >
+            <input
+              class="input-pet-name"
+              type="radio"
+              name="pet-name"
+              v-on:change="findPetByName"
+              v-bind:value="pet.name"
+              v-model="petName"
+              required
+            />{{ pet.name }}</label
+          >
+
+          <div id="cancel-join-playdate-buttons">
+            <button id="button-add-pet" type="submit">Join Playdate</button>
+            <div id="button-divider"><span>&nbsp;|&nbsp;</span></div>
+            <button id="button-cancel-add-pet" v-on:click="cancelJoinPlaydate">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+      <div
+        v-show="preemptiveJoinAttempt"
+        class="alert alert-danger playdate-error-message"
+        role="alert"
+      >
+        Please register a pet before joining a playdate.
+      </div>
     </div>
   </div>
 </template>
@@ -316,7 +312,8 @@ export default {
 </script>
 
 <style scoped>
-#owner-details, #playdate-details {
+#owner-details,
+#playdate-details {
   margin-right: 30px;
 }
 #not-logged-in {
