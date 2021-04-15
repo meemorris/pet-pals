@@ -30,11 +30,11 @@
       <h4>Playdate with {{ playdate.pet.name }}</h4>
 
       <p>
-        Location: {{ playdate.address }}, {{ playdate.city }},
+        <span class="bolded">Location: </span>{{ playdate.address }}, {{ playdate.city }},
         {{ playdate.state }} {{ playdate.zip }}
       </p>
       <p>
-        Date & Time:
+        <span class="bolded">Date & Time: </span>
         {{ moment(this.playdate.date).format("dddd, MMMM Do YYYY, h:mm a") }}
       </p>
     </div>
@@ -53,7 +53,7 @@
         />
       </div>
       <div id="title">
-        <h4>Playdate with {{ playdate.pet.name }}</h4>
+        <h3>Playdate with {{ playdate.pet.name }}</h3>
       </div>
       <div id="pet-details">
         <p v-if="playdate.pet.bio">{{ playdate.pet.bio }}</p>
@@ -73,11 +73,11 @@
       </div>
       <div id="playdate-details">
         <p>
-          Location: {{ playdate.address }}, {{ playdate.city }},
+          <span class="bolded">Location: </span>{{ playdate.address }}, {{ playdate.city }},
           {{ playdate.state }} {{ playdate.zip }}
         </p>
         <p>
-          Date & Time:
+          <span class="bolded">Date & Time: </span>
           {{ moment(this.playdate.date).format("dddd, MMMM Do YYYY, h:mm a") }}
         </p>
       </div>
@@ -86,7 +86,7 @@
         <!-- <img class="owner-pic" v-else src="@/assets/paw-outline-light.png" /> -->
         <img class="owner-pic" v-else src="@/assets/default-user-pic.jpg" />
         <div id="owner-content">
-          <h5>Owner</h5>
+          <h4>Owner</h4>
           <h6>{{ owner.firstName }} {{ owner.lastName }}</h6>
           <p v-if="owner.bio">{{ owner.bio }}</p>
         </div>
@@ -310,15 +310,18 @@ export default {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-areas:
-    "pic title title"
+    "title title title"
     "pic pet playdate"
     "pic pet owner"
-    "pic pet join";
+    ". join .";
+}
+#large p {
+  font-size: 1.1rem;
 }
 #pet-pic {
   grid-area: pic;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 }
 #title {
@@ -352,7 +355,7 @@ export default {
 
 #small {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   margin: 20px;
   height: 120px;
@@ -372,7 +375,7 @@ export default {
   cursor: pointer;
 }
 
-h4 {
+h3 {
   text-align: center;
 }
 
@@ -406,5 +409,13 @@ h4 {
 
 #button-divider {
   align-self: center;
+}
+
+.bolded {
+  font-weight: 700;
+}
+
+#owner-content h4 {
+  text-align: left;
 }
 </style>

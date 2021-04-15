@@ -324,7 +324,7 @@ export default {
 
 <style scoped>
 .travel-map {
-  height: 100%;
+  height: 80%;
   width: 80%;
   margin: 10px;
   align-self: center;
@@ -337,7 +337,10 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  width: 70vw;
   justify-content: flex-start;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 h1 {
@@ -354,15 +357,8 @@ h1 {
   margin-top: 3vh;
 }
 
-#species {
-  border: 1px solid hsla(210, 6%, 67%, 0.6);
-  border-radius: 3%;
-  height: 35px;
-  width: 18vw;
-  max-width: 250px;
-  padding-left: 5px;
-}
 
+#species,
 #energy,
 #timidity,
 #curiosity,
@@ -370,7 +366,7 @@ h1 {
   border: 1px solid hsla(210, 6%, 67%, 0.6);
   border-radius: 3%;
   height: 35px;
-  width: 18vw;
+  width: 11vw;
   max-width: 250px;
   padding-left: 5px;
 }
