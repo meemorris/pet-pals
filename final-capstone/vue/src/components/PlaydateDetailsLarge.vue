@@ -14,7 +14,7 @@
         />
       </div>
       <div id="title">
-        <h4>Playdate with {{ playdate.pet.name }}</h4>
+        <h3>Playdate with {{ playdate.pet.name }}</h3>
       </div>
       <div id="pet-details">
         <p v-if="playdate.pet.bio">{{ playdate.pet.bio }}</p>
@@ -34,43 +34,31 @@
       </div>
       <div id="playdate-details">
         <p>
-          Location: {{ playdate.address }}, {{ playdate.city }},
+          <span class="bolded">Location: </span>{{ playdate.address }}, {{ playdate.city }},
           {{ playdate.state }} {{ playdate.zip }}
         </p>
         <p>
-          Date & Time:
+          <span class="bolded">Date & Time: </span>
           {{ moment(this.playdate.date).format("dddd, MMMM Do YYYY, h:mm a") }}
         </p>
       </div>
       <div id="owner-details">
-        <img class="owner-pic" v-if="owner.pic" v-bind:src="owner.pic" />
+        <img class="owner-pic" v-if="playdate.owner.pic" v-bind:src="playdate.owner.pic" />
         <img class="owner-pic" v-else src="@/assets/paw-outline-light.png" />
         <div id="owner-content">
           <h5>Owner</h5>
-          <h6>{{ owner.firstName }} {{ owner.lastName }}</h6>
-          <p v-if="owner.bio">{{ owner.bio }}</p>
+          <h6>{{ playdate.owner.firstName }} {{ playdate.owner.lastName }}</h6>
+          <p v-if="playdate.owner.bio">{{ playdate.owner.bio }}</p>
         </div>
       </div>
       <div id="join-playdate" v-show="$store.state.token != ''">
-        <button
-          id="button-join-playdate"
-          class="btn btn-primary"
-          v-on:click.stop="
-            toggleShowForm();
-            maintainLargeDisplay();
-          "
-        >
-          Join Playdate
-        </button>
-      </div>
-    </div>
-    <div v-show="showForm">
         <join-playdate-form v-bind:playdate="playdate"/>
-    </div>
-    <div>
+       
+      </div>
+
     <router-link
       :to="{ name: 'playdates' }"
-      id="backToList"
+      id="back-to-list"
       tag="button"
       class="btn btn-primary"
       >Back to Playdates List</router-link
@@ -80,7 +68,6 @@
 </template>
 
 <script>
-import userService from '@/services/UserService';
 import playdateService from '@/services/PlaydateService';
 import JoinPlaydateForm from '@/components/JoinPlaydateForm.vue';
 
@@ -95,7 +82,7 @@ export default {
   data() {
     return {
         showForm: false,
-        owner: [],
+        owner: {},
         playdate: {}
     };
   },
@@ -115,16 +102,11 @@ export default {
     getPlaydate(){
         playdateService
         .getPlaydate(this.$route.params.id)
-        .then((response) => this.playdate = response.data)
-        this.getOwner();
-    },
-    getOwner() {
-      userService
-        .getProfile(this.playdate.pet.userId)
         .then((response) => {
-          this.owner = response.data;
-        });
+          this.playdate = response.data
+          })
     },
+
   },
 };
 </script>
@@ -134,10 +116,15 @@ export default {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-areas:
-    "pic title title"
+    "title title title"
     "pic pet playdate"
     "pic pet owner"
-    "pic pet join";
+    ". join ."
+    ". back .";
+}
+
+#back-to-list{
+  grid-area: back;
 }
 #pet-pic {
   grid-area: pic;
@@ -147,7 +134,7 @@ export default {
 }
 #title {
   grid-area: title;
-  margin-top: 10px;
+  margin-top: 45px;
 }
 #pet-details {
   grid-area: pet;
@@ -176,8 +163,16 @@ export default {
   margin-right: 10px;
 }
 
-h4 {
+#largeDetail p {
+  font-size: 1.1rem;
+}
+
+h3 {
   text-align: center;
+}
+
+.bolded {
+  font-weight: 700;
 }
 
 #owner-details {

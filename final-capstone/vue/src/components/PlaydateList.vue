@@ -1,7 +1,7 @@
 <template>
   <div id="list">
     <h1>Playdates</h1>
-    <div>
+    <div v-show="$store.state.token != ''">
       <button class="btn btn-primary" v-on:click="toggleDisplayType">
         {{ displayType === "List" ? "View Map" : "Back to List" }}
       </button>

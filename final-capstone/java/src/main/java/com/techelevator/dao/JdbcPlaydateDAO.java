@@ -1,10 +1,7 @@
 package com.techelevator.dao;
 
-import com.techelevator.model.Account;
-import com.techelevator.model.CreatePlaydateDTO;
-import com.techelevator.model.UpdatePlaydateDTO;
+import com.techelevator.model.*;
 import com.techelevator.model.distanceMatrix.Location;
-import com.techelevator.model.Playdate;
 import com.techelevator.services.MapService;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -142,7 +139,8 @@ public class JdbcPlaydateDAO implements PlaydateDAO {
         Playdate playdate = new Playdate();
         playdate.setPlaydateId(results.getLong("playdate_id"));
         int petId = results.getInt("pet_id");
-        playdate.setPet(petDAO.getPet(petId));
+        Pet pet = petDAO.getPet(petId);
+        playdate.setPet(pet);
         playdate.setAttendeeList(attendeeDAO.getAttendees(results.getInt("playdate_id")));
         playdate.setAddress(results.getString("address"));
         playdate.setCity(results.getString("city"));
@@ -151,6 +149,8 @@ public class JdbcPlaydateDAO implements PlaydateDAO {
         playdate.setDate(results.getTimestamp("date").toLocalDateTime());
         playdate.setLat(results.getString("lat"));
         playdate.setLng(results.getString("lng"));
+        Long ownerId = pet.getUserId();
+        playdate.setOwner(accountDAO.getAccount(ownerId.intValue()));
         return playdate;
     }
 }

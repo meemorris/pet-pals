@@ -121,7 +121,8 @@ CREATE TABLE messages (
         pet_id int,
         
         CONSTRAINT PK_message PRIMARY KEY(message_id),
-        CONSTRAINT FK_user FOREIGN KEY(user_id) REFERENCES users(user_id)
+        CONSTRAINT FK_user FOREIGN KEY(user_id) REFERENCES users(user_id),
+        CONSTRAINT FK_pet FOREIGN KEY(pet_id) REFERENCES pets(pet_id)
 );
 
 INSERT INTO messages (user_id, message, posted_date, pet_id) VALUES (2, 'Pet message trash talk here', '2021-04-14 09:00:00', 1);
