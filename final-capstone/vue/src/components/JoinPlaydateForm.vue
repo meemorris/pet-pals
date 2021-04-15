@@ -17,22 +17,24 @@
     </div>
     <div v-show="displayForm">
       <form class="form-user" id="form" v-on:submit.prevent="addPetToPlaydate">
-        <p>Which pet?</p>
-        <label
-          v-for="pet in $store.state.pets"
-          v-bind:key="pet.petId"
-          for="pet-name"
-          class="label-pet-name"
-        >
-          <input
-            class="input-pet-name"
-            type="radio"
-            id="pet-name"
-            v-on:change="findPetByName"
-            v-bind:value="pet.name"
-            v-model="petName"
-          />{{ pet.name }}</label
-        >
+        <p>Which pet would you like to join the playdate?</p>
+        <div id="buttons">
+          <label
+            v-for="pet in $store.state.pets"
+            v-bind:key="pet.petId"
+            for="pet-name"
+            class="label-pet-name"
+          >
+            <input
+              class="input-pet-name"
+              type="radio"
+              id="pet-name"
+              v-on:change="findPetByName"
+              v-bind:value="pet.name"
+              v-model="petName"
+            />{{ pet.name }}</label
+          >
+        </div>
         <button id="button-add-pet" class="btn btn-primary" type="submit">
           Join Playdate
         </button>
@@ -100,14 +102,19 @@ export default {
     },
     addPetToPlaydate() {
       if (this.playdate.pet.name == this.pet.name) {
-        this.errorMsg =this.playdate.pet.name + " is already hosting this playdate.";
+        this.errorMsg =
+        this.playdate.pet.name + " is already hosting this playdate.";
         // this.showForm = false;
         // this.toggleDisplay();
-      } else if(this.playdate.attendeeList.some(attendee => attendee.name == this.pet.name)){
+      } else if (
+        this.playdate.attendeeList.some(
+          (attendee) => attendee.name == this.pet.name
+        )
+      ) {
         this.errorMsg = this.pet.name + " is already attending this playdate.";
         this.showForm = false;
         this.toggleDisplay();
-      }else {
+      } else {
         playdateService
           .joinPlaydate(this.playdate.playdateId, this.pet.petId)
           .then((response) => {
@@ -146,5 +153,19 @@ export default {
 .input-pet-name {
   display: inline-block;
   margin: 0.5rem;
+}
+#form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#form p {
+  text-align: center;
+  margin-bottom: 0px
+}
+
+#form label {
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>

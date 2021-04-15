@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="playdate">
     <playdate-details-large/>
   </div>
 </template>
@@ -23,5 +23,10 @@ export default {
 </script>
 
 <style scoped>
+#playdate{
+  width: 70vw;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 </style>
