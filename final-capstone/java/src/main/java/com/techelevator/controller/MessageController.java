@@ -33,11 +33,11 @@ public class MessageController {
         return messageDAO.create(messageDTO, userId, postedDate);
     }
 
-    @RequestMapping(path = "/messages/{id}", method = RequestMethod.GET)
-    public List<Message> getMessageByUserId(@PathVariable int id) {
-        //int userId = userDAO.findIdByUsername(id.getName());
-        return messageDAO.getMessageByUserId(id);
-    }
+//    @RequestMapping(path = "/messages/{id}", method = RequestMethod.GET)
+//    public List<Message> getMessageByUserId(@PathVariable int id) {
+//        //int userId = userDAO.findIdByUsername(id.getName());
+//        return messageDAO.getMessageByUserId(id);
+//    }
 
     @RequestMapping(path = "/messages", method = RequestMethod.GET)
     public List<Message> getMessages() {

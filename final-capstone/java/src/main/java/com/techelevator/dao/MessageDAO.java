@@ -10,7 +10,7 @@ public interface MessageDAO {
 
     List<Message> getMessages ();
 
-    List<Message> getMessageByUserId(int userId);
+//    List<Message> getMessageByUserId(int userId);
 
     long create(MessageDTO messageDTO, int userId, LocalDateTime date);
 }

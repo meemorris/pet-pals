@@ -51,9 +51,16 @@ public class JdbcPlaydateDAO implements PlaydateDAO {
     @Override
     public Playdate getPlaydate(int id) {
         Playdate playdate = new Playdate();
-        String sql = "SELECT playdate_id, pet_id, address, city, state, zip, date, lat, lng FROM playdates WHERE playdate_id = ?";
+        String sql = "SELECT pd.playdate_id, pd.pet_id, pd.address, pd.city, pd.state, pd.zip, pd.date, pd.lat, pd.lng, " +
+                "name, pets.user_id, species, breed, weight, birth_year, energetic_relaxed, shy_friendly, apathetic_curious, pets.bio, pets.pic, " +
+                "first_name, last_name, email, phone, a.address AS account_address, a.city AS account_city, a.state AS account_state, a.zip AS account_zip, " +
+                "a.bio AS account_bio, a.pic AS account_pic, a.lat AS account_lat, a.lng AS account_lng " +
+                "FROM playdates pd " +
+                "JOIN pets ON pets.pet_id = pd.pet_id " +
+                "JOIN accounts a ON a.user_id = pets.user_id " +
+                "WHERE pd.playdate_id = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
-        if(results.next()) {
+        if (results.next()) {
             playdate = mapRowToPlaydate(results);
         }
         return playdate;
@@ -63,15 +70,22 @@ public class JdbcPlaydateDAO implements PlaydateDAO {
     public List<Playdate> getAllPlaydates(MapService mapService, int userId) {
         List<Playdate> playdates = new ArrayList<>();
 
-        String sql = "SELECT playdate_id, pet_id, address, city, state, zip, date, lat, lng FROM playdates WHERE deleted_date IS NULL";
+        String sql = "SELECT pd.playdate_id, pd.pet_id, pd.address, pd.city, pd.state, pd.zip, pd.date, pd.lat, pd.lng, " +
+                "name, pets.user_id, species, breed, weight, birth_year, energetic_relaxed, shy_friendly, apathetic_curious, pets.bio, pets.pic, " +
+                "first_name, last_name, email, phone, a.address AS account_address, a.city AS account_city, a.state AS account_state, a.zip AS account_zip, " +
+                "a.bio AS account_bio, a.pic AS account_pic, a.lat AS account_lat, a.lng AS account_lng " +
+                "FROM playdates pd " +
+                "JOIN pets ON pets.pet_id = pd.pet_id " +
+                "JOIN accounts a ON a.user_id = pets.user_id " +
+                "WHERE deleted_date IS NULL";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         String destinations = "";
-        while(results.next()) {
+        while (results.next()) {
             Playdate playdate = mapRowToPlaydate(results);
             playdates.add(playdate);
             destinations += playdate.getLat() + "," + playdate.getLng() + "|";
         }
-        destinations = destinations.substring(0,destinations.length()-1);
+        destinations = destinations.substring(0, destinations.length() - 1);
 
         if (userId != 0) {
             //get location of current user
@@ -98,13 +112,18 @@ public class JdbcPlaydateDAO implements PlaydateDAO {
     public List<Playdate> getScheduledPlaydates(int petId) {
         List<Playdate> playdates = new ArrayList<>();
 
-        String sql = "SELECT p.playdate_id, p.pet_id, address, city, state, zip, date, lat, lng " +
-        "FROM playdates p " +
-        "JOIN playdates_pets pp ON p.playdate_id = pp.playdate_id " +
-        "WHERE pp.pet_id = ? AND p.deleted_date IS NULL";
+        String sql = "SELECT pd.playdate_id, pd.pet_id, pd.address, pd.city, pd.state, pd.zip, pd.date, pd.lat, pd.lng, " +
+                "name, pets.user_id, species, breed, weight, birth_year, energetic_relaxed, shy_friendly, apathetic_curious, pets.bio, pets.pic, " +
+                "first_name, last_name, email, phone, a.address AS account_address, a.city AS account_city, a.state AS account_state, a.zip AS account_zip, " +
+                "a.bio AS account_bio, a.pic AS account_pic, a.lat AS account_lat, a.lng AS account_lng " +
+                "FROM playdates pd " +
+                "JOIN pets ON pets.pet_id = pd.pet_id " +
+                "JOIN accounts a ON a.user_id = pets.user_id " +
+                "JOIN playdates_pets pp ON pd.playdate_id = pp.playdate_id " +
+                "WHERE pp.pet_id = ? AND pd.deleted_date IS NULL";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, petId);
-        while(results.next()) {
+        while (results.next()) {
             playdates.add(mapRowToPlaydate(results));
         }
 
@@ -139,7 +158,7 @@ public class JdbcPlaydateDAO implements PlaydateDAO {
         Playdate playdate = new Playdate();
         playdate.setPlaydateId(results.getLong("playdate_id"));
         int petId = results.getInt("pet_id");
-        Pet pet = petDAO.getPet(petId);
+        Pet pet = petDAO.mapRowToPet(results);
         playdate.setPet(pet);
         playdate.setAttendeeList(attendeeDAO.getAttendees(results.getInt("playdate_id")));
         playdate.setAddress(results.getString("address"));
@@ -149,8 +168,27 @@ public class JdbcPlaydateDAO implements PlaydateDAO {
         playdate.setDate(results.getTimestamp("date").toLocalDateTime());
         playdate.setLat(results.getString("lat"));
         playdate.setLng(results.getString("lng"));
-        Long ownerId = pet.getUserId();
-        playdate.setOwner(accountDAO.getAccount(ownerId.intValue()));
+        Account owner = mapPlaydateRowToAccount(results);
+        playdate.setOwner(owner);
         return playdate;
     }
+
+    private Account mapPlaydateRowToAccount(SqlRowSet results) {
+        Account account = new Account();
+        account.setUserId(results.getLong("user_id"));
+        account.setFirstName(results.getString("first_name"));
+        account.setLastName(results.getString("last_name"));
+        account.setEmail(results.getString("email"));
+        account.setPhone(results.getString("phone"));
+        account.setAddress(results.getString("account_address"));
+        account.setCity(results.getString("account_city"));
+        account.setState(results.getString("account_state"));
+        account.setZip(results.getString("account_zip"));
+        account.setBio(results.getString("account_bio"));
+        account.setPic(results.getString("account_pic"));
+        account.setLat(results.getString("account_lat"));
+        account.setLng(results.getString("account_lng"));
+        return account;
+    }
+
 }
