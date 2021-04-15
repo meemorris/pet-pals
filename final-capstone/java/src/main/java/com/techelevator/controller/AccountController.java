@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -49,5 +50,10 @@ public class AccountController {
         Location location = mapService.getLocation(accountDTO.getAddress(), accountDTO.getCity(), accountDTO.getState());
 
         accountDAO.updateAccount(id, accountDTO, location);
+    }
+
+    @RequestMapping(path = "/profile-list", method = RequestMethod.GET)
+    public List<Account> getAllUsers() {
+        return accountDAO.getAllUsers();
     }
 }

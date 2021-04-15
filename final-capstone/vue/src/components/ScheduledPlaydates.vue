@@ -5,7 +5,7 @@
     </div>
 
     <div v-show="playdateList.length == 0">
-      <p>No playdates at the moment</p>
+      <p id="no-playdates">No playdates at the moment</p>
     </div>
 
     <div
@@ -39,7 +39,7 @@
         <div id="playdate-buttons">
           <div
             v-show="
-              isHost(playdate.playdateId) && playdate.attendeeList.length != 0
+              isHost(playdate.playdateId) && playdate.attendeeList.length == 0
             "
           >
             <button v-on:click="updatePlaydate(playdate.playdateId)">
@@ -258,6 +258,13 @@ button:hover {
 #scheduled-playdate-grid h4 {
   color: #949494;
   margin-bottom: 15px;
+}
+
+#no-playdates {
+  color: #949494;
+  text-align: center;
+  border: 2px solid hsla(240, 1%, 40%, 0.2);
+  padding: 10px;
 }
 
 </style>

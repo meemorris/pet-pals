@@ -166,7 +166,6 @@ h1 {
 #playdate-info {
   border: 2px solid #cd704c;
   border-radius: 0.25rem;
-  margin: 20px 10px;
   padding: 30px 25px;
   background-color: #fff;
   box-shadow: 1px 3px 7px 0 rgba(134, 130, 130, 0.4),
@@ -175,6 +174,7 @@ h1 {
 
 #createPlaydate {
   margin-bottom: 50px;
+  margin-top: 3vh;
 }
 
 #playdate-scheduled-header {

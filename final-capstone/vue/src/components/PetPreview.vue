@@ -37,7 +37,7 @@ h3 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 3vh;
+    margin-bottom: 1.5vh;
     background-color: #FAFAFA !important;
 }
 

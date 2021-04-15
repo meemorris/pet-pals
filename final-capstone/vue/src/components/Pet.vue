@@ -268,4 +268,8 @@ h3 {
   max-width: 300px;
 }
 
+.bio-group h3, .stats-group h3, .personality-group h3 {
+  text-align: left;
+  margin-left: 10px;
+}
 </style>

@@ -13,4 +13,8 @@ export default {
         return axios.get(`/profile/${id}`)
       },
 
+    getAllProfiles() {
+      return axios.get('/profile-list')
+    }
+
 }

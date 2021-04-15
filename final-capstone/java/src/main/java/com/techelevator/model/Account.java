@@ -2,6 +2,7 @@ package com.techelevator.model;
 
 public class Account {
 
+    private long userId;
     private String firstName;
     private String lastName;
     private String email;
@@ -17,7 +18,8 @@ public class Account {
 
     public Account(){}
 
-    public Account(String firstName, String lastName, String email, String phone, String address, String city, String state, String zip, String bio, String pic, String lat, String lng) {
+    public Account(long userId, String firstName, String lastName, String email, String phone, String address, String city, String state, String zip, String bio, String pic, String lat, String lng) {
+        this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -30,6 +32,14 @@ public class Account {
         this.pic = pic;
         this.lat = lat;
         this.lng = lng;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public String getFirstName() {

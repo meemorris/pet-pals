@@ -86,6 +86,7 @@ h4 {
 .card {
   display: flex;
   align-items: center;
+  padding: 20px;
 }
 
 h3 {

@@ -94,4 +94,5 @@ export default {
 #message-container {
     flex-basis: 50%;
 }
+
 </style>
