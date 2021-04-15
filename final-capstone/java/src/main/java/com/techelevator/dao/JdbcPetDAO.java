@@ -71,7 +71,8 @@ public class JdbcPetDAO implements PetDAO {
         return petList;
     }
 
-    private Pet mapRowToPet(SqlRowSet results) {
+    @Override
+    public Pet mapRowToPet(SqlRowSet results) {
         Pet pet = new Pet();
         pet.setPetId(results.getLong("pet_id"));
         pet.setName(results.getString("name"));

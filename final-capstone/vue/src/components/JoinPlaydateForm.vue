@@ -15,7 +15,7 @@
     >
       {{ errorMsg }}
     </div>
-    <div v-show="displayForm">
+    <div>
       <form class="form-user" id="form" v-on:submit.prevent="addPetToPlaydate">
         <p>Which pet would you like to join the playdate?</p>
         <div id="buttons">
@@ -35,10 +35,11 @@
             />{{ pet.name }}</label
           >
         </div>
-      </form>
-      <button id="button-add-pet" class="btn btn-primary" type="submit">
+
+        <button id="button-add-pet" class="btn btn-primary" type="submit">
           Join Playdate
         </button>
+      </form>
     </div>
   </div>
 </template>
@@ -70,7 +71,6 @@ export default {
         pic: "",
       },
       petName: "",
-      displayForm: true,
       errorMsg: "",
       successMsg: "",
     };
@@ -101,9 +101,11 @@ export default {
       );
     },
     addPetToPlaydate() {
+      this.errorMsg="";
+      this.successMsg="";
       if (this.playdate.pet.name == this.pet.name) {
         this.errorMsg =
-        this.playdate.pet.name + " is already hosting this playdate.";
+          this.playdate.pet.name + " is already hosting this playdate.";
         // this.showForm = false;
         // this.toggleDisplay();
       } else if (
@@ -154,14 +156,14 @@ export default {
   display: inline-block;
   margin: 0.5rem;
 }
-#form{
+#form {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 #form p {
   text-align: center;
-  margin-bottom: 0px
+  margin-bottom: 0px;
 }
 
 #form label {
@@ -177,4 +179,12 @@ button {
   margin-bottom: 30px;
 }
 
+.playdate-error-message,
+.playdate-joined-message{
+  width: 450px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+
+}
 </style>

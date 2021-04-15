@@ -1,10 +1,7 @@
 package com.techelevator.dao;
 
-import com.techelevator.model.Account;
-import com.techelevator.model.MessageDTO;
-import com.techelevator.model.Message;
+import com.techelevator.model.*;
 
-import com.techelevator.model.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -32,7 +29,12 @@ public class JdbcMessageDAO implements MessageDAO  {
     public List<Message> getMessages() {
         List<Message> messageList = new ArrayList<>();
 
-        String sql = "SELECT * FROM messages";
+        String sql = "SELECT message_id, m.user_id, message, posted_date, m.pet_id, username, a.pic AS account_pic, " +
+                "name, pets.user_id, species, breed, weight, birth_year, energetic_relaxed, shy_friendly, apathetic_curious, pets.bio, pets.pic " +
+                "FROM messages m " +
+                "JOIN users u ON u.user_id=m.user_id " +
+                "JOIN accounts a ON a.user_id=m.user_id " +
+                "LEFT JOIN pets ON pets.pet_id=m.pet_id";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
             while(results.next()) {
                 messageList.add(mapRowToMessage(results));
@@ -41,16 +43,16 @@ public class JdbcMessageDAO implements MessageDAO  {
             return messageList;
         }
 
-    @Override
-    public List<Message> getMessageByUserId(int userId) {
-        List<Message> messageList = new ArrayList<>();
-        String sql = "SELECT * FROM messages WHERE user_id = ?";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
-        while(results.next()) {
-            messageList.add(mapRowToMessage(results));
-        }
-        return messageList;
-    }
+//    @Override
+//    public List<Message> getMessageByUserId(int userId) {
+//        List<Message> messageList = new ArrayList<>();
+//        String sql = "SELECT * FROM messages WHERE user_id = ?";
+//        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
+//        while(results.next()) {
+//            messageList.add(mapRowToMessage(results));
+//        }
+//        return messageList;
+//    }
 
     @Override
     public long create(MessageDTO messageDTO, int userId, LocalDateTime postedDate) {
@@ -64,16 +66,13 @@ public class JdbcMessageDAO implements MessageDAO  {
     private Message mapRowToMessage(SqlRowSet results) {
         Message message = new Message();
         message.setMessageId(results.getLong("message_id"));
-        Long userId = results.getLong("user_id");
-        message.setUserId(userId);
+        message.setUserId(results.getLong("user_id"));
         message.setMessage(results.getString("message"));
         message.setPostedDate(results.getTimestamp("posted_date").toLocalDateTime());
-        int petId = results.getInt("pet_id");
-        message.setPet(petDAO.getPet(petId));
-        User user = userDAO.getUserById(userId);
-        message.setName(user.getUsername());
-        Account account = accountDAO.getAccount(userId.intValue());
-        message.setPic(account.getPic());
+        Pet pet = petDAO.mapRowToPet(results);
+        message.setPet(pet);
+        message.setName(results.getString("username"));
+        message.setPic(results.getString("account_pic"));
         return message;
     }
 
