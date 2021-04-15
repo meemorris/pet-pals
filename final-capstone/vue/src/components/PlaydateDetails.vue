@@ -191,9 +191,6 @@ export default {
     }
   },
   methods: {
-    // maintainHighlightedBackground() {
-
-    // },
 
     findPetByName() {
       this.pet = this.$store.state.pets.find(
