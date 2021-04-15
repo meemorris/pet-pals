@@ -24,7 +24,7 @@ public class RestMapService implements MapService{
         String fullAddress = formatFullAddress(address, city, state);
         GeocodeResult geocodeResult = null;
         try {
-            geocodeResult = restTemplate.getForObject(GEOCODE_URL + "address=" +  fullAddress + "&key=AIzaSyCMDIDFLUZUj0iH6vHHsSb-hFw4ZQmhgus", GeocodeResult.class);
+            geocodeResult = restTemplate.getForObject(GEOCODE_URL + "address=" +  fullAddress + "&key=" + System.getenv("GOOGLE_MAPS_API_KEY"), GeocodeResult.class);
         } catch (RestClientResponseException ex) {
             System.out.println(ex.getRawStatusCode() + " : " + ex.getStatusText());
         } catch (ResourceAccessException ex) {
@@ -39,7 +39,7 @@ public class RestMapService implements MapService{
     public List<String> getDistances(String origin, String destinations) {
         DistanceMatrixResult distanceMatrixResult = null;
         try {
-            distanceMatrixResult = restTemplate.getForObject(DISTANCE_MATRIX_URL + "&origins=" + origin + "&destinations=" + destinations + "&key=AIzaSyCMDIDFLUZUj0iH6vHHsSb-hFw4ZQmhgus", DistanceMatrixResult.class);
+            distanceMatrixResult = restTemplate.getForObject(DISTANCE_MATRIX_URL + "&origins=" + origin + "&destinations=" + destinations + "&key=" + System.getenv("GOOGLE_MAPS_API_KEY"), DistanceMatrixResult.class);
         }catch (RestClientResponseException ex) {
             System.out.println(ex.getRawStatusCode() + " : " + ex.getStatusText());
         } catch (ResourceAccessException ex) {

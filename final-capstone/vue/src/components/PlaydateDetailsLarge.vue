@@ -1,13 +1,12 @@
 <template>
   <div>
- 
     <b-container id="join-playdate-info">
       <b-row align-h="center">
         <b-col cols="11" id="header-row">
           <h3>Playdate with {{ playdate.pet.name }}</h3>
         </b-col>
       </b-row>
-  
+
       <b-row align-v="center" align-h="center" class="form-row">
         <b-col cols="4" id="pet-pic-container"
           ><img
@@ -130,7 +129,6 @@ export default {
 </script>
 
 <style>
-
 .pet-pic {
   max-width: 90%;
   border-radius: 3%;
@@ -143,6 +141,11 @@ export default {
 #join-playdate-info {
   max-width: 50vw;
   margin-top: 50px;
+  /* background-image: url("../assets/pet-pals-playdate.png");
+  background-size: cover;
+  height: 100vh;
+  background-position: 5%;
+  opacity: 0.2; */
 }
 
 h3 {
@@ -168,8 +171,8 @@ h3 {
 }
 
 #header-row {
- border-bottom: 2px solid hsla(240, 1%, 40%, 0.2);
- padding-bottom: 15px;
+  border-bottom: 2px solid hsla(240, 1%, 40%, 0.2);
+  padding-bottom: 15px;
 }
 
 .bolded {
@@ -183,5 +186,4 @@ p {
 #back-to-list {
   margin-bottom: 80px;
 }
-
 </style>
