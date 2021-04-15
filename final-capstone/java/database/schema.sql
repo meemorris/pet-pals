@@ -125,8 +125,10 @@ CREATE TABLE messages (
         CONSTRAINT FK_pet FOREIGN KEY(pet_id) REFERENCES pets(pet_id)
 );
 
-INSERT INTO messages (user_id, message, posted_date, pet_id) VALUES (2, 'Pet message trash talk here', '2021-04-14 09:00:00', 1);
-INSERT INTO messages (user_id, message, posted_date) VALUES (1, 'Pet Pals is amazing!', '2021-04-13 10:00:00');
-
+INSERT INTO messages (user_id, message, posted_date) VALUES (1, 'Pet Pals is amazing!', '2021-04-12 10:00:00');
+INSERT INTO messages (user_id, message, posted_date, pet_id) VALUES (1, 'Gimli had so much fun bird watching with the fellas today.', '2021-04-13 2:45:00', 1);
+INSERT INTO messages (user_id, message, posted_date, pet_id) VALUES (2, 'Off to the park to look for worms!!', '2021-04-14 11:00:00', 4);
+INSERT INTO messages (user_id, message, posted_date, pet_id) VALUES (1, 'Sable met her best friend through Pet Pals <3', '2021-04-14 3:00:00', 3);
+INSERT INTO messages (user_id, message, posted_date, pet_id) VALUES (2, 'The forecast today calls for sunbathing in the park.', '2021-04-15 9:00:00', 2);
 COMMIT TRANSACTION;
 
