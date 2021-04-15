@@ -103,6 +103,7 @@
 <script>
 import playdateService from "@/services/PlaydateService";
 import userService from "@/services/UserService";
+import petService from "@/services/PetService";
 
 import PlaydateDetails from "@/components/PlaydateDetails.vue";
 import TravelMap from "@/components/TravelMap";
@@ -143,6 +144,7 @@ export default {
   created() {
     this.createPlaydatesList();
     this.retrieveAccountInfo();
+
   },
 
   components: {
@@ -228,6 +230,7 @@ export default {
               this.$router.push("/profile/create");
             } else {
               this.$store.commit("SET_ACCOUNT_INFO", response.data);
+              this.retrievePetList();
             }
           })
           .catch((error) => {
@@ -317,6 +320,25 @@ export default {
         lng: "",
         distanceFromUser: "",
       };
+    },
+    retrievePetList() {
+      petService
+        .getPetsByUserId()
+        .then((response) => {
+          this.$store.commit("SET_PETS", response.data);
+        })
+        .catch((error) => {
+          if (error.response) {
+            alert(
+              "Pet list could not be found. Response was " +
+                error.response.statusText
+            );
+          } else if (error.request) {
+            alert("Pet list could not be found. Server could not be reached");
+          } else {
+            alert("Pet list could not be found. Request could not be created.");
+          }
+        });
     },
   },
 };
