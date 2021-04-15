@@ -81,19 +81,15 @@ INSERT INTO pets (name, user_id, species, breed, weight, birth_year, energetic_r
 INSERT INTO pets (name, user_id, species, breed, weight, birth_year, energetic_relaxed, shy_friendly, apathetic_curious, bio, pic) VALUES ('Jasper', 2, 'Cat', 'Russian Siberian', 19, 2010, 'Relaxed', 'Friendly', 'Apathetic', 'Jasper is the laziest, friendliest cat in all the land', 'https://scontent-ort2-2.cdninstagram.com/v/t51.2885-15/e35/s1080x1080/96138189_241521896906719_5444118948239169433_n.jpg?tp=1&_nc_ht=scontent-ort2-2.cdninstagram.com&_nc_cat=107&_nc_ohc=ZgEO3E3PeeQAX8TvPcl&edm=AP_V10EAAAAA&ccb=7-4&oh=d80e497dfc4ea08a3fcfec87ccbcf5e8&oe=6092A5CC&_nc_sid=4f375e');
 INSERT INTO pets (name, user_id, species, weight, birth_year, energetic_relaxed, shy_friendly, apathetic_curious, bio) VALUES ('Sable', 1, 'Dog', 50, 2016, 'Energetic', 'Friendly', 'Curious', 'Sable likes to run around until she smashes into something.');
 INSERT INTO pets (name, user_id, species, weight, birth_year, energetic_relaxed, shy_friendly, apathetic_curious, pic) VALUES ('Quilliam', 2, 'Hedgehog', 1, 2020, 'Relaxed', 'Shy', 'Curious', 'https://scontent-ort2-2.cdninstagram.com/v/t51.2885-15/e35/s1080x1080/163175945_463728028084756_1030008473754746239_n.jpg?tp=1&_nc_ht=scontent-ort2-2.cdninstagram.com&_nc_cat=104&_nc_ohc=y1-u1u-xJosAX_1qmJX&edm=AP_V10EAAAAA&ccb=7-4&oh=2860f21f232d002c06c52d79712aaf35&oe=60907661&_nc_sid=4f375e');
-<<<<<<< HEAD
 INSERT INTO pets (name, user_id, species, weight, birth_year, energetic_relaxed, shy_friendly, apathetic_curious, pic) VALUES ('Ollie', 3, 'Dog', 17, 2021, 'Energetic', 'Friendly', 'Curious', 'Ollie likes cuddles and attention.', 'https://www.rd.com/wp-content/uploads/2021/01/GettyImages-588935825.jpg');
 INSERT INTO pets (name, user_id, species, weight, birth_year, energetic_relaxed, shy_friendly, apathetic_curious, pic) VALUES ('Toby', 4, 'Dog', 54, 2017, 'Relaxed', 'Shy', 'Curious', 'Toby is a bit quirky, and loves learning all that he can about the world around him.', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxL5QtpvnUtBaMKw7FN0k4wslIkPW50eGQnQ&usqp=CAU');
 INSERT INTO pets (name, user_id, species, weight, birth_year, energetic_relaxed, shy_friendly, apathetic_curious, pic) VALUES ('Tucker', 5, 'Dog', 26, 2016, 'Energetic', 'Friendly', 'Curious', 'Tucker loves to frolick in open spaces.', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXKDSv9C9N0TFrJG0rVHyQgIlIdr7UTF2AfA&usqp=CAU');
 INSERT INTO pets (name, user_id, species, weight, birth_year, energetic_relaxed, shy_friendly, apathetic_curious, pic) VALUES ('Thumper', 4, 'Rabbit', 5, 2019, 'Relaxed', 'Shy', 'Apathetic', 'https://advancelocal-adapter-image-uploads.s3.amazonaws.com/image.advance.net/home/adv-media/width2048/img/newyorkupstatecom_national_desk_blog/photo/2018/03/28/img-7484jpg-31960d0170b9b97d.jpg');
 INSERT INTO pets (name, user_id, species, weight, birth_year, energetic_relaxed, shy_friendly, apathetic_curious, pic) VALUES ('Samara', 3, 'Cat', 9, 2016, 'Relaxed', 'Friendly', 'Apathetic', 'https://c.files.bbci.co.uk/12A9B/production/_111434467_gettyimages-1143489763.jpg');
-
-
-=======
 INSERT INTO pets (name, user_id, species, weight, birth_year, energetic_relaxed, shy_friendly, apathetic_curious, pic) VALUES ('Snuggles', 4, 'Aligator', 60, 2017, 'Relaxed', 'Friendly', 'Curious', 'https://cdn.pixabay.com/photo/2018/11/19/09/01/aligator-3824881_1280.jpg');
 INSERT INTO pets (name, user_id, species, weight, birth_year, energetic_relaxed, shy_friendly, apathetic_curious, pic) VALUES ('Jai', 3, 'Parrot', 1, 2020, 'Energetic', 'Shy', 'Curious', 'https://macawparroteggsforsale.com/wp-content/uploads/2019/06/vira4.jpg');
 INSERT INTO pets (name, user_id, species, weight, birth_year, energetic_relaxed, shy_friendly, apathetic_curious, pic) VALUES ('Alexander Hamilton', 3, 'Hamster', 1, 2020, 'Energetic', 'Shy', 'Curious', 'https://hamsterpal.com/wp-content/uploads/2019/08/best-hamster-food.jpg');
->>>>>>> ae5958a01c765255a9fc15a20d39c5a2d1355407
+
 CREATE TABLE playdates (
         playdate_id SERIAL,
         pet_id int NOT NULL,
