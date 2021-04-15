@@ -106,7 +106,7 @@ export default {
       return playdateService
         .getScheduledPlaydates(this.petId)
         .then((response) => {
-          this.playdateList = response.data;
+          this.playdateList = response.data.filter(playdate => new Date(playdate.date) >= Date.now());
         });
     },
     isHost(playdateId) {

@@ -109,13 +109,14 @@ CREATE TABLE playdates (
 );
 
 INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) VALUES (2, '7850 VOA Park Dr', 'Cincinnati', 'Ohio', '45069', '2021-04-10 12:00:00', '39.3686391', '-84.346541');
-INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) VALUES (3, '4686 Old Irwin Simpson Rd', 'Mason', 'Ohio', '45040', '2021-04-11 03:00:00', '39.3090199', '-84.3074929');
-INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) VALUES (4, '4335 Glendale Milford Rd', 'Blue Ash', 'Ohio', '45242', '2021-04-15 10:00:00', '39.2519331', '-84.38789640000002');
-INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) VALUES (5, '5057 Wooster Pike', 'Cincinnati', 'Ohio', '45226', '2021-04-15 10:00:00', '39.12185119999999', '-84.403733');
-INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) VALUES (10, '3006 Westwood Northern Blvd', 'Cincinnati', 'Ohio', '45211', '2021-04-15 10:00:00', '39.1575827', '-84.59373169999999');
-INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) VALUES (7, '4335 Glendale Milford Rd', 'Blue Ash', 'Ohio', '45242', '2021-04-15 10:00:00', '39.2303513', '-84.71075429999999');
-INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) VALUES (11, '6701 Kellogg Rd', 'Cincinnati', 'Ohio', '45230', '2021-04-15 10:00:00', '39.048995', '-84.3972387');
-INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) VALUES (12, '2234 Eastern Ave', 'Covington', 'KY', '41014', '2021-04-15 10:00:00', '39.0640171', '-84.49827569999999');
+INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) VALUES (2, '7850 VOA Park Dr', 'Cincinnati', 'Ohio', '45069', '2021-04-17 12:00:00', '39.3686391', '-84.346541');
+INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) VALUES (3, '4686 Old Irwin Simpson Rd', 'Mason', 'Ohio', '45040', '2021-04-18 03:00:00', '39.3090199', '-84.3074929');
+INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) VALUES (4, '4335 Glendale Milford Rd', 'Blue Ash', 'Ohio', '45242', '2021-04-20 10:00:00', '39.2519331', '-84.38789640000002');
+INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) VALUES (5, '5057 Wooster Pike', 'Cincinnati', 'Ohio', '45226', '2021-04-19 19:00:00', '39.12185119999999', '-84.403733');
+INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) VALUES (10, '3006 Westwood Northern Blvd', 'Cincinnati', 'Ohio', '45211', '2021-04-28 09:30:00', '39.1575827', '-84.59373169999999');
+INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) VALUES (7, '4335 Glendale Milford Rd', 'Blue Ash', 'Ohio', '45242', '2021-04-17 12:00:00', '39.2303513', '-84.71075429999999');
+INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) VALUES (11, '6701 Kellogg Rd', 'Cincinnati', 'Ohio', '45230', '2021-04-25 10:30:00', '39.048995', '-84.3972387');
+INSERT INTO playdates (pet_id, address, city, state, zip, date, lat, lng) VALUES (12, '2234 Eastern Ave', 'Covington', 'KY', '41014', '2021-04-30 18:00:00', '39.0640171', '-84.49827569999999');
 
 
 CREATE TABLE playdates_pets (
@@ -129,19 +130,20 @@ CREATE TABLE playdates_pets (
 );
 
 INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (1, 2, true);
-INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (2, 3, true);
-INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (3, 4, true);
-INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (4, 5, true);
-INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (5, 10, true);
-INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (6, 7, true);
-INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (7, 11, true);
-INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (8, 12, true);
+INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (2, 2, true);
+INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (3, 3, true);
+INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (4, 4, true);
+INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (5, 5, true);
+INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (6, 10, true);
+INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (7, 7, true);
+INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (8, 11, true);
+INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (9, 12, true);
 
-INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (3, 6, false);
-INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (4, 9, false);
-INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (5, 12, false);
-INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (6, 13, false);
-INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (7, 1, false);
+INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (4, 6, false);
+INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (5, 9, false);
+INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (6, 12, false);
+INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (7, 13, false);
+INSERT INTO playdates_pets (playdate_id, pet_id, is_host) VALUES (8, 1, false);
 
 CREATE TABLE messages (
         message_id SERIAL,
@@ -158,8 +160,9 @@ CREATE TABLE messages (
 INSERT INTO messages (user_id, message, posted_date) VALUES (3, 'Pet Pals is amazing!', '2021-04-12 10:00:00');
 INSERT INTO messages (user_id, message, posted_date, pet_id) VALUES (1, 'Gimli had so much fun bird watching with the fellas today.', '2021-04-13 2:45:00', 1);
 INSERT INTO messages (user_id, message, posted_date, pet_id) VALUES (5, 'Off to the park to look for worms!!', '2021-04-14 11:12:00', 4);
-INSERT INTO messages (user_id, message, posted_date, pet_id) VALUES (1, 'Sable met her best friend through Pet Pals <3', '2021-04-14 3:09:00', 3);
-INSERT INTO messages (user_id, message, posted_date, pet_id) VALUES (2, 'The forecast today calls for sunbathing in the park.', '2021-04-15 9:02:00', 2);
 INSERT INTO messages (user_id, message, posted_date) VALUES (4, 'I just joined Pet Pals! So excited to find some friends for my pets :)', '2021-04-15 2:01:00');
+INSERT INTO messages (user_id, message, posted_date, pet_id) VALUES (2, 'The forecast today calls for sunbathing in the park.', '2021-04-15 9:02:00', 2);
+INSERT INTO messages (user_id, message, posted_date, pet_id) VALUES (1, 'Sable met her best friend through Pet Pals <3', '2021-04-14 3:09:00', 3);
+
 COMMIT TRANSACTION;
 

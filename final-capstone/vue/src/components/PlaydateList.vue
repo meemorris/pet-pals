@@ -156,7 +156,7 @@ export default {
       return this.displayType === "List";
     },
     filteredList() {
-      let filteredPlaydates = this.$store.state.playdateList;
+      let filteredPlaydates = this.$store.state.playdateList.filter(playdate => new Date(playdate.date) >= Date.now());
       const isListedOption =
         this.filter.pet.species === "Dog" ||
         this.filter.pet.species === "Cat" ||
