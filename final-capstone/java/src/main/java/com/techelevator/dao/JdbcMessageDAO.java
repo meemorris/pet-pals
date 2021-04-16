@@ -56,9 +56,16 @@ public class JdbcMessageDAO implements MessageDAO  {
 
     @Override
     public long create(MessageDTO messageDTO, int userId, LocalDateTime postedDate) {
+        Long messageId;
 
-        String sql = "INSERT INTO messages (user_id, message, posted_date, pet_id) VALUES (?,?,?,?) RETURNING message_id";
-        Long messageId = jdbcTemplate.queryForObject(sql, Long.class, userId, messageDTO.getMessage(), postedDate, messageDTO.getPetId());
+        if (messageDTO.getPetId()!=0) {
+
+            String sql = "INSERT INTO messages (user_id, message, posted_date, pet_id) VALUES (?,?,?,?) RETURNING message_id";
+            messageId = jdbcTemplate.queryForObject(sql, Long.class, userId, messageDTO.getMessage(), postedDate, messageDTO.getPetId());
+        } else {
+            String sql = "INSERT INTO messages (user_id, message, posted_date) VALUES (?,?,?) RETURNING message_id";
+            messageId = jdbcTemplate.queryForObject(sql, Long.class, userId, messageDTO.getMessage(), postedDate);
+        }
 
         return messageId;
     }
