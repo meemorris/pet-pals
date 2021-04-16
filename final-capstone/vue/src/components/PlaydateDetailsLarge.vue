@@ -128,7 +128,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .pet-pic {
   max-width: 90%;
   border-radius: 3%;

@@ -33,9 +33,8 @@
             <div>
               <p>
                 <span class="account-header">Address: </span
-                >{{ account.address }}
+                >{{ account.address }}, {{ account.city }}, {{ account.state }} {{ account.zip }}
               </p>
-              <p>{{ account.city }}, {{ account.state }} {{ account.zip }}</p>
             </div>
           </div>
         </div>

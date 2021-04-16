@@ -42,7 +42,7 @@
               isHost(playdate.playdateId) && playdate.attendeeList.length == 0
             "
           >
-            <button v-on:click="updatePlaydate(playdate.playdateId)">
+            <button id="update-button" v-on:click="updatePlaydate(playdate.playdateId)">
               Update Playdate
             </button>
           </div>
@@ -76,7 +76,6 @@
 
           <div v-show="isHost(playdate.playdateId) && !confirmCancelMsg">
             <button id="cancel-button" v-on:click="confirmCancel(playdate.playdateId)">
-              <!-- <button v-on:click="cancel(playdate.playdateId)"> -->
               Cancel Playdate
             </button>
           </div>
@@ -165,7 +164,7 @@ export default {
 .playdate-card {
   border: 2px solid hsla(240, 1%, 40%, 0.2);
   border-radius: 1.5%;
-  padding: 15px;
+  padding: 25px;
   margin-bottom: 10px;
 }
 
@@ -267,8 +266,12 @@ button:hover {
   padding: 10px;
 }
 
-#cancel-button {
+#cancel-button, #update-button {
   display: flex;
   justify-content: flex-end;
+}
+
+#scheduled-playdates-card {
+  margin: 10px auto;
 }
 </style>

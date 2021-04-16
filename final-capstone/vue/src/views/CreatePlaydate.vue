@@ -22,9 +22,10 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #schedule {
   margin-top: 45px;
   text-align: center;
 }
+
 </style>

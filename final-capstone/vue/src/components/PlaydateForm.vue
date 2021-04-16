@@ -72,7 +72,7 @@
       </div>
     </div>
 
-    <button class="btn btn-lg btn-primary form-submit" type="submit">
+    <button id="schedule-playdate-form-button" class="btn btn-lg btn-primary form-submit" type="submit">
       Schedule Playdate
     </button>
   </form>
@@ -206,5 +206,10 @@ export default {
   height: 40px;
   border: 1px solid hsla(210, 6%, 67%, 0.5);
   border-radius: 3%;
+}
+
+#schedule-playdate-form-button {
+  margin-top: 30px;
+  width: 200px;
 }
 </style>

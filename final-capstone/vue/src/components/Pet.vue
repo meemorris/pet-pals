@@ -5,10 +5,14 @@
     <h2 id="pet-name">{{ pet.name }}</h2>
 
     <img class="pet-pic" v-if="pet.pic" v-bind:src="pet.pic" />
-    <img class="pet-pic default-pic" v-else src="@/assets/paws-default-white.png" />
+    <img
+      class="pet-pic default-pic"
+      v-else
+      src="@/assets/paws-default-white.png"
+    />
 
     <div id="playdates">
-      <scheduled-playdates v-bind:petId="id"/>
+      <scheduled-playdates v-bind:petId="id" />
     </div>
 
     <div class="profile-card">
@@ -39,11 +43,64 @@
 
       <div class="personality-group">
         <h3>Personality</h3>
-        <div id="personality-info">
-          <p>{{ pet.energeticRelaxed }}</p>
-          <p>{{ pet.shyFriendly }}</p>
-          <!-- <i v-if="pet.apatheticCurious='apathetic'" class="fa fa-meh-o" aria-hidden="true"></i> -->
-          <p>{{ pet.apatheticCurious }}</p>
+        <div id="personality-container">
+          <div id="personality-icons">
+            <div v-if="pet.energeticRelaxed == 'Energetic'">
+              <b-icon
+                id="laughing-icon"
+                icon="emoji-laughing"
+                font-scale="1.3"
+                aria-hidden="true"
+              ></b-icon>
+            </div>
+            <div v-else>
+              <b-icon
+                id="sunglasses-icon"
+                icon="emoji-sunglasses"
+                font-scale="1.3"
+                aria-hidden="true"
+              ></b-icon>
+            </div>
+
+            <div v-if="pet.shyFriendly == 'Friendly'">
+              <b-icon
+                id="heart-eyes-icon"
+                icon="emoji-heart-eyes"
+                font-scale="1.3"
+                aria-hidden="true"
+              ></b-icon>
+            </div>
+            <div v-else>
+              <b-icon
+                id="smile-upside-down-icon"
+                icon="emoji-smile-upside-down"
+                font-scale="1.3"
+                aria-hidden="true"
+              ></b-icon>
+            </div>
+
+            <div v-if="pet.apatheticCurious == 'Apathetic'">
+              <b-icon
+                id="apathetic-icon"
+                icon="emoji-expressionless"
+                font-scale="1.3"
+                aria-hidden="true"
+              ></b-icon>
+            </div>
+            <div v-else>
+              <b-icon
+                id="curious-icon"
+                icon="emoji-dizzy"
+                font-scale="1.3"
+                aria-hidden="true"
+              ></b-icon>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="personality-info-text">{{ pet.energeticRelaxed }}</div>
+          <div class="personality-info-text">{{ pet.shyFriendly }}</div>
+          <div class="personality-info-text">{{ pet.apatheticCurious }}</div>
         </div>
       </div>
     </div>
@@ -76,7 +133,7 @@
 
 <script>
 import petService from "@/services/PetService";
-import ScheduledPlaydates from './ScheduledPlaydates.vue';
+import ScheduledPlaydates from "./ScheduledPlaydates.vue";
 
 export default {
   components: { ScheduledPlaydates },
@@ -121,17 +178,17 @@ export default {
 </script>
 
 <style scoped>
-
 .pet-profile {
   display: grid;
   grid-template-columns: 1fr, 1fr, 1fr;
-  gap: 40px;
+  gap: 60px;
   grid-template-areas:
     "page-header page-header page-header"
     "name name name"
     "links image pd"
     "pet-info pet-info pd";
-  margin: 0 30px;
+  margin: 0 6vw;
+  margin-bottom: 10vh;
 }
 
 h1 {
@@ -141,10 +198,6 @@ h1 {
   font-family: "Rock Salt", cursive;
   font-size: 1.8rem;
   color: #cd704c;
-  /* background-image: url("../assets/paw-outline-light.png"); 
-  background-size: 8%;
-  background-repeat: no-repeat;
-  background-position: 2% 30%; */
   padding-top: 2rem;
   padding-left: 4rem;
 }
@@ -258,11 +311,7 @@ h3 {
 }
 
 .personality-group h3 {
-  flex-basis: 50%;
-}
-
-#personality-info {
-  flex-basis: 60%;
+  flex-basis: 41%;
 }
 
 .links {
@@ -270,8 +319,32 @@ h3 {
   max-width: 300px;
 }
 
-.bio-group h3, .stats-group h3, .personality-group h3 {
+.bio-group h3,
+.stats-group h3,
+.personality-group h3 {
   text-align: left;
   margin-left: 10px;
 }
+
+.personality-info-text {
+  margin-bottom: 8px;
+}
+
+#laughing-icon,
+#sunglasses-icon,
+#heart-eyes-icon,
+#smile-upside-down-icon,
+#apathetic-icon,
+#curious-icon {
+  margin-bottom: 10px;
+}
+
+#personality-icons {
+  margin-right: 10px;
+}
+
+#personality-container {
+  margin-left: 10px;
+}
+
 </style>

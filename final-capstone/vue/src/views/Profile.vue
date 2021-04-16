@@ -27,7 +27,7 @@
       </div>
 
       <div id="playdateColumn">
-        <h2>Current Playdates</h2>
+        <h2>Your Playdates</h2>
         <div id="playdate-info">
           <div v-for="pet in $store.state.pets"
           v-bind:key="pet.petId">
@@ -157,11 +157,6 @@ h1 {
   margin-bottom: 65px;
   color: #cd704c;
 }
-
-/* .preview:hover {
-  background-color: #c4cad0;
-  border-radius: 2%;
-} */
 
 #playdate-info {
   border: 2px solid #cd704c;

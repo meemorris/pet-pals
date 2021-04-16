@@ -1,35 +1,47 @@
 <template>
   <div id="app">
     <head>
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,400;0,600;1,400&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet">
+      <link rel="preconnect" href="https://fonts.gstatic.com" />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,400;0,600;1,400&display=swap"
+        rel="stylesheet"
+      />
+      <link rel="preconnect" href="https://fonts.gstatic.com" />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap"
+        rel="stylesheet"
+      />
     </head>
     <header>
       <nav id="nav1">
-        <router-link v-bind:to="{name: 'profile'}" v-show="$store.state.token != ''">Home</router-link>
-        <router-link v-bind:to="{ name: 'home' }" v-show="$store.state.token == ''">Home</router-link
+        <router-link
+          v-bind:to="{ name: 'profile' }"
+          v-show="$store.state.token != ''"
+          >Home</router-link
+        >
+        <router-link
+          v-bind:to="{ name: 'home' }"
+          v-show="$store.state.token == ''"
+          >Home</router-link
         >
         <span v-show="$store.state.token != ''">&nbsp;|&nbsp;</span>
         <router-link
           v-bind:to="{ name: 'logout' }"
           v-if="$store.state.token != ''"
-          >Logout</router-link>
-
+          >Logout</router-link
+        >
       </nav>
-    
 
-        <h1>Pet Pals</h1>
+      <h1>Pet Pals</h1>
 
       <nav id="nav2">
-
-        <router-link v-bind:to="{name: 'playdates'}">Playdates</router-link>
+        <router-link v-bind:to="{ name: 'playdates' }">Playdates</router-link>
         <span v-show="$store.state.token != ''">&nbsp;|&nbsp;</span>
-        <router-link v-bind:to="{name: 'messageforum'}" v-show="$store.state.token != ''">Message Forum</router-link>
+        <router-link
+          v-bind:to="{ name: 'messageforum' }"
+          v-show="$store.state.token != ''"
+          >Message Forum</router-link
+        >
       </nav>
     </header>
     <router-view />
@@ -40,9 +52,9 @@
 
 
 <style>
-body{
+body {
   color: #2a2b2a !important;
-  background-color: #FAFAFA !important;
+  background-color: #fafafa !important;
 }
 
 /* * {
@@ -55,42 +67,43 @@ body{
 } */
 
 #app {
-  background-color: #FAFAFA; 
+  background-color: #fafafa;
 }
 header {
   display: flex !important;
   flex-direction: row;
-  align-items: center; 
+  align-items: center;
   justify-content: space-between;
   background-color: #07475f;
-  color: #FAFAFA;
+  color: #fafafa;
 }
 nav a {
-  color: #FAFAFA;
+  color: #fafafa;
   padding-left: 10px;
   padding-right: 10px;
 }
 
-nav a:hover, .router-link-exact-active {
+nav a:hover,
+.router-link-exact-active {
   text-decoration: none;
   color: #f89e7a;
 }
-
 
 #nav1 {
   margin-left: 20px;
 }
 
-header >nav, header>h1 {
+header > nav,
+header > h1 {
   flex-basis: 50%;
 }
-header>h1 {
+header > h1 {
   text-align: center;
 }
-header>nav {
+header > nav {
   display: flex;
 }
-#nav2{
+#nav2 {
   justify-content: flex-end;
   margin-right: 20px;
 }
@@ -108,7 +121,12 @@ header>nav {
   border-color: #1e7c9e !important;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: "Raleway", sans-serif;
 }
 
@@ -136,7 +154,7 @@ input[type="email"] {
 }
 
 .outline:hover {
-  background-color: #FAFAFA;
+  background-color: #fafafa;
 }
 
 .form-header {
@@ -155,5 +173,4 @@ input[type="email"] {
   border: 1px solid hsla(240, 1%, 40%, 0.2);
   border-radius: 2%;
 }
-
 </style>
