@@ -40,9 +40,9 @@ const mapSettings = {
   zoomControlOptions: {
     style: "SMALL"
   },
-  zoom: 10,
+  zoom: 11,
   minZoom: 7,
-  maxZoom: 15,
+  maxZoom: 16,
   styles: [
     {
       featureType: "landscape",

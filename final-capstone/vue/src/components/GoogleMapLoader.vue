@@ -94,7 +94,7 @@ export default {
       //create variables for optional and formatted playdate info
       const pic =
         playdate.pet.pic != null
-          ? "<img height='100px' src=" + playdate.pet.pic + "/>"
+          ? "<img height='100px' src=" + playdate.pet.pic + ">"
           : "";
       const bio =
         playdate.pet.bio != null ? "<p>" + playdate.pet.bio + "</p>" : "";

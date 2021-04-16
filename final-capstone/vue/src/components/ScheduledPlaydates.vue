@@ -82,6 +82,43 @@
         </div>
       </div>
     </div>
+
+    <div v-show="playdateHistoryLength > 0">
+      <b-button v-b-toggle="collapseId" id="history-button">Playdate History</b-button>
+      <b-collapse :id="collapseId">
+        <div
+      class="playdate-card"
+      v-for="playdate in playdateHistory"
+      v-bind:key="playdate.playdateId"
+    >
+        <div id="playdate-history-grid">
+          <h4>Past Playdate hosted by {{ playdate.pet.name }}</h4>
+          <p id="playdate-date-time-history">
+            <span class="playdate-header"> Date/Time:</span>
+            {{ moment(playdate.date).format("dddd, MMMM Do YYYY, h:mm a") }}
+          </p>
+          <p id="playdate-address-history">
+            <span class="playdate-header">Location:</span>
+            {{ playdate.address }}, {{ playdate.city }},
+            {{ playdate.state }}
+            {{ playdate.zip }}
+          </p>
+          <div id="attendee-list-group-history">
+            <h5 v-show="playdate.attendeeList.length != 0">Attendees:</h5>
+            <div
+              v-for="attendee in playdate.attendeeList"
+              v-bind:key="attendee.petId"
+              id="attendee-list-block-history"
+            >
+              <p id="attendee-list-names-history">{{ attendee.name }}</p>
+            </div>
+          </div>
+        </div>
+        </div>
+      </b-collapse>
+    </div>
+
+
   </div>
 </template>
 
@@ -95,17 +132,31 @@ export default {
       playdateList: [],
       confirmCancelMsg: "",
       playdateIdToCancel: "",
+      playdateHistory: [],
     };
   },
   created() {
     this.getPlaydates();
+  },
+  computed: {
+    collapseId() {
+      return "collapse-" + this.petId;
+    },
+    playdateHistoryLength() {
+      return this.playdateHistory.length;
+    }
   },
   methods: {
     getPlaydates() {
       return playdateService
         .getScheduledPlaydates(this.petId)
         .then((response) => {
-          this.playdateList = response.data;
+          this.playdateList = response.data.filter(
+            (playdate) => new Date(playdate.date) >= Date.now()
+          );
+          this.playdateHistory = response.data.filter(
+            (playdate) => new Date(playdate.date) < Date.now()
+          );
         });
     },
     isHost(playdateId) {
@@ -168,6 +219,11 @@ export default {
   margin-bottom: 10px;
 }
 
+#history-button {
+  color: #FAFAFA;
+  margin-bottom: 10px;
+}
+
 #scheduled-playdate-grid {
   display: grid;
   grid-template-columns: 1fr, 1fr;
@@ -179,26 +235,53 @@ export default {
     ". links";
 }
 
+#playdate-history-grid {
+  display: grid;
+  grid-template-columns: 1fr, 1fr;
+  grid-template-areas:
+    "hhost hhost"
+    "hdt hdt"
+    "hlocation hlocation"
+    "hattendees .";
+}
+
 .playdate-header {
   font-weight: 500;
+}
+#scheduled-playdate-grid h4 {
+  grid-area: host;
+}
+#playdate-history-grid h4 {
+  grid-area: hhost;
 }
 
 h4 {
   font-size: 1.1rem;
   font-style: italic;
-  grid-area: host;
 }
 
 #playdate-date-time {
   grid-area: dt;
 }
 
+#playdate-date-time-history {
+  grid-area: hdt;
+}
+
 #playdate-address {
   grid-area: location;
 }
 
+#playdate-address-history {
+  grid-area: hlocation;
+}
+
 #attendee-list-group {
   grid-area: attendees;
+}
+
+#attendee-list-group-history {
+  grid-area: hattendees;
 }
 
 #playdate-buttons {
@@ -209,7 +292,8 @@ h5 {
   font-size: 1.1rem;
 }
 
-#attendee-list-names::before {
+#attendee-list-names::before,
+#attendee-list-names-history::before {
   content: "\2022";
   color: #a7acb1;
   font-weight: bold;
@@ -217,7 +301,8 @@ h5 {
   width: 1em;
 }
 
-#attendee-list-names {
+#attendee-list-names,
+#attendee-list-names-history {
   margin-left: 1em;
   margin-bottom: 1px;
 }
@@ -254,7 +339,8 @@ button:hover {
   
 }
 
-#scheduled-playdate-grid h4 {
+#scheduled-playdate-grid h4,
+#playdate-history-grid h4 {
   color: #949494;
   margin-bottom: 15px;
 }
